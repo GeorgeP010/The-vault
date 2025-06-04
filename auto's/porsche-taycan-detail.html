@@ -1,0 +1,1001 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>The Vault - Porsche Taycan Details</title>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Didot&family=Montserrat:wght@400;700&display=swap" rel="stylesheet" />
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+  <style>
+    /* Consistent CSS variables (copied from existing pages) */
+    :root {
+      --bg-color: #f8f9fa; 
+      --text-color: #111;
+      --accent-color: #bfa14a;
+      --accent-hover: #9a7f36;
+      --header-bg: #fff; 
+      --header-border: #e0e0e0;
+      --footer-bg: #111;
+      --footer-text: #ccc;
+      --card-bg: #fff; 
+      --card-border: #e9ecef;
+      --button-primary-bg: var(--accent-color);
+      --button-primary-text: #fff;
+      --button-primary-hover-bg: var(--accent-hover);
+    }
+    body.dark {
+      --bg-color: #121212;
+      --text-color: #eee;
+      --accent-color: #d4af37;
+      --accent-hover: #a5820a;
+      --header-bg: #1c1c1c;
+      --header-border: #333;
+      --footer-bg: #1c1c1c; 
+      --footer-text: #ccc;
+      --card-bg: #1f1f1f; 
+      --card-border: #333;
+      --button-primary-bg: var(--accent-color);
+      --button-primary-text: #121212; 
+      --button-primary-hover-bg: var(--accent-hover);
+    }
+    html {
+      height: 100%;
+    }
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      margin: 0;
+      padding: 0;
+      transition: background-color 0.5s ease, color 0.5s ease;
+      display: flex; 
+      flex-direction: column; 
+      min-height: 100vh;
+    }
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.5rem 4rem;
+      background-color: var(--header-bg);
+      border-bottom: 1px solid var(--header-border);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      transition: background-color 0.5s ease, border-color 0.5s ease;
+    }
+    .logo {
+      font-family: 'Didot', serif;
+      font-size: 2.5rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      color: var(--text-color);
+      cursor: default;
+      user-select: none;
+      text-transform: uppercase;
+      transition: color 0.5s ease;
+    }
+    nav a {
+      color: var(--text-color);
+      text-decoration: none;
+      font-weight: 500;
+      margin-left: 3rem;
+      font-size: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      transition: color 0.3s ease;
+    }
+    nav a:hover {
+      color: var(--accent-color);
+    }
+    
+    .content-wrapper {
+      flex-grow: 1; 
+      /* padding for this page will be handled by sections or specific containers */
+    }
+
+    footer {
+      background-color: var(--footer-bg);
+      color: var(--footer-text);
+      text-align: center;
+      padding: 2rem 1rem;
+      font-size: 0.9rem;
+      letter-spacing: 0.05em;
+      user-select: none;
+      transition: background-color 0.5s ease, color 0.5s ease;
+      border-top: 1px solid transparent; 
+    }
+    body.dark footer {
+        border-top: 1px solid var(--header-border); 
+    }
+
+    #theme-toggle {
+      background: none;
+      border: 1px solid var(--text-color);
+      color: var(--text-color);
+      padding: 0.5rem 0.8rem;
+      margin-left: 3rem;
+      font-size: 1rem; 
+      cursor: pointer;
+      border-radius: 5px;
+      transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+      text-transform: uppercase; 
+      letter-spacing: 0.1em;
+    }
+    #theme-toggle:hover {
+      background-color: var(--accent-color);
+      color: var(--bg-color); 
+      border-color: var(--accent-color);
+    }
+    body.dark #theme-toggle {
+      border-color: var(--text-color); 
+      color: var(--text-color);
+    }
+    body.dark #theme-toggle:hover {
+      background-color: var(--accent-color);
+      color: #121212; 
+      border-color: var(--accent-color);
+    }
+
+    /* Car Detail Page Specific Styles */
+    .car-detail-hero {
+      position: relative;
+      height: 70vh; 
+      background-color: #282828; 
+      /* background-size: cover; */ /* No longer needed directly here */
+      /* background-position: center; */ /* No longer needed directly here */
+      display: flex;
+      flex-direction: column; 
+      align-items: center;
+      justify-content: center; 
+      text-align: center;
+      color: #fff; 
+      overflow: hidden; 
+    }
+
+    .hero-video-background {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        z-index: 0; /* Ensure video is in the background */
+    }
+    .hero-video-background video {
+        width: 100%;
+        height: 100%;
+        object-fit: cover; /* Cover the area, cropping if necessary */
+    }
+
+    @keyframes slideInUpFade {
+      from {
+        opacity: 0;
+        transform: translate(-50%, 30px); /* Start slightly lower */
+      }
+      to {
+        opacity: 1;
+        transform: translate(-50%, 0); /* End at original position */
+      }
+    }
+
+    .car-detail-hero .hero-car-name {
+        font-family: 'Didot', serif; 
+        font-size: 6rem; /* Adjusted for balance */
+        font-weight: bold;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        color: #fff; /* Ensure contrast */
+        text-shadow: 2px 2px 8px rgba(0,0,0,0.7); /* Add pop to text */
+        position: relative; 
+        z-index: 2; /* Above car image */
+        /* animation: slideInUpFade 1s ease-out 0.3s backwards; */ /* Removed from here */
+    }
+    .car-detail-hero .hero-car-image {
+        position: absolute;
+        bottom: 0; 
+        left: 50%;
+        transform: translateX(-50%);
+        max-width: 85%; /* Slightly larger */
+        max-height: 85%; /* Slightly larger */
+        z-index: 1; /* Above background, below name */
+        object-fit: contain; /* Maintain car aspect ratio */
+        animation: slideInUpFade 1s ease-out 0.3s backwards; /* Applied here instead */
+    }
+
+    .car-info-section {
+        padding: 3rem 2rem;
+        max-width: 1100px;
+        margin: 0 auto;
+        text-align: center;
+    }
+    .car-info-section .model-name-main {
+        font-family: 'Didot', serif;
+        font-size: 3.5rem;
+        color: var(--text-color);
+        margin-bottom: 0.5rem;
+    }
+    .car-info-section .model-subtitle {
+        font-family: 'Montserrat', sans-serif;
+        font-size: 1.2rem;
+        color: var(--text-color);
+        opacity: 0.8;
+        margin-bottom: 0.5rem;
+    }
+    .car-info-section .model-price {
+        font-family: 'Montserrat', sans-serif;
+        font-size: 1.8rem;
+        font-weight: bold;
+        color: var(--accent-color);
+        margin-bottom: 2rem;
+    }
+    .variant-filters {
+        margin-bottom: 3rem;
+    }
+    .variant-filters .btn-filter {
+      font-family: 'Montserrat', sans-serif;
+      background: none;
+      border: 1px solid var(--text-color);
+      color: var(--text-color);
+      padding: 0.6rem 1.5rem;
+      margin: 0 0.3rem;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+    }
+    .variant-filters .btn-filter:hover, .variant-filters .btn-filter.active {
+      background-color: var(--accent-color);
+      color: var(--button-primary-text);
+      border-color: var(--accent-color);
+    }
+    body.dark .variant-filters .btn-filter:hover, body.dark .variant-filters .btn-filter.active {
+        color: #121212; 
+    }
+
+    .key-specs-section {
+        display: flex;
+        justify-content: space-around;
+        align-items: flex-start;
+        padding: 2rem 0 3rem;
+        border-top: 1px solid var(--card-border);
+        border-bottom: 1px solid var(--card-border);
+        margin-bottom: 3rem;
+    }
+    .spec-item {
+        text-align: center;
+    }
+    .spec-item .spec-value {
+        font-family: 'Didot', serif; /* Or Montserrat bold */
+        font-size: 3rem;
+        font-weight: bold;
+        color: var(--text-color);
+        line-height: 1;
+    }
+    .spec-item .spec-label {
+        font-family: 'Montserrat', sans-serif;
+        font-size: 0.9rem;
+        color: var(--text-color);
+        opacity: 0.8;
+        margin-top: 0.5rem;
+    }
+
+    .btn-all-specs {
+      font-family: 'Montserrat', sans-serif;
+      border: 1px solid var(--text-color);
+      color: var(--text-color);
+      background: transparent;
+      padding: 0.8rem 2rem;
+      text-decoration: none;
+      border-radius: 5px;
+      transition: all 0.3s ease;
+      display: inline-block;
+      margin-bottom: 3rem;
+    }
+    .btn-all-specs:hover {
+        background-color: var(--text-color);
+        color: var(--bg-color);
+    }
+
+    /* Wireframe-like detail section */
+    .product-detail-wireframe {
+        display: flex;
+        gap: 2rem;
+        padding: 2rem 0;
+        margin-bottom: 3rem;
+        max-width: 1200px; /* Different max-width potentially */
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .product-detail-wireframe .main-image-container {
+        flex: 0 0 60%;
+        background-color: var(--card-bg); /* Changed from #e0e0e0 for consistency */
+        min-height: 400px; /* Placeholder */
+        display: flex; align-items: center; justify-content: center;
+        overflow: hidden; /* Good practice with object-fit: cover */
+    }
+    .product-detail-wireframe .main-image-container img {
+        width: 100%; /* Ensure it tries to fill container width */
+        height: 100%; /* Ensure it tries to fill container height */
+        object-fit: cover; /* Changed from contain */
+        /* max-width: 100%; max-height: 500px; object-fit: contain; */ /* Old rule commented out */
+    }
+    .product-detail-wireframe .info-column {
+        flex: 0 0 35%;
+        display: flex; flex-direction: column;
+    }
+    .info-column .product-title-wf {
+        font-family: 'Didot', serif;
+        font-size: 2.5rem; margin-bottom: 0.5rem; color: var(--text-color);
+    }
+    .info-column .product-desc-wf {
+        font-size: 1rem; margin-bottom: 1rem; color: var(--text-color); opacity: 0.8;
+    }
+    .info-column .product-price-wf {
+        font-size: 1.8rem; font-weight: bold; color: var(--accent-color); margin-bottom: 1.5rem;
+    }
+    .info-column .btn-add-to-cart-wf {
+      font-family: 'Montserrat', sans-serif;
+      background-color: var(--button-primary-bg);
+      color: var(--button-primary-text);
+      border: none;
+      padding: 1rem 1.5rem;
+      font-size: 1rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      text-decoration: none;
+      text-align: center;
+      width: 100%;
+    }
+    .info-column .btn-add-to-cart-wf:hover {
+      background-color: var(--button-primary-hover-bg);
+    }
+    body.dark .info-column .btn-add-to-cart-wf { color: #121212;}
+
+    .thumbnail-gallery {
+        display: flex; gap: 1rem; margin-top: 2rem; margin-bottom:2rem; justify-content: center;
+    }
+    .thumbnail-gallery .thumb {
+        width: 100px; /* Increased width */
+        height: 75px; /* Increased height */
+        background-color: var(--card-bg); /* Use card background for consistency */
+        border: 1px solid var(--card-border); 
+        cursor: pointer; 
+        display: flex; 
+        align-items: center; 
+        justify-content: center; 
+        overflow:hidden;
+        transition: border-color 0.3s ease;
+    }
+    .thumbnail-gallery .thumb:hover {
+        border-color: var(--accent-color);
+    }
+    .thumbnail-gallery .thumb img {
+        width:100%; /* Explicitly set width */
+        height:100%; /* Explicitly set height */
+        object-fit:cover; /* Changed back to cover to fill the box */
+    }
+
+    .specs-bar-wf {
+        display: flex; justify-content: space-around; background-color: var(--card-bg); 
+        padding: 1.5rem 1rem; border-radius: 8px; border: 1px solid var(--card-border); margin-top:2rem;
+    }
+    .specs-bar-wf .spec-col {
+        text-align: center;
+    }
+    .specs-bar-wf .spec-col .spec-label-wf { font-size: 0.9rem; color: var(--text-color); opacity: 0.7; margin-bottom: 0.3rem; text-transform:uppercase; letter-spacing: 0.05em;}
+    .specs-bar-wf .spec-col .spec-value-wf { font-size: 1.1rem; font-weight: bold; color: var(--text-color);}
+
+    /* Scroll Animation Utilities */
+    .animate-on-scroll {
+        opacity: 0;
+        transform: translateY(30px);
+        transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    }
+    .animate-on-scroll.is-visible {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    /* Styles for Nieuwe Sectie: Technisch Ontwerp */
+    .technical-design-section {
+      padding: 3rem 2rem; /* Consistent with car-info-section */
+      max-width: 1200px; /* Increased max-width for this specific section */
+      margin: 3rem auto 6rem; /* Increased bottom margin to 6rem */
+      border-top: 1px solid var(--card-border);
+      border-bottom: 1px solid var(--card-border);
+    }
+
+    .technical-design-section .section-title {
+      font-family: 'Didot', serif;
+      font-size: 2.8rem; /* Prominent title */
+      color: var(--text-color);
+      text-align: center;
+      margin-bottom: 3rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    /* Part 1: Specs & Front Car Image */
+    .technical-specs-split {
+      display: flex;
+      align-items: center; /* Vertically align items */
+      gap: 3rem; /* Space between text and image */
+      margin-bottom: 4rem; /* Space before the next part */
+    }
+
+    .specs-column {
+      flex: 1 1 40%; /* Text column takes about 40% */
+      display: flex;
+      flex-direction: column;
+      gap: 2rem; /* Space between spec items */
+    }
+
+    .spec-item-large .spec-value-large {
+      font-family: 'Didot', serif;
+      font-size: 4rem; /* Very large spec value */
+      font-weight: normal; /* Not bold, to match image */
+      color: var(--text-color);
+      line-height: 1;
+      display: inline; /* To allow unit on same line */
+    }
+    .spec-item-large .spec-unit-small {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.8rem; /* Smaller unit next to the large value */
+      font-weight: normal;
+      color: var(--text-color);
+      opacity: 0.9;
+      margin-left: 0.2em;
+    }
+
+    .spec-item-large .spec-label-large {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.9rem;
+      color: var(--text-color);
+      opacity: 0.8;
+      margin-top: 0.3rem;
+      line-height: 1.4;
+    }
+    .spec-note {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.8rem;
+      color: var(--text-color);
+      opacity: 0.7;
+      margin-top: 1rem;
+    }
+    .spec-note a {
+      color: var(--accent-color);
+      text-decoration: underline;
+    }
+
+    .image-column-split {
+      flex: 1 1 55%; /* Image column takes about 55% */
+      text-align: right; /* Align image to the right if container is wider */
+    }
+    .image-column-split img {
+      max-width: 100%;
+      height: auto;
+      object-fit: contain;
+    }
+
+    /* Part 2: Overlapping Images & Info */
+    .overfeel-section {
+      display: flex;
+      align-items: center;
+      gap: 3rem;
+      padding-top: 3rem; /* Add some space above this part */
+      border-top: 1px solid var(--card-border); /* Separator line */
+      margin-top: 3rem;
+    }
+
+    .overfeel-text-content {
+      flex: 1 1 45%;
+    }
+    .overfeel-title {
+      font-family: 'Didot', serif;
+      font-size: 3.5rem; /* Large title */
+      color: var(--text-color);
+      margin-bottom: 1.5rem;
+    }
+    .overfeel-description {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.1rem;
+      line-height: 1.7;
+      color: var(--text-color);
+      opacity: 0.85;
+      max-width: 500px;
+    }
+
+    .overfeel-images-container {
+      flex: 1 1 50%;
+      position: relative; /* For positioning overlapping images */
+      top: -1.5rem; /* Shift the container and its contents up */
+      min-height: 450px; /* Increased min-height */
+    }
+    .overfeel-images-container img {
+      position: absolute;
+      border: 5px solid var(--bg-color); /* White border effect, or use --card-bg for light/dark theme */
+      box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+      border-radius: 8px;
+      transition: transform 0.3s ease;
+    }
+    .overfeel-images-container img:hover {
+        transform: scale(1.03);
+    }
+
+    .overfeel-image-1 {
+      width: 70%; /* Example size */
+      top: 0;
+      left: 0;
+      z-index: 1;
+    }
+    .overfeel-image-2 {
+      width: 60%; /* Example size */
+      bottom: 0; /* Aligns to bottom of container */
+      right: 0;
+      z-index: 2; /* On top */
+      /* Adjust top/bottom/left/right for desired overlap */
+      /* For example, to have it lower and more to the right: */
+      /* top: 20%; */
+      /* left: 30%; */
+    }
+
+    /* Responsive adjustments for the new section */
+    @media (max-width: 992px) { /* Medium devices (tablets, less than 992px) */
+      .technical-specs-split, .overfeel-section {
+        flex-direction: column;
+        text-align: center; /* Center content when stacked */
+      }
+      .specs-column, .image-column-split, .overfeel-text-content, .overfeel-images-container {
+        flex: 1 1 100%; /* Full width when stacked */
+        text-align: center;
+      }
+      .image-column-split img {
+          margin: 0 auto; /* Center image */
+      }
+      .spec-item-large .spec-value-large {
+        font-size: 3rem;
+      }
+      .spec-item-large .spec-unit-small {
+        font-size: 1.5rem;
+      }
+      .overfeel-images-container {
+        margin-top: 2rem;
+        min-height: 300px; /* Adjust for smaller screens */
+      }
+      .overfeel-images-container img { /* Adjust image positions for stacked layout */
+          position: relative; /* Back to relative for simpler stacking */
+          display: block;
+          margin: 0 auto 1rem; /* Center and add bottom margin */
+          width: 80%; /* Make them a bit larger and stack them */
+      }
+       .overfeel-image-1, .overfeel-image-2 {
+        top: auto; left: auto; bottom:auto; right:auto;
+      }
+    }
+
+    @media (max-width: 768px) {
+       .technical-design-section .section-title {
+        font-size: 2.2rem;
+      }
+      .spec-item-large .spec-value-large {
+        font-size: 2.5rem;
+      }
+       .spec-item-large .spec-unit-small {
+        font-size: 1.3rem;
+      }
+      .overfeel-title {
+        font-size: 2.8rem;
+      }
+      .overfeel-description {
+        font-size: 1rem;
+      }
+    }
+
+    /* Hamburger Menu & General Responsive Header */
+    .nav-toggle {
+      display: none; /* Hidden by default */
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0;
+      z-index: 1001; /* Above nav links */
+    }
+    .hamburger {
+      display: block;
+      width: 25px;
+      height: 3px;
+      background-color: var(--text-color);
+      margin: 5px 0;
+      transition: all 0.3s ease-in-out;
+    }
+
+    @media (max-width: 992px) { /* Breakpoint for hamburger */
+      header {
+        padding: 1rem 2rem; /* Adjust padding for smaller screens */
+      }
+      .logo {
+        font-size: 2rem;
+      }
+      .nav-links-container {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 100%; /* Position below header */
+        left: 0;
+        width: 100%;
+        background-color: var(--header-bg);
+        border-top: 1px solid var(--header-border);
+        padding: 1rem 0;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      }
+      .nav-links-container.active {
+        display: flex;
+      }
+      nav a, #theme-toggle {
+        margin: 0.8rem auto; /* Center links and give vertical spacing */
+        display: block;
+        text-align: center;
+        width: 80%; /* Make touch targets larger */
+        padding: 0.5rem;
+      }
+      #theme-toggle {
+         margin-left: auto; /* Keep consistent with desktop nav a styling */
+         margin-right: auto;
+      }
+      .nav-toggle {
+        display: block; /* Show hamburger */
+      }
+      /* Hamburger animation to X */
+      .nav-toggle.active .hamburger:nth-child(1) {
+        transform: rotate(45deg) translate(6px, 6px);
+      }
+      .nav-toggle.active .hamburger:nth-child(2) {
+        opacity: 0;
+      }
+      .nav-toggle.active .hamburger:nth-child(3) {
+        transform: rotate(-45deg) translate(5px, -5px);
+      }
+
+      /* General content padding for smaller screens */
+      .content-wrapper {
+        /* padding: 1rem; */ /* Removed, sections will handle their own padding */
+      }
+       .car-info-section, .product-detail-wireframe, .technical-design-section {
+        padding-left: 1rem;
+        padding-right: 1rem;
+      }
+
+      /* Hero Section Adjustments */
+      .car-detail-hero {
+        height: 50vh; /* Reduce height on smaller screens */
+      }
+      .car-detail-hero .hero-car-name {
+        font-size: 3.5rem; /* Reduce font size */
+      }
+       .car-detail-hero .hero-car-image {
+        max-width: 70%;
+        max-height: 70%;
+      }
+
+      /* Info Section Adjustments */
+      .car-info-section .model-name-main {
+        font-size: 2.5rem;
+      }
+      .car-info-section .model-price {
+        font-size: 1.5rem;
+      }
+
+      /* Wireframe Detail Section Adjustments */
+      .product-detail-wireframe {
+        flex-direction: column;
+      }
+      .product-detail-wireframe .main-image-container,
+      .product-detail-wireframe .info-column {
+        flex: 1 1 100%; /* Stack them */
+      }
+      .thumbnail-gallery {
+        justify-content: flex-start; /* Align to start on mobile */
+        flex-wrap: wrap; /* Allow wrapping */
+      }
+      .thumbnail-gallery .thumb {
+        width: 80px; height: 60px; /* Slightly smaller thumbs */
+      }
+
+    }
+     @media (max-width: 576px) { /* Extra small devices */
+        header {
+            padding: 1rem 1.5rem;
+        }
+        .logo {
+            font-size: 1.8rem;
+        }
+        .car-detail-hero .hero-car-name {
+            font-size: 2.8rem;
+        }
+        .car-info-section .model-name-main {
+            font-size: 2rem;
+        }
+        .info-column .product-title-wf {
+            font-size: 1.8rem;
+        }
+         .info-column .product-price-wf {
+            font-size: 1.5rem;
+        }
+        .technical-design-section .section-title {
+            font-size: 1.8rem;
+        }
+        .spec-item-large .spec-value-large {
+            font-size: 2rem;
+        }
+        .spec-item-large .spec-unit-small {
+            font-size: 1.1rem;
+        }
+        .overfeel-title {
+            font-size: 2.2rem;
+        }
+        .overfeel-description {
+            font-size: 0.9rem;
+        }
+    }
+
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="logo">THE VAULT</div>
+  <button class="nav-toggle" aria-label="toggle navigation">
+    <span class="hamburger"></span>
+    <span class="hamburger"></span>
+    <span class="hamburger"></span>
+  </button>
+  <nav class="nav-links-container">
+    <a href="../Rest/index.html">Home</a>
+    <a href="../Rest/categorieën.html">Categorieën</a>
+    <a href="../auto's/autos.html">Auto's</a>
+    <a href="../jachten/jachten.html">Jachten</a>
+    <a href="../Rest/cart.html">Account</a>
+    <button id="theme-toggle" aria-label="Toggle dark mode">🌙</button>
+  </nav>
+</header>
+
+<main class="content-wrapper">
+  <!-- Hero Section (Porsche Inspired) -->
+  <section class="car-detail-hero"> 
+    <div class="hero-video-background">
+      <video autoplay loop muted playsinline poster="../images/porsche_taycan_hero_bg.jpg"> <!-- Added poster attribute as a fallback -->
+        <source src="../Videos/porsche1.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+    </div>
+    <h1 class="hero-car-name">Taycan</h1> 
+    <img src="../images/auto's/carbc.jpg" alt="Porsche Taycan" class="hero-car-image"> 
+  </section>
+
+  <!-- Info Section (Porsche Inspired) -->
+  <section class="car-info-section">
+    <h2 class="model-name-main">Taycan</h2>
+    <p class="model-subtitle">Elektrisch</p>
+    <p class="model-price">€ 107.700</p>
+    </div>
+  </section>
+
+  <!-- Wireframe Detail Section -->
+  <section class="product-detail-wireframe">
+    <div class="main-image-container">
+        <img src="../images/auto's/Main.jpg" alt="Porsche Taycan Studio Shot" id="mainProductImage"> <!-- Different, more detailed image -->
+    </div>
+    <div class="info-column">
+        <h3 class="product-title-wf">Porsche Taycan 4 Sedan</h3>
+        <p class="product-desc-wf">De Taycan is klaar voor de toekomst, dankzij zijn innovatieve concept. Hij wordt gekenmerkt door de features die een Porsche altijd hebben gedefinieerd: pure emotie en maximaal rijplezier.</p>
+        <p class="product-price-wf">vanaf € 107.700</p>
+        <a href="../Rest/cart.html" class="btn-add-to-cart-wf">Interesse tonen</a>
+        <div class="thumbnail-gallery">
+            <div class="thumb"><img src="../images/auto's/Main.jpg" alt="Thumbnail 1"></div>
+            <div class="thumb"><img src="../images/auto's/car1.jpg" alt="Thumbnail 2"></div>
+            <div class="thumb"><img src="../images/auto's/car2.jpg" alt="Thumbnail 3"></div>
+            <div class="thumb"><img src="../images/auto's/car3.jpg" alt="Thumbnail 4"></div>
+            <div class="thumb">+5</div>
+        </div>
+    </div>
+  </section>
+
+  <!-- Key Specs Section (Porsche Inspired) TO BE REMOVED -->
+  <!-- 
+  <section class="car-info-section">
+    <div class="key-specs-section">
+      <div class="spec-item">
+        <div class="spec-value">4,8 s</div>
+        <div class="spec-label">Acceleratie 0 - 100 km/h <br>(met Launch Control)</div>
+      </div>
+      <div class="spec-item">
+        <div class="spec-value">300 <span style="font-size:1.5rem; opacity:0.8;">kW</span> / 408 <span style="font-size:1.5rem; opacity:0.8;">PK</span></div>
+        <div class="spec-label">Vermogen tot (kW)/Vermogen tot (PK)</div>
+      </div>
+      <div class="spec-item">
+        <div class="spec-value">230 <span style="font-size:1.5rem; opacity:0.8;">km/h</span></div>
+        <div class="spec-label">Topsnelheid</div>
+      </div>
+    </div>
+    <a href="#" class="btn-all-specs">Alle technische details</a>
+  </section>
+  -->
+  
+  <!-- Nieuwe Sectie: Technisch Ontwerp -->
+  <section class="technical-design-section car-info-section animate-on-scroll">
+    <h2 class="section-title">Technisch Ontwerp</h2>
+
+    <!-- Part 1: Specs & Front Car Image -->
+    <div class="technical-specs-split">
+      <div class="specs-column">
+        <div class="spec-item-large">
+          <div class="spec-value-large">2,2 <span class="spec-unit-small">s</span></div>
+          <div class="spec-label-large">Acceleratie 0 - 100 km/h met Launch Control</div>
+        </div>
+        <div class="spec-item-large">
+          <div class="spec-value-large">760 <span class="spec-unit-small">kW</span> / 1034 <span class="spec-unit-small">PK</span></div>
+          <div class="spec-label-large">Overboostvermogen met Launch Control (kW)/Overboostvermogen met Launch Control (PK)</div>
+        </div>
+        <div class="spec-item-large">
+          <div class="spec-value-large">305 <span class="spec-unit-small">km/h</span></div>
+          <div class="spec-label-large">Topsnelheid</div>
+        </div>
+        <p class="spec-note">Details over de meetmethode op <a href="https://www.porsche.com/gtr/21" target="_blank">www.porsche.com/gtr/21</a></p>
+      </div>
+      <div class="image-column-split">
+        <img src="../images/auto's/porsche-taycan-front-technical.jpg" alt="Porsche Taycan Technisch Ontwerp Voorkant">
+      </div>
+    </div>
+
+    <!-- Part 2: Overlapping Images & Info -->
+    <div class="overfeel-section">
+      <div class="overfeel-text-content">
+        <h3 class="overfeel-title">Overfeel.</h3>
+        <p class="overfeel-description">
+          Het overweldigende gevoel om in een geweldige elektrische sportwagen te zitten: de nieuwe Taycan maakt elektriciteit nog opwindender. Prestaties nog indrukwekkender. En het buitengewone nog opmerkelijker.
+        </p>
+      </div>
+      <div class="overfeel-images-container">
+        <img src="../images/auto's/porsche-taycan-overlap1.jpg" alt="Porsche Taycan Overfeel afbeelding 1" class="overfeel-image-1">
+        <img src="../images/auto's/porsche-taycan-overlap2.jpg" alt="Porsche Taycan Overfeel afbeelding 2" class="overfeel-image-2">
+      </div>
+    </div>
+  </section>
+  <!-- Einde Nieuwe Sectie -->
+
+  <!-- Wireframe Specs Bar TO BE REMOVED -->
+  <!--
+  <section class="car-info-section" style="padding-top:0;">
+    <div class="specs-bar-wf">
+        <div class="spec-col">
+            <div class="spec-label-wf">Brandstof</div><div class="spec-value-wf">Elektrisch</div>
+        </div>
+        <div class="spec-col">
+            <div class="spec-label-wf">Transmissie</div><div class="spec-value-wf">Automaat</div>
+        </div>
+        <div class="spec-col">
+            <div class="spec-label-wf">Vermogen</div><div class="spec-value-wf">408 PK</div>
+        </div>
+        <div class="spec-col">
+            <div class="spec-label-wf">Zitplaatsen</div><div class="spec-value-wf">4-5</div>
+        </div>
+        <div class="spec-col">
+            <div class="spec-label-wf">Lengte</div><div class="spec-value-wf">4963 mm</div>
+        </div>
+    </div>
+  </section>
+  -->
+
+</main>
+
+<footer>
+  &copy; 2025 The Vault — Alle rechten voorbehouden.
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+  // Dark Mode Toggle Script
+  const themeToggle = document.getElementById('theme-toggle');
+  const currentTheme = localStorage.getItem('theme');
+
+  if (currentTheme) {
+    document.body.classList.add(currentTheme);
+    if (currentTheme === 'dark') {
+        themeToggle.textContent = '☀️'; 
+    } else {
+        themeToggle.textContent = '🌙';
+    }
+  } else {
+    themeToggle.textContent = '🌙';
+  }
+
+  themeToggle.addEventListener('click', () => {
+    document.body.classList.toggle('dark');
+    let theme = 'light';
+    if (document.body.classList.contains('dark')) {
+      theme = 'dark';
+      themeToggle.textContent = '☀️'; 
+    } else {
+      themeToggle.textContent = '🌙'; 
+    }
+    localStorage.setItem('theme', theme);
+  });
+
+  // Variant filter active state (simple example)
+  const filterButtons = document.querySelectorAll('.variant-filters .btn-filter');
+  filterButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      filterButtons.forEach(btn => btn.classList.remove('active'));
+      button.classList.add('active');
+      // Add actual filtering logic here in a real application
+    });
+  });
+
+  // Thumbnail click to change main image
+  const mainImage = document.getElementById('mainProductImage');
+  const thumbnails = document.querySelectorAll('.thumbnail-gallery .thumb img');
+
+  thumbnails.forEach(thumb => {
+    thumb.addEventListener('click', function() {
+      mainImage.src = this.src;
+      mainImage.alt = this.alt; // Update alt text as well for accessibility
+    });
+  });
+
+  // Scroll Animation Script
+  const scrollElements = document.querySelectorAll('.animate-on-scroll');
+  const elementInView = (el, dividend = 1) => {
+    const elementTop = el.getBoundingClientRect().top;
+    return (
+      elementTop <= (window.innerHeight || document.documentElement.clientHeight) / dividend
+    );
+  };
+  const displayScrollElement = (element) => {
+    element.classList.add('is-visible');
+  };
+  // const hideScrollElement = (element) => { // Optional: if you want elements to hide again
+  //   element.classList.remove('is-visible');
+  // }
+  const handleScrollAnimation = () => {
+    scrollElements.forEach((el) => {
+      if (elementInView(el, 1.25)) { 
+        displayScrollElement(el);
+      }
+      // else { // Optional: if you want elements to hide again
+      //   hideScrollElement(el);
+      // }
+    })
+  };
+  // Initial check in case elements are already in view on load
+  handleScrollAnimation();
+  window.addEventListener('scroll', () => {
+    handleScrollAnimation();
+  });
+
+  // Hamburger Menu Toggle Script
+  const navToggle = document.querySelector('.nav-toggle');
+  const navLinksContainer = document.querySelector('.nav-links-container');
+
+  if (navToggle && navLinksContainer) {
+    navToggle.addEventListener('click', () => {
+      navToggle.classList.toggle('active');
+      navLinksContainer.classList.toggle('active');
+    });
+  }
+
+</script>
+
+</body>
+</html> 

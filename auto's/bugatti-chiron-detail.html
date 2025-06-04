@@ -1,0 +1,936 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>The Vault - Bugatti Chiron Details</title>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Didot&family=Montserrat:wght@400;700&display=swap" rel="stylesheet" />
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+  <style>
+    /* Consistent CSS variables (copied from existing pages) */
+    :root {
+      --bg-color: #f8f9fa; 
+      --text-color: #111;
+      --accent-color: #bfa14a;
+      --accent-hover: #9a7f36;
+      --header-bg: #fff; 
+      --header-border: #e0e0e0;
+      --footer-bg: #111;
+      --footer-text: #ccc;
+      --card-bg: #fff; 
+      --card-border: #e9ecef;
+      --button-primary-bg: var(--accent-color);
+      --button-primary-text: #fff;
+      --button-primary-hover-bg: var(--accent-hover);
+    }
+    body.dark {
+      --bg-color: #121212;
+      --text-color: #eee;
+      --accent-color: #d4af37;
+      --accent-hover: #a5820a;
+      --header-bg: #1c1c1c;
+      --header-border: #333;
+      --footer-bg: #1c1c1c; 
+      --footer-text: #ccc;
+      --card-bg: #1f1f1f; 
+      --card-border: #333;
+      --button-primary-bg: var(--accent-color);
+      --button-primary-text: #121212; 
+      --button-primary-hover-bg: var(--accent-hover);
+    }
+    html {
+      height: 100%;
+    }
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      margin: 0;
+      padding: 0;
+      transition: background-color 0.5s ease, color 0.5s ease;
+      display: flex; 
+      flex-direction: column;
+      min-height: 100vh;
+    }
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.5rem 4rem;
+      background-color: var(--header-bg);
+      border-bottom: 1px solid var(--header-border);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      transition: background-color 0.5s ease, border-color 0.5s ease;
+    }
+    .logo {
+      font-family: 'Didot', serif;
+      font-size: 2.5rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      color: var(--text-color);
+      cursor: default;
+      user-select: none;
+      text-transform: uppercase;
+      transition: color 0.5s ease;
+    }
+    nav a {
+      color: var(--text-color);
+      text-decoration: none;
+      font-weight: 500;
+      margin-left: 3rem;
+      font-size: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      transition: color 0.3s ease;
+    }
+    nav a:hover {
+      color: var(--accent-color);
+    }
+    
+    .content-wrapper {
+      flex-grow: 1; 
+      /* padding for this page will be handled by sections or specific containers */
+    }
+
+    footer {
+      background-color: var(--footer-bg);
+      color: var(--footer-text);
+      text-align: center;
+      padding: 2rem 1rem;
+      font-size: 0.9rem;
+      letter-spacing: 0.05em;
+      user-select: none;
+      transition: background-color 0.5s ease, color 0.5s ease;
+      border-top: 1px solid transparent; 
+    }
+    body.dark footer {
+        border-top: 1px solid var(--header-border); 
+    }
+
+    #theme-toggle {
+      background: none;
+      border: 1px solid var(--text-color);
+      color: var(--text-color);
+      padding: 0.5rem 0.8rem;
+      margin-left: 3rem;
+      font-size: 1rem; 
+      cursor: pointer;
+      border-radius: 5px;
+      transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+      text-transform: uppercase; 
+      letter-spacing: 0.1em;
+    }
+    #theme-toggle:hover {
+      background-color: var(--accent-color);
+      color: var(--bg-color); 
+      border-color: var(--accent-color);
+    }
+    body.dark #theme-toggle {
+      border-color: var(--text-color); 
+      color: var(--text-color);
+    }
+    body.dark #theme-toggle:hover {
+      background-color: var(--accent-color);
+      color: #121212; 
+      border-color: var(--accent-color);
+    }
+
+    /* Hamburger Menu Styles */
+    .nav-toggle {
+        display: none; /* Hidden by default, shown in media query */
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        padding: 0.5rem;
+        z-index: 1001; /* Above nav links */
+    }
+    .hamburger {
+        display: block;
+        position: relative;
+        width: 25px;
+        height: 3px;
+        background-color: var(--text-color);
+        transition: all 0.3s ease-in-out;
+    }
+    .hamburger::before,
+    .hamburger::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        width: 100%;
+        height: 3px;
+        background-color: var(--text-color);
+        transition: all 0.3s ease-in-out;
+    }
+    .hamburger::before {
+        top: -8px;
+    }
+    .hamburger::after {
+        bottom: -8px;
+    }
+    .nav-toggle.active .hamburger {
+        background-color: transparent; /* Middle bar disappears */
+    }
+    .nav-toggle.active .hamburger::before {
+        transform: translateY(8px) rotate(45deg);
+    }
+    .nav-toggle.active .hamburger::after {
+        transform: translateY(-8px) rotate(-45deg);
+    }
+
+    .nav-links-container {
+        display: flex;
+        align-items: center;
+    } 
+
+    /* Car Detail Page Specific Styles */
+    .car-detail-hero {
+      position: relative;
+      height: 70vh; 
+      background-color: #1a1a1a; 
+      /* background-size: cover; */ /* No longer needed directly here */
+      /* background-position: center; */ /* No longer needed directly here */
+      display: flex;
+      flex-direction: column; 
+      align-items: center;
+      justify-content: center; 
+      text-align: center;
+      color: #fff; 
+      overflow: hidden; 
+    }
+
+    .hero-video-background {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        z-index: 0; /* Ensure video is in the background */
+    }
+    .hero-video-background video {
+        width: 100%;
+        height: 100%;
+        object-fit: cover; /* Cover the area, cropping if necessary */
+    }
+
+    @keyframes slideInUpFade {
+      from {
+        opacity: 0;
+        transform: translate(-50%, 30px); /* Start slightly lower */
+      }
+      to {
+        opacity: 1;
+        transform: translate(-50%, 0); /* End at original position */
+      }
+    }
+
+    .car-detail-hero .hero-car-name {
+        font-family: 'Didot', serif; 
+        font-size: 6rem; 
+        font-weight: bold;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        color: #fff; 
+        text-shadow: 2px 2px 8px rgba(0,0,0,0.7); 
+        position: relative; 
+        z-index: 2; /* Ensure name is above video and potentially car image if stacking changes */
+    }
+    .car-detail-hero .hero-car-image {
+        position: absolute;
+        bottom: 0; 
+        left: 50%;
+        transform: translateX(-50%);
+        max-width: 85%; 
+        max-height: 85%; 
+        z-index: 1; /* Ensure car image is above video */
+        object-fit: contain; 
+        animation: slideInUpFade 1s ease-out 0.3s backwards;
+    }
+
+    .car-info-section {
+        padding: 3rem 2rem;
+        max-width: 1100px;
+        margin: 0 auto;
+        text-align: center;
+    }
+    .car-info-section .model-name-main {
+        font-family: 'Didot', serif;
+        font-size: 3.8rem; /* Slightly larger for Chiron */
+        color: var(--text-color);
+        margin-bottom: 0.5rem;
+    }
+    .car-info-section .model-subtitle {
+        font-family: 'Montserrat', sans-serif;
+        font-size: 1.3rem; /* Slightly larger */
+        color: var(--text-color);
+        opacity: 0.8;
+        margin-bottom: 0.5rem;
+    }
+    .car-info-section .model-price {
+        font-family: 'Montserrat', sans-serif;
+        font-size: 2rem; /* Larger for higher price point */
+        font-weight: bold;
+        color: var(--accent-color);
+        margin-bottom: 2rem;
+    }
+    /* Variant filters removed for Chiron */
+
+    .key-specs-section {
+        display: flex;
+        justify-content: space-around;
+        align-items: flex-start;
+        padding: 2rem 0 3rem;
+        border-top: 1px solid var(--card-border);
+        border-bottom: 1px solid var(--card-border);
+        margin-bottom: 3rem;
+    }
+    .spec-item {
+        text-align: center;
+    }
+    .spec-item .spec-value {
+        font-family: 'Didot', serif; 
+        font-size: 3.2rem; /* Slightly larger for impressive specs */
+        font-weight: bold;
+        color: var(--text-color);
+        line-height: 1;
+    }
+    .spec-item .spec-label {
+        font-family: 'Montserrat', sans-serif;
+        font-size: 0.9rem;
+        color: var(--text-color);
+        opacity: 0.8;
+        margin-top: 0.5rem;
+    }
+
+    .btn-all-specs {
+      font-family: 'Montserrat', sans-serif;
+      border: 1px solid var(--text-color);
+      color: var(--text-color);
+      background: transparent;
+      padding: 0.8rem 2rem;
+      text-decoration: none;
+      border-radius: 5px;
+      transition: all 0.3s ease;
+      display: inline-block;
+      margin-bottom: 3rem;
+    }
+    .btn-all-specs:hover {
+        background-color: var(--text-color);
+        color: var(--bg-color);
+    }
+
+    /* Wireframe-like detail section */
+    .product-detail-wireframe {
+        display: flex;
+        gap: 2rem;
+        padding: 2rem 0;
+        margin-bottom: 3rem;
+        max-width: 1200px; 
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .product-detail-wireframe .main-image-container {
+        flex: 0 0 60%;
+        background-color: var(--card-bg); 
+        min-height: 400px; 
+        display: flex; align-items: center; justify-content: center;
+        overflow: hidden; 
+    }
+    .product-detail-wireframe .main-image-container img {
+        width: 100%; 
+        height: 100%; 
+        object-fit: cover; 
+    }
+    .product-detail-wireframe .info-column {
+        flex: 0 0 35%;
+        display: flex; flex-direction: column;
+    }
+    .info-column .product-title-wf {
+        font-family: 'Didot', serif;
+        font-size: 2.8rem; margin-bottom: 0.5rem; color: var(--text-color); /* Larger title */
+    }
+    .info-column .product-desc-wf {
+        font-size: 1rem; margin-bottom: 1rem; color: var(--text-color); opacity: 0.8;
+    }
+    .info-column .product-price-wf {
+        font-size: 2rem; font-weight: bold; color: var(--accent-color); margin-bottom: 1.5rem; /* Larger price */
+    }
+    .info-column .btn-add-to-cart-wf {
+      font-family: 'Montserrat', sans-serif;
+      background-color: var(--button-primary-bg);
+      color: var(--button-primary-text);
+      border: none;
+      padding: 1rem 1.5rem;
+      font-size: 1rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      text-decoration: none;
+      text-align: center;
+      width: 100%;
+    }
+    .info-column .btn-add-to-cart-wf:hover {
+      background-color: var(--button-primary-hover-bg);
+    }
+    body.dark .info-column .btn-add-to-cart-wf { color: #121212;}
+
+    .thumbnail-gallery {
+        display: flex; gap: 1rem; margin-top: 2rem; margin-bottom:2rem; justify-content: center;
+    }
+    .thumbnail-gallery .thumb {
+        width: 100px; 
+        height: 75px; 
+        background-color: var(--card-bg); 
+        border: 1px solid var(--card-border); 
+        cursor: pointer; 
+        display: flex; 
+        align-items: center; 
+        justify-content: center; 
+        overflow:hidden;
+        transition: border-color 0.3s ease;
+    }
+    .thumbnail-gallery .thumb:hover {
+        border-color: var(--accent-color);
+    }
+    .thumbnail-gallery .thumb img {
+        width:100%; 
+        height:100%; 
+        object-fit:cover; 
+    }
+
+    .specs-bar-wf {
+        display: flex; justify-content: space-around; background-color: var(--card-bg); 
+        padding: 1.5rem 1rem; border-radius: 8px; border: 1px solid var(--card-border); margin-top:2rem;
+    }
+    .specs-bar-wf .spec-col {
+        text-align: center;
+    }
+    .specs-bar-wf .spec-col .spec-label-wf { font-size: 0.9rem; color: var(--text-color); opacity: 0.7; margin-bottom: 0.3rem; text-transform:uppercase; letter-spacing: 0.05em;}
+    .specs-bar-wf .spec-col .spec-value-wf { font-size: 1.1rem; font-weight: bold; color: var(--text-color);}
+
+    /* Responsive adjustments */
+    @media (max-width: 1024px) { /* Tablet and smaller */
+        header {
+            padding: 1rem 2rem;
+        }
+        .logo {
+            font-size: 2rem;
+        }
+        /* Nav links container adjustments for tablet, before full collapse */
+        .nav-links-container a {
+            margin-left: 1.5rem;
+            font-size: 0.9rem;
+        }
+        .nav-links-container #theme-toggle {
+            margin-left: 1.5rem;
+            font-size: 0.9rem;
+        }
+        .car-detail-hero .hero-car-name {
+            font-size: 5rem;
+        }
+        .car-info-section .model-name-main {
+            font-size: 3rem;
+        }
+        .car-info-section .model-subtitle {
+            font-size: 1.1rem;
+        }
+        .car-info-section .model-price {
+            font-size: 1.8rem;
+        }
+        .key-specs-section .spec-item .spec-value {
+            font-size: 2.5rem;
+        }
+        .product-detail-wireframe {
+            flex-direction: column;
+            align-items: center;
+        }
+        .product-detail-wireframe .main-image-container,
+        .product-detail-wireframe .info-column {
+            flex: 0 0 90%; /* Allow them to take more width when stacked */
+            max-width: 600px; /* Cap max width for very wide stacked items */
+        }
+        .info-column .product-title-wf {
+            font-size: 2.2rem;
+        }
+    }
+
+    @media (max-width: 768px) { /* Smaller tablets / Large phones - Hamburger appears */
+        .nav-toggle {
+            display: block; /* Show hamburger */
+        }
+        header {
+            justify-content: space-between; /* Ensure logo and toggle are spaced */
+            align-items: center; /* Vertically align logo and toggle */
+        }
+        .nav-links-container {
+            position: absolute;
+            top: 100%; /* Position below header */
+            left: 0;
+            right: 0;
+            background-color: var(--header-bg);
+            flex-direction: column;
+            align-items: center;
+            padding: 1rem 0;
+            border-top: 1px solid var(--header-border);
+            transform: translateY(-150%); /* Off-screen initially */
+            transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+            opacity: 0;
+            pointer-events: none;
+            z-index: 1000; /* Below toggle but above content */
+        }
+        .nav-links-container.active {
+            transform: translateY(0);
+            opacity: 1;
+            pointer-events: auto;
+        }
+        .nav-links-container a {
+            margin: 1rem 0;
+            font-size: 1.1rem; /* Make links a bit larger for touch */
+        }
+        .nav-links-container #theme-toggle {
+            margin: 1rem 0;
+        }
+
+        .car-detail-hero {
+            height: 50vh;
+        }
+        .car-detail-hero .hero-car-name {
+            font-size: 3.5rem;
+        }
+        .car-detail-hero .hero-car-image {
+            max-width: 80%;
+            max-height: 80%;
+        }
+        .key-specs-section {
+            flex-direction: column;
+            align-items: center;
+            gap: 1.5rem;
+        }
+        .specs-bar-wf {
+            flex-direction: column;
+            gap: 1rem;
+        }
+        .specs-bar-wf .spec-col {
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--card-border);
+        }
+        .specs-bar-wf .spec-col:last-child {
+            border-bottom: none;
+        }
+        .thumbnail-gallery {
+            flex-wrap: wrap; /* Allow thumbnails to wrap */
+            justify-content: flex-start;
+        }
+        .thumbnail-gallery .thumb {
+            width: 80px;
+            height: 60px;
+        }
+    }
+
+    @media (max-width: 480px) { /* Mobile phones */
+        header {
+            padding: 1rem 1rem; /* Less padding */
+            flex-direction: row; /* Keep logo and hamburger on one line */
+            /* align-items will be handled by justify-content: space-between */
+        }
+        /* Remove previous mobile header/nav specific stacking as hamburger handles it */
+        .logo {
+            margin-bottom: 0; /* Reset from previous mobile style */
+        }
+        /* .nav-links-container styles for mobile are handled by 768px breakpoint now */
+        /* nav a and #theme-toggle specific styles for mobile inside .nav-links-container are also handled */
+
+        .car-detail-hero .hero-car-name {
+            font-size: 2.5rem;
+        }
+        .car-info-section .model-name-main {
+            font-size: 2.2rem;
+        }
+        .car-info-section .model-subtitle {
+            font-size: 1rem;
+        }
+        .car-info-section .model-price {
+            font-size: 1.5rem;
+        }
+        .info-column .product-title-wf {
+            font-size: 1.8rem;
+        }
+        .info-column .product-price-wf {
+            font-size: 1.6rem;
+        }
+         .btn-all-specs,
+        .info-column .btn-add-to-cart-wf {
+            padding: 0.8rem 1.5rem;
+            font-size: 0.9rem;
+        }
+    }
+
+    /* Styles for Nieuwe Sectie: Technisch Ontwerp (Copied from Porsche) */
+    .technical-design-section {
+      padding: 3rem 2rem;
+      max-width: 1200px;
+      margin: 3rem auto 6rem;
+      border-top: 1px solid var(--card-border);
+      border-bottom: 1px solid var(--card-border);
+    }
+    .technical-design-section .section-title {
+      font-family: 'Didot', serif;
+      font-size: 2.8rem;
+      color: var(--text-color);
+      text-align: center;
+      margin-bottom: 3rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+    .technical-specs-split {
+      display: flex;
+      align-items: center;
+      gap: 3rem;
+      margin-bottom: 4rem;
+    }
+    .specs-column {
+      flex: 1 1 40%;
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+    .spec-item-large .spec-value-large {
+      font-family: 'Didot', serif;
+      font-size: 4rem;
+      font-weight: normal;
+      color: var(--text-color);
+      line-height: 1;
+      display: inline;
+    }
+    .spec-item-large .spec-unit-small {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.8rem;
+      font-weight: normal;
+      color: var(--text-color);
+      opacity: 0.9;
+      margin-left: 0.2em;
+    }
+    .spec-item-large .spec-label-large {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.9rem;
+      color: var(--text-color);
+      opacity: 0.8;
+      margin-top: 0.3rem;
+      line-height: 1.4;
+    }
+    .spec-note {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.8rem;
+      color: var(--text-color);
+      opacity: 0.7;
+      margin-top: 1rem;
+    }
+    .spec-note a {
+      color: var(--accent-color);
+      text-decoration: underline;
+    }
+    .image-column-split {
+      flex: 1 1 55%;
+      text-align: right;
+    }
+    .image-column-split img {
+      max-width: 100%;
+      height: auto;
+      object-fit: contain;
+    }
+    .overfeel-section {
+      display: flex;
+      align-items: center;
+      gap: 3rem;
+      padding-top: 3rem;
+      border-top: 1px solid var(--card-border);
+      margin-top: 3rem;
+    }
+    .overfeel-text-content {
+      flex: 1 1 45%;
+    }
+    .overfeel-title {
+      font-family: 'Didot', serif;
+      font-size: 3.5rem;
+      color: var(--text-color);
+      margin-bottom: 1.5rem;
+    }
+    .overfeel-description {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.1rem;
+      line-height: 1.7;
+      color: var(--text-color);
+      opacity: 0.85;
+      max-width: 500px;
+    }
+    .overfeel-images-container {
+      flex: 1 1 50%;
+      position: relative;
+      top: -1.5rem; /* Keep adjustment from Porsche */
+      min-height: 450px;
+    }
+    .overfeel-images-container img {
+      position: absolute;
+      border: 5px solid var(--bg-color);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+      border-radius: 8px;
+      transition: transform 0.3s ease;
+    }
+    .overfeel-images-container img:hover {
+        transform: scale(1.03);
+    }
+    .overfeel-image-1 {
+      width: 70%;
+      top: 0;
+      left: 0;
+      z-index: 1;
+    }
+    .overfeel-image-2 {
+      width: 60%;
+      bottom: 0;
+      right: 0;
+      z-index: 2;
+    }
+    /* Responsive adjustments for the new section (Copied from Porsche) */
+    @media (max-width: 992px) { 
+      .technical-specs-split, .overfeel-section {
+        flex-direction: column;
+        text-align: center;
+      }
+      .specs-column, .image-column-split, .overfeel-text-content, .overfeel-images-container {
+        flex: 1 1 100%;
+        text-align: center;
+      }
+      .image-column-split img {
+          margin: 0 auto;
+      }
+      .overfeel-images-container {
+        margin-top: 2rem;
+        min-height: 300px;
+      }
+      .overfeel-images-container img { 
+          position: relative;
+          display: block;
+          margin: 0 auto 1rem;
+          width: 80%;
+      }
+       .overfeel-image-1, .overfeel-image-2 {
+        top: auto; left: auto; bottom:auto; right:auto;
+      }
+      /* Retain existing 992px rules for .technical-design-section title if needed, 
+         or ensure they are covered by the Porsche copied rules for smaller screens */
+    }
+    /* Retain existing 768px and 576px rules specific to Chiron for .technical-design-section elements
+       or ensure the Porsche ones are sufficient and don't conflict badly. */
+    /* For example, if Porsche's .spec-item-large .spec-value-large font sizes for 768/576 are different, 
+       decide if we override or let them be. Assuming Porsche ones take precedence if not specified here for Chiron. */
+     @media (max-width: 768px) {
+       .technical-design-section .section-title {
+        /* Font size from Porsche rule: font-size: 2.2rem; */
+      }
+      .spec-item-large .spec-value-large {
+        /* Font size from Porsche rule: font-size: 2.5rem; */
+      }
+       .spec-item-large .spec-unit-small {
+        /* Font size from Porsche rule: font-size: 1.3rem; */
+      }
+      .overfeel-title {
+        /* Font size from Porsche rule: font-size: 2.8rem; */
+      }
+      .overfeel-description {
+        /* Font size from Porsche rule: font-size: 1rem; */
+      }
+    }
+    @media (max-width: 576px) {
+        .technical-design-section .section-title {
+            /* Font size from Porsche: font-size: 1.8rem; */
+        }
+        .spec-item-large .spec-value-large {
+            /* Font size from Porsche: font-size: 2rem; */
+        }
+        .spec-item-large .spec-unit-small {
+            /* Font size from Porsche: font-size: 1.1rem; */
+        }
+        .overfeel-title {
+            /* Font size from Porsche: font-size: 2.2rem; */
+        }
+        .overfeel-description {
+            /* Font size from Porsche: font-size: 0.9rem; */
+        }
+    }
+
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="logo">THE VAULT</div>
+  <button class="nav-toggle" aria-label="toggle navigation">
+    <span class="hamburger"></span>
+  </button>
+  <nav class="nav-links-container">
+    <a href="../Rest/index.html">Home</a>
+    <a href="../Rest/categorieën.html">Categorieën</a>
+    <a href="../auto's/autos.html">Auto's</a>
+    <a href="../jachten/jachten.html">Jachten</a>
+    <a href="../Rest/cart.html">Account</a>
+    <button id="theme-toggle" aria-label="Toggle dark mode">🌙</button>
+  </nav>
+</header>
+
+<main class="content-wrapper">
+  <!-- Hero Section -->
+  <section class="car-detail-hero">
+    <div class="hero-video-background">
+      <video autoplay loop muted playsinline poster="../images/bugatti_chiron_hero_bg.jpg"> 
+        <source src="../Videos/BUGATTI.mp4" type="video/mp4">
+        <!-- <source src="../videos/bugatti_video.webm" type="video/webm"> -->
+        Your browser does not support the video tag.
+      </video>
+    </div>
+    <h1 class="hero-car-name">Chiron</h1>
+    <img src="../images/auto's/bugatti.jpg" alt="Bugatti Chiron" class="hero-car-image">
+  </section>
+
+  <!-- Info Section -->
+  <section class="car-info-section">
+    <h2 class="model-name-main">Bugatti Chiron</h2>
+    <p class="model-subtitle">Hypercar Vakmanschap</p>
+    <p class="model-price">Vanaf € 2.400.000</p>
+    <!-- Variant Filters removed for Chiron -->
+  </section>
+
+  <!-- Wireframe Detail Section -->
+  <section class="product-detail-wireframe">
+    <div class="main-image-container">
+        <img src="../images/auto's/bugatticar1.jpg" alt="Bugatti Chiron Studio Shot" id="mainProductImage"> 
+    </div>
+    <div class="info-column">
+        <h3 class="product-title-wf">Bugatti Chiron</h3>
+        <p class="product-desc-wf">De Bugatti Chiron is de krachtigste, snelste en meest exclusieve productie supersportwagen in de geschiedenis van Bugatti. Zijn geavanceerde technologie, baanbrekend design en prestatiegerichte prestaties maken het een meesterwerk van autotechniek.</p>
+        <p class="product-price-wf">vanaf € 2.400.000</p>
+        <a href="../Rest/cart.html" class="btn-add-to-cart-wf">Interesse tonen</a>
+        <div class="thumbnail-gallery">
+            <div class="thumb"><img src="../images/auto's/bugatticar.jpg" alt="Chiron Thumbnail 1"></div>
+            <div class="thumb"><img src="../images/auto's/bugatticar1.jpg" alt="Chiron Thumbnail 2"></div>
+            <div class="thumb"><img src="../images/auto's/bugatticar2.jpg" alt="Chiron Thumbnail 3"></div>
+            <div class="thumb">+5</div>
+        </div>
+    </div>
+  </section>
+
+
+  <!-- Nieuwe Sectie: Technisch Ontwerp (Bugatti Version) -->
+  <section class="technical-design-section car-info-section animate-on-scroll">
+    <h2 class="section-title">Technisch Meesterwerk</h2>
+
+    <!-- Part 1: Specs & Front Car Image -->
+    <div class="technical-specs-split">
+      <div class="specs-column">
+        <div class="spec-item-large">
+          <div class="spec-value-large">&lt;2,3 <span class="spec-unit-small">s</span></div>
+          <div class="spec-label-large">Acceleratie 0 - 100 km/h</div>
+        </div>
+        <div class="spec-item-large">
+          <div class="spec-value-large">1600 <span class="spec-unit-small">PK</span></div>
+          <div class="spec-label-large">Maximaal Vermogen (hp)</div>
+        </div>
+        <div class="spec-item-large">
+          <div class="spec-value-large">490+ <span class="spec-unit-small">km/h</span></div>
+          <div class="spec-label-large">Topsnelheid (Super Sport 300+)</div>
+        </div>
+        <p class="spec-note">Prestatiecijfers kunnen variëren per modelvariant.</p>
+      </div>
+      <div class="image-column-split">
+        <img src="../images/auto's/bugattiV.png" alt="Bugatti Chiron Technisch Ontwerp Voorkant">
+      </div>
+    </div>
+
+    <!-- Part 2: Overlapping Images & Info (Bugatti Version) -->
+    <div class="overfeel-section">
+      <div class="overfeel-text-content">
+        <h3 class="overfeel-title">Ongeëvenaard.</h3>
+        <p class="overfeel-description">
+          De Chiron belichaamt de essentie van Bugatti: een fusie van adembenemende snelheid, tijdloze elegantie en pure kracht. Elk detail is een bewijs van compromisloos vakmanschap.
+        </p>
+      </div>
+      <div class="overfeel-images-container">
+        <img src="../images/auto's/Bugattioverlap1.jpeg" alt="Bugatti Chiron Ervaring afbeelding 1" class="overfeel-image-1">
+        <img src="../images/auto's/Bugattieoverlap.jpeg" alt="Bugatti Chiron Ervaring afbeelding 2" class="overfeel-image-2">
+      </div>
+    </div>
+  </section>
+  <!-- Einde Nieuwe Sectie -->
+
+</main>
+
+<footer>
+  &copy; 2025 The Vault — Alle rechten voorbehouden.
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+  // Dark Mode Toggle Script
+  const themeToggle = document.getElementById('theme-toggle');
+  const currentTheme = localStorage.getItem('theme');
+
+  if (currentTheme) {
+    document.body.classList.add(currentTheme);
+    if (currentTheme === 'dark') {
+        themeToggle.textContent = '☀️'; 
+    } else {
+        themeToggle.textContent = '🌙';
+    }
+  } else {
+    themeToggle.textContent = '🌙';
+  }
+
+  themeToggle.addEventListener('click', () => {
+    document.body.classList.toggle('dark');
+    let theme = 'light';
+    if (document.body.classList.contains('dark')) {
+      theme = 'dark';
+      themeToggle.textContent = '☀️'; 
+    } else {
+      themeToggle.textContent = '🌙'; 
+    }
+    localStorage.setItem('theme', theme);
+  });
+
+  // Thumbnail click to change main image
+  const mainImage = document.getElementById('mainProductImage');
+  const thumbnails = document.querySelectorAll('.thumbnail-gallery .thumb img');
+
+  thumbnails.forEach(thumb => {
+    thumb.addEventListener('click', function() {
+      mainImage.src = this.src;
+      mainImage.alt = this.alt; 
+    });
+  });
+
+  // Hamburger Menu Toggle Script
+  const navToggle = document.querySelector('.nav-toggle');
+  const navLinksContainer = document.querySelector('.nav-links-container');
+
+  if (navToggle && navLinksContainer) {
+    navToggle.addEventListener('click', () => {
+      navToggle.classList.toggle('active');
+      navLinksContainer.classList.toggle('active');
+    });
+  }
+
+</script>
+
+</body>
+</html>

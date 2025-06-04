@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>The Vault - Omega-Seamaster Details</title>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Didot&family=Montserrat:wght@400;700&display=swap" rel="stylesheet" />
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+  <style>
+    /* Copied from horloges.html - CSS custom properties */
+    :root {
+      --bg-light: #f8f9fa;
+      --bg-dark: #121212;
+      --text-light: #111;
+      --text-dark: #eee;
+      --accent-light: #bfa14a;
+      --accent-dark: #d4af37;
+      --accent-hover-light: #9a7f36;
+      --accent-hover-dark: #a5820a;
+      --card-bg-light: #fff;
+      --card-bg-dark: #1f1f1f;
+      --border-light: #e9ecef;
+      --border-dark: #333;
+      --header-bg-light: #fff;
+      --header-bg-dark: #1c1c1c;
+      --header-border-light: #e0e0e0;
+      --header-border-dark: #333;
+      --footer-bg-light: #111;
+      --footer-bg-dark: #1c1c1c;
+      --footer-text-light: #ccc;
+      --footer-text-dark: #ccc;
+    }
+    body.dark {
+      --bg-color: #121212;
+      --text-color: #eee;
+      --accent-color: #d4af37;
+      --accent-hover: #a5820a;
+      --header-bg: #1c1c1c;
+      --header-border: #333;
+      --footer-bg: #1c1c1c; 
+      --footer-text: #ccc;
+      --card-bg: #1f1f1f;
+      --card-border: #333;
+      --button-primary-bg: var(--accent-color);
+      --button-primary-text: #121212; 
+      --button-primary-hover-bg: var(--accent-hover);
+    }
+    html {
+      height: 100%;
+    }
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      margin: 0;
+      padding: 0;
+      transition: background-color 0.5s ease, color 0.5s ease;
+      display: flex; 
+      flex-direction: column; 
+      min-height: 100vh;
+    }
+
+    main.content-wrapper {
+      flex-grow: 1;
+      padding-top: 2rem; /* Add some space below sticky header */
+    }
+
+    header { /* Copied from horloges.html */
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.5rem 4rem;
+      background-color: var(--header-bg);
+      border-bottom: 1px solid var(--header-border);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      transition: background-color 0.5s ease, border-color 0.5s ease;
+    }
+    .logo {
+      font-family: 'Didot', serif;
+      font-size: 2.5rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      color: inherit;
+      user-select: none;
+      text-transform: uppercase;
+      cursor: default;
+      transition: color 0.4s ease;
+    }
+    nav a {
+      color: inherit;
+      text-decoration: none;
+      font-weight: 500;
+      margin-left: 3rem;
+      font-size: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      position: relative;
+      transition: color 0.3s ease;
+    }
+    nav a::after {
+      content: '';
+      position: absolute;
+      width: 0%;
+      height: 2px;
+      bottom: -4px;
+      left: 0;
+      background-color: var(--accent-light);
+      transition: width 0.3s ease;
+    }
+    nav a:hover::after {
+      width: 100%;
+    }
+    body.dark nav a::after {
+      background-color: var(--accent-dark);
+    }
+    nav a:hover {
+      color: var(--accent-light);
+    }
+    body.dark nav a:hover {
+      color: var(--accent-dark);
+    }
+    #theme-toggle {
+      background: none;
+      border: 1px solid currentColor;
+      color: inherit;
+      padding: 0.5rem 0.8rem;
+      margin-left: 3rem;
+      font-size: 1rem;
+      cursor: pointer;
+      border-radius: 5px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      transition: background-color 0.3s ease, color 0.3s ease;
+      user-select: none;
+    }
+    #theme-toggle:hover {
+      background-color: var(--accent-light);
+      color: var(--bg-light);
+      border-color: var(--accent-light);
+    }
+    body.dark #theme-toggle:hover {
+      background-color: var(--accent-dark);
+      color: var(--bg-dark);
+      border-color: var(--accent-dark);
+    }
+    .nav-toggle {
+        display: none; 
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        padding: 0.5rem;
+        z-index: 1001;
+    }
+    .hamburger {
+        display: block;
+        position: relative;
+        width: 25px;
+        height: 3px;
+        background-color: var(--text-color);
+        transition: all 0.3s ease-in-out;
+    }
+    .hamburger::before,
+    .hamburger::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        width: 100%;
+        height: 3px;
+        background-color: var(--text-color);
+        transition: all 0.3s ease-in-out;
+    }
+    .hamburger::before {
+        top: -8px;
+    }
+    .hamburger::after {
+        bottom: -8px;
+    }
+    .nav-toggle.active .hamburger {
+        background-color: transparent;
+    }
+    .nav-toggle.active .hamburger::before {
+        transform: translateY(8px) rotate(45deg);
+    }
+    .nav-toggle.active .hamburger::after {
+        transform: translateY(-8px) rotate(-45deg);
+    }
+    .nav-links-container {
+        display: flex;
+        align-items: center;
+    }
+
+    /* Watch Detail Page Specific Styles */
+    .watch-detail-container {
+        max-width: 1200px;
+        margin: 2rem auto;
+        padding: 2rem;
+        background-color: var(--card-bg);
+        border-radius: 8px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+    }
+    body.dark .watch-detail-container {
+        box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    }
+
+    .watch-detail-grid {
+        display: grid;
+        grid-template-columns: 1fr; /* Single column for mobile */
+        gap: 2rem;
+    }
+
+    .watch-name-hero {
+        font-family: 'Didot', serif;
+        font-size: 3.5rem;
+        color: var(--text-color);
+        text-align: center;
+        margin-bottom: 2rem;
+    }
+    
+    .watch-primary-image-container {
+        text-align: center;
+        margin-bottom: 1rem;
+    }
+    .watch-primary-image {
+        max-width: 100%;
+        max-height: 500px;
+        height: auto;
+        object-fit: contain;
+        border-radius: 8px;
+        border: 1px solid var(--card-border);
+    }
+
+    .watch-description {
+        font-size: 1.1rem;
+        line-height: 1.7;
+        margin-bottom: 2rem;
+        color: var(--text-color);
+        opacity: 0.9;
+    }
+
+    .watch-specs-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 2rem;
+    }
+    .watch-specs-table th, .watch-specs-table td {
+        padding: 0.75rem 1rem;
+        text-align: left;
+        border-bottom: 1px solid var(--card-border);
+    }
+    .watch-specs-table th {
+        font-weight: 700;
+        width: 30%;
+        color: var(--text-color);
+    }
+    .watch-specs-table td {
+        color: var(--text-color);
+        opacity: 0.85;
+    }
+    body.dark .watch-specs-table td {
+        opacity: 1;
+    }
+
+    .watch-price {
+        font-family: 'Montserrat', sans-serif;
+        font-size: 2rem;
+        font-weight: bold;
+        color: var(--accent-color);
+        margin-bottom: 1.5rem;
+        text-align: right;
+    }
+
+    .btn-add-to-cart-detail {
+      font-family: 'Montserrat', sans-serif;
+      background-color: var(--button-primary-bg);
+      color: var(--button-primary-text);
+      border: none;
+      padding: 1rem 2rem;
+      font-size: 1rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
+      text-decoration: none;
+      display: block; /* Make it full width in its container */
+      width: 100%;
+      text-align: center;
+    }
+    .btn-add-to-cart-detail:hover {
+      background-color: var(--button-primary-hover-bg);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    }
+    body.dark .btn-add-to-cart-detail {
+        color: #121212;
+    }
+
+    footer { /* Copied from horloges.html */
+      background-color: var(--footer-bg);
+      color: var(--footer-text);
+      text-align: center;
+      padding: 2rem 1rem;
+      font-size: 0.9rem;
+      letter-spacing: 0.05em;
+      user-select: none;
+      transition: background-color 0.5s ease, color 0.5s ease;
+      border-top: 1px solid transparent; 
+    }
+    body.dark footer {
+        border-top: 1px solid var(--header-border); 
+    }
+
+    /* Responsive adjustments */
+    @media (min-width: 768px) {
+        .watch-detail-grid {
+             /* Two columns for larger screens: image/thumbs on left, info/specs on right */
+            grid-template-columns: repeat(2, 1fr);
+            align-items: flex-start; /* Align items to the top of their grid cells */
+        }
+        .watch-image-column {
+            position: sticky; /* Make image column sticky */
+            top: calc(1.5rem + 70px); /* header padding + approx header height + some space */
+            max-height: calc(100vh - 100px); /* Prevent it from overlapping footer */
+        }
+        .watch-name-hero {
+            grid-column: 1 / -1; /* Span full width */
+            text-align: left;
+        }
+        .watch-info-column {
+            /* Stays in flow */
+        }
+    }
+
+    @media (max-width: 1024px) { /* Tablet and smaller - already in horloges.html */
+        header { padding: 1rem 2rem; }
+        .logo { font-size: 2rem; }
+        .nav-links-container a { margin-left: 1.5rem; font-size: 0.9rem; }
+        .nav-links-container #theme-toggle { margin-left: 1.5rem; font-size: 0.9rem; }
+        .watch-name-hero { font-size: 2.8rem; }
+    }
+
+    @media (max-width: 768px) { /* Smaller tablets / Large phones - Hamburger appears */
+        .nav-toggle { display: block; }
+        header { justify-content: space-between; align-items: center; }
+        .nav-links-container {
+            position: absolute; top: 100%; left: 0; right: 0;
+            background-color: var(--header-bg);
+            flex-direction: column; align-items: center; padding: 1rem 0;
+            border-top: 1px solid var(--header-border);
+            transform: translateY(-150%);
+            transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+            opacity: 0; pointer-events: none; z-index: 1000;
+        }
+        .nav-links-container.active { transform: translateY(0); opacity: 1; pointer-events: auto; }
+        .nav-links-container a { margin: 1rem 0; font-size: 1.1rem; }
+        .nav-links-container #theme-toggle { margin: 1rem 0; }
+        .watch-name-hero { font-size: 2.2rem; text-align: center; }
+        .watch-price { text-align: center; }
+    }
+
+    @media (max-width: 480px) { /* Mobile phones */
+        header { padding: 1rem 1rem; flex-direction: row; }
+        .logo { margin-bottom: 0; font-size: 1.8rem; }
+        .watch-detail-container { padding: 1rem; margin: 1rem auto; }
+        .watch-name-hero { font-size: 2rem; }
+        .watch-specs-table th, .watch-specs-table td { padding: 0.5rem; }
+    }
+
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="logo">THE VAULT</div>
+    <button class="nav-toggle" aria-label="toggle navigation">
+      <span class="hamburger"></span>
+    </button>
+    <nav class="nav-links-container">
+      <a href="../Rest/index.html">Home</a>
+      <a href="../Rest/categorieën.html">Categorieën</a>
+      <a href="horloges.html">Horloges</a>
+      <a href="../jachten/jachten.html">Jachten</a>
+      <a href="../Rest/cart.html">Account</a>
+      <button id="theme-toggle" aria-label="Toggle dark mode">🌙</button>
+    </nav>
+  </header>
+
+<main class="content-wrapper">
+  <div class="watch-detail-container">
+    <h1 class="watch-name-hero">Omega-Seamaster</h1>
+    <div class="watch-detail-grid">
+      <div class="watch-image-column">
+        <div class="watch-primary-image-container">
+          <img src="../images/horloge2.jpg" alt="Omega-Seamaster Horloge - Hoofdafbeelding" class="watch-primary-image" id="mainWatchImage">
+        </div>
+      </div>
+
+      <div class="watch-info-column">
+        <p class="watch-description">
+          Dit is een placeholder beschrijving voor het Omega-Seamaster horloge. Vertrouwen uitdragen met elegantie. Gemaakt voor de veeleisende connaisseur die zowel stijl als functionaliteit waardeert. Elk detail is zorgvuldig overwogen om een horloge te creëren dat generaties lang meegaat.
+        </p>
+        
+        <h3>Specificaties</h3>
+        <table class="watch-specs-table">
+          <tbody>
+            <tr>
+              <th>Model:</th>
+              <td>Omega-Seamaster XYZ-002</td>
+            </tr>
+            <tr>
+              <th>Referentienummer:</th>
+              <td>OMG002-S</td>
+            </tr>
+            <tr>
+              <th>Uurwerk:</th>
+              <td>Automatisch, Kaliber Co-Axial</td>
+            </tr>
+            <tr>
+              <th>Gangreserve:</th>
+              <td>Ca. 55 uur</td>
+            </tr>
+            <tr>
+              <th>Materiaal Kast:</th>
+              <td>Edelstaal & Sedna™ Goud</td>
+            </tr>
+            <tr>
+              <th>Diameter Kast:</th>
+              <td>42 mm</td>
+            </tr>
+            <tr>
+              <th>Dikte Kast:</th>
+              <td>13 mm</td>
+            </tr>
+            <tr>
+              <th>Waterdichtheid:</th>
+              <td>300 meter / 1000 voet</td>
+            </tr>
+            <tr>
+              <th>Glas:</th>
+              <td>Saffierkristal, krasbestendig</td>
+            </tr>
+            <tr>
+              <th>Wijzerplaat:</th>
+              <td>Blauw, met golfpatroon</td>
+            </tr>
+            <tr>
+              <th>Band:</th>
+              <td>Rubberen band</td>
+            </tr>
+            <tr>
+              <th>Functies:</th>
+              <td>Uren, minuten, seconden, datum, Heliumuitlaatventiel</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <p class="watch-price">€ 7.800,-</p>
+        <a href="../Rest/cart.html" class="btn-add-to-cart-detail">Toevoegen aan winkelwagen</a>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer>
+  &copy; 2025 The Vault — Alle rechten voorbehouden.
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+  // Dark Mode Toggle Script (copied from horloges.html)
+  const themeToggle = document.getElementById('theme-toggle');
+  const currentTheme = localStorage.getItem('theme');
+
+  if (currentTheme) {
+    document.body.classList.add(currentTheme);
+    if (currentTheme === 'dark') {
+        themeToggle.textContent = '☀️'; 
+    } else {
+        themeToggle.textContent = '🌙';
+    }
+  } else {
+    themeToggle.textContent = '🌙';
+  }
+
+  themeToggle.addEventListener('click', () => {
+    document.body.classList.toggle('dark');
+    let theme = 'light';
+    if (document.body.classList.contains('dark')) {
+      theme = 'dark';
+      themeToggle.textContent = '☀️'; 
+    } else {
+      themeToggle.textContent = '🌙'; 
+    }
+    localStorage.setItem('theme', theme);
+  });
+
+  // Hamburger Menu Toggle Script (copied from horloges.html)
+  const navToggle = document.querySelector('.nav-toggle');
+  const navLinksContainer = document.querySelector('.nav-links-container');
+
+  if (navToggle && navLinksContainer) {
+    navToggle.addEventListener('click', () => {
+      navToggle.classList.toggle('active');
+      navLinksContainer.classList.toggle('active');
+    });
+  }
+
+  // Thumbnail click to change main image and active state
+  const mainWatchImage = document.getElementById('mainWatchImage');
+  // const thumbnails = document.querySelectorAll('.watch-thumbnail'); // No longer needed
+
+  // function changeMainImage(src) { // No longer needed
+  //   mainWatchImage.src = src;
+  //   thumbnails.forEach(thumb => {
+  //       if (thumb.querySelector('img').src === src) {
+  //           thumb.classList.add('active');
+  //       } else {
+  //           thumb.classList.remove('active');
+  //       }
+  //   });
+  // }
+  
+  // if(thumbnails.length > 0) { // No longer needed
+  //     thumbnails[0].classList.add('active');
+  // }
+
+</script>
+
+</body>
+</html> 

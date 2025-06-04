@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>The Vault - Lamborghini Urus Details</title>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Didot&family=Montserrat:wght@400;700&display=swap" rel="stylesheet" />
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+  <style>
+    /* Consistent CSS variables (copied from existing pages) */
+    :root {
+      --bg-color: #f8f9fa; 
+      --text-color: #111;
+      --accent-color: #bfa14a;
+      --accent-hover: #9a7f36;
+      --header-bg: #fff; 
+      --header-border: #e0e0e0;
+      --footer-bg: #111;
+      --footer-text: #ccc;
+      --card-bg: #fff; 
+      --card-border: #e9ecef;
+      --button-primary-bg: var(--accent-color);
+      --button-primary-text: #fff;
+      --button-primary-hover-bg: var(--accent-hover);
+    }
+    body.dark {
+      --bg-color: #121212;
+      --text-color: #eee;
+      --accent-color: #d4af37;
+      --accent-hover: #a5820a;
+      --header-bg: #1c1c1c;
+      --header-border: #333;
+      --footer-bg: #1c1c1c; 
+      --footer-text: #ccc;
+      --card-bg: #1f1f1f; 
+      --card-border: #333;
+      --button-primary-bg: var(--accent-color);
+      --button-primary-text: #121212; 
+      --button-primary-hover-bg: var(--accent-hover);
+    }
+    html {
+      height: 100%;
+    }
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      margin: 0;
+      padding: 0;
+      transition: background-color 0.5s ease, color 0.5s ease;
+      display: flex; 
+      flex-direction: column; 
+      min-height: 100vh;
+    }
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.5rem 4rem;
+      background-color: var(--header-bg);
+      border-bottom: 1px solid var(--header-border);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      transition: background-color 0.5s ease, border-color 0.5s ease;
+    }
+    .logo {
+      font-family: 'Didot', serif;
+      font-size: 2.5rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      color: var(--text-color);
+      cursor: default;
+      user-select: none;
+      text-transform: uppercase;
+      transition: color 0.5s ease;
+    }
+    nav a {
+      color: var(--text-color);
+      text-decoration: none;
+      font-weight: 500;
+      margin-left: 3rem;
+      font-size: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      transition: color 0.3s ease;
+    }
+    nav a:hover {
+      color: var(--accent-color);
+    }
+    
+    .content-wrapper {
+      flex-grow: 1; 
+      /* padding for this page will be handled by sections or specific containers */
+    }
+
+    footer {
+      background-color: var(--footer-bg);
+      color: var(--footer-text);
+      text-align: center;
+      padding: 2rem 1rem;
+      font-size: 0.9rem;
+      letter-spacing: 0.05em;
+      user-select: none;
+      transition: background-color 0.5s ease, color 0.5s ease;
+      border-top: 1px solid transparent; 
+    }
+    body.dark footer {
+        border-top: 1px solid var(--header-border); 
+    }
+
+    #theme-toggle {
+      background: none;
+      border: 1px solid var(--text-color);
+      color: var(--text-color);
+      padding: 0.5rem 0.8rem;
+      margin-left: 3rem;
+      font-size: 1rem; 
+      cursor: pointer;
+      border-radius: 5px;
+      transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+      text-transform: uppercase; 
+      letter-spacing: 0.1em;
+    }
+    #theme-toggle:hover {
+      background-color: var(--accent-color);
+      color: var(--bg-color); 
+      border-color: var(--accent-color);
+    }
+    body.dark #theme-toggle {
+      border-color: var(--text-color); 
+      color: var(--text-color);
+    }
+    body.dark #theme-toggle:hover {
+      background-color: var(--accent-color);
+      color: #121212; 
+      border-color: var(--accent-color);
+    }
+
+    /* Hamburger Menu & General Responsive Nav */
+    .nav-toggle {
+      display: none; /* Hidden by default, shown in media query */
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      padding: 0;
+      z-index: 1001; /* Above nav links container */
+      margin-left: 1.5rem; /* Space from logo or last nav item */
+    }
+    .nav-toggle span {
+      display: block;
+      width: 25px;
+      height: 3px;
+      background-color: var(--text-color);
+      margin: 5px 0;
+      transition: transform 0.3s ease, opacity 0.3s ease;
+      position: relative;
+    }
+    .nav-toggle.active span:nth-child(1) {
+      transform: translateY(8px) rotate(45deg);
+    }
+    .nav-toggle.active span:nth-child(2) {
+      opacity: 0;
+    }
+    .nav-toggle.active span:nth-child(3) {
+      transform: translateY(-8px) rotate(-45deg);
+    }
+
+    /* Car Detail Page Specific Styles */
+    .car-detail-hero {
+      position: relative;
+      height: 70vh; 
+      background-color: #282828; 
+      /* background-size: cover; */ /* No longer needed directly here */
+      /* background-position: center; */ /* No longer needed directly here */
+      display: flex;
+      flex-direction: column; 
+      align-items: center;
+      justify-content: center; 
+      text-align: center;
+      color: #fff; 
+      overflow: hidden; 
+    }
+
+    .hero-video-background {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        z-index: 0; /* Ensure video is in the background */
+    }
+    .hero-video-background video {
+        width: 100%;
+        height: 100%;
+        object-fit: cover; /* Cover the area, cropping if necessary */
+    }
+
+    @keyframes slideInUpFade {
+      from {
+        opacity: 0;
+        transform: translate(-50%, 30px); /* Start slightly lower */
+      }
+      to {
+        opacity: 1;
+        transform: translate(-50%, 0); /* End at original position */
+      }
+    }
+
+    .car-detail-hero .hero-car-name {
+        font-family: 'Didot', serif; 
+        font-size: 6rem; /* Adjusted for balance */
+        font-weight: bold;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        color: #fff; /* Ensure contrast */
+        text-shadow: 2px 2px 8px rgba(0,0,0,0.7); /* Add pop to text */
+        position: relative; 
+        z-index: 2; /* Above car image */
+        /* animation: slideInUpFade 1s ease-out 0.3s backwards; */ /* Removed from here */
+    }
+    .car-detail-hero .hero-car-image {
+        position: absolute;
+        bottom: 0; 
+        left: 50%;
+        transform: translateX(-50%);
+        max-width: 85%; /* Slightly larger */
+        max-height: 85%; /* Slightly larger */
+        z-index: 1; /* Above background, below name */
+        object-fit: contain; /* Maintain car aspect ratio */
+        animation: slideInUpFade 1s ease-out 0.3s backwards; /* Applied here instead */
+    }
+
+    .car-info-section {
+        padding: 3rem 2rem;
+        max-width: 1100px;
+        margin: 0 auto;
+        text-align: center;
+    }
+    .car-info-section .model-name-main {
+        font-family: 'Didot', serif;
+        font-size: 3.5rem;
+        color: var(--text-color);
+        margin-bottom: 0.5rem;
+    }
+    .car-info-section .model-subtitle {
+        font-family: 'Montserrat', sans-serif;
+        font-size: 1.2rem;
+        color: var(--text-color);
+        opacity: 0.8;
+        margin-bottom: 0.5rem;
+    }
+    .car-info-section .model-price {
+        font-family: 'Montserrat', sans-serif;
+        font-size: 1.8rem;
+        font-weight: bold;
+        color: var(--accent-color);
+        margin-bottom: 2rem;
+    }
+  
+
+    .key-specs-section {
+        display: flex;
+        justify-content: space-around;
+        align-items: flex-start;
+        padding: 2rem 0 3rem;
+        border-top: 1px solid var(--card-border);
+        border-bottom: 1px solid var(--card-border);
+        margin-bottom: 3rem;
+    }
+    .spec-item {
+        text-align: center;
+        padding: 0 1rem; /* Add some padding for spacing */
+    }
+    .spec-item .spec-value {
+        font-family: 'Didot', serif; /* Or Montserrat bold */
+        font-size: 3rem;
+        font-weight: bold;
+        color: var(--text-color);
+        line-height: 1;
+    }
+    .spec-item .spec-label {
+        font-family: 'Montserrat', sans-serif;
+        font-size: 0.9rem;
+        color: var(--text-color);
+        opacity: 0.8;
+        margin-top: 0.5rem;
+    }
+
+    .btn-all-specs {
+      font-family: 'Montserrat', sans-serif;
+      border: 1px solid var(--text-color);
+      color: var(--text-color);
+      background: transparent;
+      padding: 0.8rem 2rem;
+      text-decoration: none;
+      border-radius: 5px;
+      transition: all 0.3s ease;
+      display: inline-block;
+      margin-bottom: 3rem;
+    }
+    .btn-all-specs:hover {
+        background-color: var(--text-color);
+        color: var(--bg-color);
+    }
+
+    /* Wireframe-like detail section */
+    .product-detail-wireframe {
+        display: flex;
+        gap: 2rem;
+        padding: 2rem 0;
+        margin-bottom: 3rem;
+        max-width: 1200px; /* Different max-width potentially */
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .product-detail-wireframe .main-image-container {
+        flex: 0 0 60%;
+        background-color: var(--card-bg); /* Changed from #e0e0e0 for consistency */
+        min-height: 400px; 
+        display: flex; align-items: center; justify-content: center;
+        overflow: hidden; /* Good practice with object-fit: cover */
+    }
+    .product-detail-wireframe .main-image-container img {
+        width: 100%; /* Ensure it tries to fill container width */
+        height: 100%; /* Ensure it tries to fill container height */
+        object-fit: cover; /* Changed from contain */
+    }
+    .product-detail-wireframe .info-column {
+        flex: 0 0 35%;
+        display: flex; flex-direction: column;
+    }
+    .info-column .product-title-wf {
+        font-family: 'Didot', serif;
+        font-size: 2.5rem; margin-bottom: 0.5rem; color: var(--text-color);
+    }
+    .info-column .product-desc-wf {
+        font-size: 1rem; margin-bottom: 1rem; color: var(--text-color); opacity: 0.8;
+    }
+    .info-column .product-price-wf {
+        font-size: 1.8rem; font-weight: bold; color: var(--accent-color); margin-bottom: 1.5rem;
+    }
+    .info-column .btn-add-to-cart-wf {
+      font-family: 'Montserrat', sans-serif;
+      background-color: var(--button-primary-bg);
+      color: var(--button-primary-text);
+      border: none;
+      padding: 1rem 1.5rem;
+      font-size: 1rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      text-decoration: none;
+      text-align: center;
+      width: 100%;
+    }
+    .info-column .btn-add-to-cart-wf:hover {
+      background-color: var(--button-primary-hover-bg);
+    }
+    body.dark .info-column .btn-add-to-cart-wf { color: #121212;}
+
+    .thumbnail-gallery {
+        display: flex; gap: 1rem; margin-top: 2rem; margin-bottom:2rem; justify-content: center;
+    }
+    .thumbnail-gallery .thumb {
+        width: 100px; /* Increased width */
+        height: 75px; /* Increased height */
+        background-color: var(--card-bg); /* Use card background for consistency */
+        border: 1px solid var(--card-border); 
+        cursor: pointer; 
+        display: flex; 
+        align-items: center; 
+        justify-content: center; 
+        overflow:hidden;
+        transition: border-color 0.3s ease;
+    }
+    .thumbnail-gallery .thumb:hover {
+        border-color: var(--accent-color);
+    }
+    .thumbnail-gallery .thumb img {
+        width:100%; /* Explicitly set width */
+        height:100%; /* Explicitly set height */
+        object-fit:cover; /* Changed back to cover to fill the box */
+    }
+
+    .specs-bar-wf {
+        display: flex; justify-content: space-around; background-color: var(--card-bg); 
+        padding: 1.5rem 1rem; border-radius: 8px; border: 1px solid var(--card-border); margin-top:2rem;
+    }
+    .specs-bar-wf .spec-col {
+        text-align: center;
+        padding: 0 0.5rem; /* Add some padding */
+    }
+    .specs-bar-wf .spec-col .spec-label-wf { font-size: 0.8rem; color: var(--text-color); opacity: 0.7; margin-bottom: 0.3rem; text-transform:uppercase; letter-spacing: 0.05em;}
+    .specs-bar-wf .spec-col .spec-value-wf { font-size: 1rem; font-weight: bold; color: var(--text-color);}
+
+    /* Styles for Nieuwe Sectie: Technisch Ontwerp (Copied from Porsche) */
+    .technical-design-section {
+      padding: 3rem 2rem;
+      max-width: 1200px;
+      margin: 3rem auto 6rem;
+      border-top: 1px solid var(--card-border);
+      border-bottom: 1px solid var(--card-border);
+    }
+    .technical-design-section .section-title {
+      font-family: 'Didot', serif;
+      font-size: 2.8rem;
+      color: var(--text-color);
+      text-align: center;
+      margin-bottom: 3rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+    .technical-specs-split {
+      display: flex;
+      align-items: center;
+      gap: 3rem;
+      margin-bottom: 4rem;
+    }
+    .specs-column {
+      flex: 1 1 40%;
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+    .spec-item-large .spec-value-large {
+      font-family: 'Didot', serif;
+      font-size: 4rem;
+      font-weight: normal;
+      color: var(--text-color);
+      line-height: 1;
+      display: inline;
+    }
+    .spec-item-large .spec-unit-small {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.8rem;
+      font-weight: normal;
+      color: var(--text-color);
+      opacity: 0.9;
+      margin-left: 0.2em;
+    }
+    .spec-item-large .spec-label-large {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.9rem;
+      color: var(--text-color);
+      opacity: 0.8;
+      margin-top: 0.3rem;
+      line-height: 1.4;
+    }
+    .spec-note {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.8rem;
+      color: var(--text-color);
+      opacity: 0.7;
+      margin-top: 1rem;
+    }
+    .spec-note a {
+      color: var(--accent-color);
+      text-decoration: underline;
+    }
+    .image-column-split {
+      flex: 1 1 55%;
+      text-align: right;
+    }
+    .image-column-split img {
+      max-width: 100%;
+      height: auto;
+      object-fit: contain;
+    }
+    .overfeel-section {
+      display: flex;
+      align-items: center;
+      gap: 3rem;
+      padding-top: 3rem;
+      border-top: 1px solid var(--card-border);
+      margin-top: 3rem;
+    }
+    .overfeel-text-content {
+      flex: 1 1 45%;
+    }
+    .overfeel-title {
+      font-family: 'Didot', serif;
+      font-size: 3.5rem;
+      color: var(--text-color);
+      margin-bottom: 1.5rem;
+    }
+    .overfeel-description {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.1rem;
+      line-height: 1.7;
+      color: var(--text-color);
+      opacity: 0.85;
+      max-width: 500px;
+    }
+    .overfeel-images-container {
+      flex: 1 1 50%;
+      position: relative;
+      top: -1.5rem; /* Keep adjustment from Porsche */
+      min-height: 450px;
+    }
+    .overfeel-images-container img {
+      position: absolute;
+      border: 5px solid var(--bg-color);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+      border-radius: 8px;
+      transition: transform 0.3s ease;
+    }
+    .overfeel-images-container img:hover {
+        transform: scale(1.03);
+    }
+    .overfeel-image-1 {
+      width: 70%;
+      top: 0;
+      left: 0;
+      z-index: 1;
+    }
+    .overfeel-image-2 {
+      width: 60%;
+      bottom: 0;
+      right: 0;
+      z-index: 2;
+    }
+    /* Responsive adjustments for the new section (Copied from Porsche) */
+    @media (max-width: 992px) { 
+      header {
+        padding: 1.5rem 2rem; /* Reduce padding for smaller screens */
+      }
+      .logo {
+        font-size: 2rem; /* Adjust logo size */
+      }
+      .nav-links-container {
+        display: none; /* Hide normal nav links */
+        flex-direction: column;
+        position: absolute;
+        top: 100%; /* Position below header */
+        left: 0;
+        width: 100%;
+        background-color: var(--header-bg);
+        border-top: 1px solid var(--header-border);
+        padding: 1rem 0;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      }
+      .nav-links-container.active {
+        display: flex; /* Show when active */
+      }
+      nav a {
+        margin-left: 0;
+        padding: 1rem 2rem;
+        text-align: center;
+        width: 100%;
+        border-bottom: 1px solid var(--header-border);
+      }
+      nav a:last-child {
+        border-bottom: none;
+      }
+      #theme-toggle {
+        margin: 1rem auto; /* Center toggle button */
+        display: block;
+        padding: 0.8rem 1.5rem;
+      }
+      .nav-toggle {
+        display: block; /* Show hamburger */
+      }
+
+      .technical-specs-split, .overfeel-section {
+        flex-direction: column;
+        text-align: center;
+      }
+      .specs-column, .image-column-split, .overfeel-text-content, .overfeel-images-container {
+        flex: 1 1 100%;
+        text-align: center;
+      }
+      .image-column-split img {
+          margin: 0 auto;
+      }
+      .overfeel-images-container {
+        margin-top: 2rem;
+        min-height: 300px;
+      }
+      .overfeel-images-container img { 
+          position: relative;
+          display: block;
+          margin: 0 auto 1rem;
+          width: 80%;
+      }
+       .overfeel-image-1, .overfeel-image-2 {
+        top: auto; left: auto; bottom:auto; right:auto;
+      }
+    }
+    @media (max-width: 768px) {
+       .car-detail-hero {
+          height: 50vh;
+       }
+       .car-detail-hero .hero-car-name {
+          font-size: 3.5rem;
+       }
+       .car-detail-hero .hero-car-image {
+          max-width: 75%;
+          max-height: 75%;
+       }
+       .car-info-section .model-name-main {
+          font-size: 2.5rem;
+       }
+       .car-info-section .model-price {
+          font-size: 1.5rem;
+       }
+       .key-specs-section {
+          flex-direction: column;
+          gap: 1.5rem;
+          align-items: center;
+       }
+       .spec-item .spec-value {
+          font-size: 2.2rem;
+       }
+       .product-detail-wireframe {
+           flex-direction: column;
+           align-items: center;
+       }
+       .product-detail-wireframe .main-image-container,
+       .product-detail-wireframe .info-column {
+           flex: 1 1 100%;
+           width: 90%; /* Ensure it doesn't touch edges */
+       }
+       .thumbnail-gallery {
+          justify-content: flex-start; /* Align thumbnails left */
+          flex-wrap: wrap; /* Allow wrapping */
+       }
+       .thumbnail-gallery .thumb {
+           width: 80px;
+           height: 60px;
+       }
+
+       .technical-design-section .section-title {
+        font-size: 2.2rem;
+      }
+      .spec-item-large .spec-value-large {
+        font-size: 2.5rem;
+      }
+       .spec-item-large .spec-unit-small {
+        font-size: 1.3rem;
+      }
+      .overfeel-title {
+        font-size: 2.8rem;
+      }
+      .overfeel-description {
+        font-size: 1rem;
+      }
+    }
+     @media (max-width: 576px) {
+        header {
+          padding: 1rem 1.5rem;
+        }
+        .logo {
+          font-size: 1.8rem;
+          letter-spacing: 0.1em;
+        }
+        nav a {
+          padding: 0.8rem 1.5rem;
+          font-size: 0.9rem;
+        }
+        .car-detail-hero .hero-car-name {
+          font-size: 2.5rem;
+        }
+        .car-info-section .model-name-main {
+          font-size: 2rem;
+        }
+        .car-info-section .model-subtitle {
+          font-size: 1rem;
+        }
+        .spec-item .spec-value {
+          font-size: 1.8rem;
+        }
+        .info-column .product-title-wf {
+          font-size: 1.8rem;
+        }
+         .info-column .product-price-wf {
+          font-size: 1.5rem;
+        }
+
+        .technical-design-section .section-title {
+          font-size: 1.8rem;
+        }
+        .spec-item-large .spec-value-large {
+          font-size: 2rem;
+        }
+        .spec-item-large .spec-unit-small {
+          font-size: 1.1rem;
+        }
+        .overfeel-title {
+          font-size: 2.2rem;
+        }
+        .overfeel-description {
+          font-size: 0.9rem;
+        }
+    }
+
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="logo">THE VAULT</div>
+  <button class="nav-toggle" aria-label="toggle navigation menu">
+    <span></span>
+  </button>
+  <nav class="nav-links-container">
+    <a href="../Rest/index.html">Home</a>
+    <a href="../Rest/categorieën.html">Categorieën</a>
+    <a href="../auto's/autos.html">Auto's</a>
+    <a href="../jachten/jachten.html">Jachten</a>
+    <a href="../Rest/cart.html">Account</a>
+    <button id="theme-toggle" aria-label="Toggle dark mode">🌙</button>
+  </nav>
+</header>
+
+<main class="content-wrapper">
+  <!-- Hero Section -->
+  <section class="car-detail-hero"> 
+    <div class="hero-video-background">
+      <video autoplay loop muted playsinline poster="../images/urus_hero_bg.jpg">
+        <source src="../Videos/lambo.mp4" type="video/mp4">
+        <!-- <source src="../videos/urus_hero_video.webm" type="video/webm"> -->
+        Your browser does not support the video tag.
+      </video>
+    </div>
+    <h1 class="hero-car-name">Urus</h1> 
+    <img src="../images/auto's/urusbs.jpg" alt="Lamborghini Urus" class="hero-car-image"> 
+  </section>
+
+  <!-- Info Section -->
+  <section class="car-info-section">
+    <h2 class="model-name-main">Urus</h2>
+    <p class="model-subtitle">Super Sport Utility Vehicle</p>
+    <p class="model-price">vanaf € 230.000</p>
+    <!-- Variant filters removed for now -->
+  </section>
+
+  <!-- Wireframe Detail Section -->
+  <section class="product-detail-wireframe">
+    <div class="main-image-container">
+        <img src="../images/auto's/uruscar1.jpg" alt="Lamborghini Urus Studio Shot" id="mainProductImage"> <!-- Placeholder studio image -->
+    </div>
+    <div class="info-column">
+        <h3 class="product-title-wf">Lamborghini Urus</h3>
+        <p class="product-desc-wf">Ervaar de ziel van een supersportwagen en de functionaliteit van een SUV. De Lamborghini Urus ontketent elke weg met ongeëvenaarde prestaties en luxe.</p>
+        <p class="product-price-wf">vanaf € 230.000</p>
+        <a href="../Rest/cart.html" class="btn-add-to-cart-wf">Interesse tonen</a>
+        <div class="thumbnail-gallery">
+            <div class="thumb"><img src="../images/auto's/uruscar1.jpg" alt="Urus Thumbnail 1"></div>
+            <div class="thumb"><img src="../images/auto's/uruscar2.jpg" alt="Urus Thumbnail 2"></div>
+            <div class="thumb"><img src="../images/auto's/uruscar3.jpg" alt="Urus Thumbnail 3"></div>
+            <div class="thumb"><img src="../images/auto's/uruscar4.jpg" alt="Urus Thumbnail 4"></div>
+            <div class="thumb"><span>+</span></div> <!-- Placeholder for more images icon -->
+        </div>
+    </div>
+  </section>
+
+ 
+  <!-- Nieuwe Sectie: Technisch Ontwerp (Lamborghini Version) -->
+  <section class="technical-design-section car-info-section animate-on-scroll">
+    <h2 class="section-title">Rauw Design DNA</h2>
+
+    <!-- Part 1: Specs & Front Car Image -->
+    <div class="technical-specs-split">
+      <div class="specs-column">
+        <div class="spec-item-large">
+          <div class="spec-value-large">3,3 <span class="spec-unit-small">s</span></div>
+          <div class="spec-label-large">Acceleratie 0 - 100 km/h (Urus Performante)</div>
+        </div>
+        <div class="spec-item-large">
+          <div class="spec-value-large">666 <span class="spec-unit-small">CV</span></div>
+          <div class="spec-label-large">Maximaal Vermogen</div>
+        </div>
+        <div class="spec-item-large">
+          <div class="spec-value-large">306 <span class="spec-unit-small">km/h</span></div>
+          <div class="spec-label-large">Topsnelheid (Urus Performante)</div>
+        </div>
+        <p class="spec-note">Prestatiecijfers gebaseerd op Urus Performante.</p>
+      </div>
+      <div class="image-column-split">
+        <img src="../images/auto's/urus.png" alt="Lamborghini Urus Technisch Ontwerp Voorkant">
+      </div>
+    </div>
+
+    <!-- Part 2: Overlapping Images & Info (Lamborghini Version) -->
+    <div class="overfeel-section">
+      <div class="overfeel-text-content">
+        <h3 class="overfeel-title">Adrenaline Gevormd.</h3>
+        <p class="overfeel-description">
+          De Lamborghini Urus combineert de ziel van een supersportwagen met de functionaliteit van een SUV. Hij is ontworpen om elke weg te domineren, met een ongeëvenaarde mix van prestaties, luxe en veelzijdigheid.
+        </p>
+      </div>
+      <div class="overfeel-images-container">
+        <img src="../images/auto's/uruspic.jpeg" alt="Lamborghini Urus Ervaring afbeelding 1" class="overfeel-image-1">
+        <img src="../images/auto's/uruspic2.jpeg" alt="Lamborghini Urus Ervaring afbeelding 2" class="overfeel-image-2">
+      </div>
+    </div>
+  </section>
+  <!-- Einde Nieuwe Sectie -->
+
+</main>
+
+<footer>
+  &copy; 2025 The Vault — Alle rechten voorbehouden.
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+  // Dark Mode Toggle Script
+  const themeToggle = document.getElementById('theme-toggle');
+  const currentTheme = localStorage.getItem('theme');
+
+  if (currentTheme) {
+    document.body.classList.add(currentTheme);
+    if (currentTheme === 'dark') {
+        themeToggle.textContent = '☀️'; 
+    } else {
+        themeToggle.textContent = '🌙';
+    }
+  } else {
+    themeToggle.textContent = '🌙';
+  }
+
+  themeToggle.addEventListener('click', () => {
+    document.body.classList.toggle('dark');
+    let theme = 'light';
+    if (document.body.classList.contains('dark')) {
+      theme = 'dark';
+      themeToggle.textContent = '☀️'; 
+    } else {
+      themeToggle.textContent = '🌙'; 
+    }
+    localStorage.setItem('theme', theme);
+  });
+
+  // Hamburger Menu Toggle Script
+  const navToggle = document.querySelector('.nav-toggle');
+  const navLinksContainer = document.querySelector('.nav-links-container');
+
+  if (navToggle && navLinksContainer) {
+    navToggle.addEventListener('click', () => {
+      navToggle.classList.toggle('active');
+      navLinksContainer.classList.toggle('active');
+    });
+  }
+
+  // Thumbnail click to change main image
+  const mainImage = document.getElementById('mainProductImage');
+  const thumbnails = document.querySelectorAll('.thumbnail-gallery .thumb img'); // Select img tags
+  const thumbnailDivs = document.querySelectorAll('.thumbnail-gallery .thumb'); // Select div tags
+
+  thumbnailDivs.forEach(thumbDiv => {
+    const imgElement = thumbDiv.querySelector('img');
+    if (imgElement) { // Check if there's an img inside the thumb div
+      thumbDiv.addEventListener('click', function() {
+        mainImage.src = imgElement.src;
+        mainImage.alt = imgElement.alt; 
+      });
+    }
+  });
+</script>
+
+</body>
+</html> 
