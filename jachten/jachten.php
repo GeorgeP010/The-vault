@@ -54,9 +54,23 @@
       height: 100%;
     }
     body {
+      --bg-color: var(--bg-light);
+      --text-color: var(--text-light);
+      --accent-color: var(--accent-light);
+      --accent-hover: var(--accent-hover-light);
+      --header-bg: var(--header-bg-light);
+      --header-border: var(--header-border-light);
+      --footer-bg: var(--footer-bg-light);
+      --footer-text: var(--footer-text-light);
+      --card-bg: var(--card-bg-light);
+      --card-border: var(--border-light);
+      --button-primary-bg: var(--accent-color); /* This will now correctly use --accent-light */
+      --button-primary-text: #FFFFFF; /* White text for light mode buttons on accent background */
+      --button-primary-hover-bg: var(--accent-hover); /* This will now correctly use --accent-hover-light */
+
       font-family: 'Montserrat', sans-serif;
-      background-color: var(--bg-color);
-      color: var(--text-color);
+      background-color: var(--bg-color); /* This will now work */
+      color: var(--text-color); /* This will now work */
       margin: 0;
       padding: 0;
       transition: background-color 0.5s ease, color 0.5s ease;
@@ -168,11 +182,36 @@
       box-sizing: border-box;
       position: relative; /* For potential absolute positioning of elements if needed */
       overflow: hidden; /* Prevent scrollbars if content slightly overflows due to padding */
-      border-bottom: 1px solid var(--card-border); /* Added for spacing */
+      /* border-bottom: 1px solid var(--card-border); */ /* Replaced by new separator style */
     }
-    .full-screen-watch-display:last-child {
-        border-bottom: none; /* Remove border for the last section */
+    /* .full-screen-watch-display:last-child { */ /* Commented out as it was for the old border style */
+        /* border-bottom: none; */ 
+    /* } */
+
+    /* New Separator Style (Copied from horloges.html) */
+    .full-screen-watch-display:not(:last-child)::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 60%; /* Width of the line */
+        height: 1px;
+        background-color: var(--card-border);
     }
+    .full-screen-watch-display:not(:last-child)::before { /* Diamond shape */
+        content: '\25C6'; /* Unicode for black diamond or use an SVG */
+        position: absolute;
+        bottom: -8px; /* Adjust to sit on the line */
+        left: 50%;
+        transform: translateX(-50%) rotate(45deg);
+        font-size: 10px; /* Size of the diamond */
+        color: var(--accent-color);
+        background-color: var(--bg-color); /* To mask the line behind it */
+        padding: 0 5px; /* Space around the diamond */
+        z-index: 1; /* Ensure it's above the line */
+    }
+    /* END New Separator Style */
 
     /* Style for alternating sections if desired, e.g., text left / image right, then image left / text right */
     .full-screen-watch-display:nth-child(even) .watch-display-content {
@@ -183,7 +222,7 @@
     }
 
     .watch-display-content {
-      flex: 1 1 45%; /* Takes about 45% of the width */
+      flex: 1 1 40%; /* Changed from 45% to 40% */
       padding: 2rem 3rem;
       display: flex;
       flex-direction: column;
@@ -235,20 +274,20 @@
     }
     
     .watch-display-image {
-  flex: 1 1 55%;
-  height: 100%;
-  display: flex;
-  align-items: stretch;
-  justify-content: stretch;
-  overflow: hidden; /* Voorkom overloop */
-}
+      flex: 1 1 60%; /* Changed from 55% to 60% */
+      height: 100%;
+      display: flex;
+      align-items: stretch;
+      justify-content: stretch;
+      overflow: hidden; /* Voorkom overloop */
+    }
 
-.watch-display-image img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover; /* Vul de hele ruimte op zonder vervorming */
-  display: block;
-}
+    .watch-display-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover; /* Vul de hele ruimte op zonder vervorming */
+      display: block;
+    }
 
 
     /* Specific background for each section for demo, can be image-based */
@@ -492,6 +531,107 @@
         transform: translateY(0);
     }
 
+    /* NEW JACHTEN HERO SECTION STYLES (Corrected) */
+    .video-hero-section-jachten {
+      position: relative;
+      height: 90vh; /* Ensure this is 90vh */
+      width: 100%;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: #fff;
+    }
+    .video-hero-section-jachten video {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      min-width: 100%;
+      min-height: 100%;
+      width: auto;
+      height: auto;
+      z-index: -100;
+      transform: translateX(-50%) translateY(-50%);
+      object-fit: cover; /* Ensure this is present */
+    }
+    .video-hero-overlay-jachten {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 1;
+    }
+    .hero-content-jachten {
+      position: relative;
+      z-index: 2;
+      padding: 20px;
+    }
+    .hero-content-jachten .subtitle-jachten {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1rem;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.8);
+      margin-bottom: 0.5rem;
+    }
+    .hero-content-jachten h1 {
+      font-family: 'Didot', serif;
+      font-size: 4.5rem;
+      font-weight: bold;
+      margin-bottom: 1.5rem;
+      line-height: 1.1;
+    }
+    .hero-content-jachten .btn-discover-jachten {
+      font-family: 'Montserrat', sans-serif;
+      background-color: rgba(255, 255, 255, 0.2);
+      color: #fff;
+      padding: 0.8rem 2rem;
+      border-radius: 30px;
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      border: 1px solid rgba(255, 255, 255, 0.5);
+      transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+    }
+    .hero-content-jachten .btn-discover-jachten:hover {
+      background-color: rgba(255, 255, 255, 0.9);
+      color: #000;
+      border-color: #fff;
+    }
+    /* END NEW JACHTEN HERO SECTION STYLES */
+
+    /* NEW: Introductory Text Section Styles (Copied from horloges.html) */
+    .intro-text-section {
+        padding: 3rem 2rem;
+        text-align: center;
+        margin-bottom: 2rem; /* Space before the first yacht section */
+        /* border-bottom: 1px solid var(--card-border); */ /* Optional separator */
+        background-color: var(--bg-color); /* Match page background */
+    }
+    .intro-text-section .intro-heading {
+        font-family: 'Didot', serif;
+        font-size: 2.8rem;
+        color: var(--text-color);
+        margin-bottom: 1rem;
+        font-weight: 700;
+    }
+    .intro-text-section .intro-paragraph {
+        font-family: 'Montserrat', sans-serif;
+        font-size: 1.1rem;
+        color: var(--text-color);
+        opacity: 0.85;
+        max-width: 700px; /* Limit width of paragraph */
+        margin: 0 auto 1.5rem auto; /* Center the paragraph and add bottom margin */
+        line-height: 1.7;
+    }
+    /* END: Introductory Text Section Styles */
+
   </style>
 </head>
 <body>
@@ -502,22 +642,49 @@
       <span class="hamburger"></span>
     </button>
     <nav class="nav-links-container">
-      <a href="../Rest/index.html">Home</a>
-      <a href="../Rest/categorieën.html">Categorieën</a>
-      <a href="../horloge/horloges.html">Horloges</a>
-      <a href="../jachten/jachten.html">Jachten</a>
-      <a href="../Rest/cart.html">Account</a>
+      <a href="../Rest/index.php">Home</a>
+      <a href="../Rest/categorieën.php">Categorieën</a>
+      <a href="../horloge/horloges.php">Horloges</a>
+      <a href="../jachten/jachten.php">Jachten</a>
+      <a href="../Rest/dashboard.php">Account</a>
       <button id="theme-toggle" aria-label="Toggle dark mode">🌙</button>
     </nav>
   </header>
 
-  <main class="content-wrapper">
+  <!-- NEW HERO SECTION for Jachten (Corrected Structure) -->
+  <section class="video-hero-section-jachten">
+    <video autoplay loop muted playsinline>
+      <source src="../Videos/yacht video.mp4" type="video/mp4">
+      <source src="../Videos/yacht video.webm" type="video/webm">
+      Your browser does not support the video tag.
+    </video>
+    <div class="video-hero-overlay-jachten"></div>
+    <div class="hero-content-jachten">
+      <p class="subtitle-jachten">DE COLLECTIE</p>
+      <h1>Onze Jachten</h1>
+      <a href="#jacht-collectie" class="btn-discover-jachten">ONTDEK DE COLLECTIE VAN 2025 ›</a>
+    </div>
+  </section>
+  <!-- END NEW HERO SECTION for Jachten -->
+
+  <!-- NEW: Introductory Text Section for Jachten -->
+  <section class="intro-text-section">
+    <h2 class="intro-heading">Exclusieve Elegantie, Ongeëvenaarde Vrijheid</h2>
+    <p class="intro-paragraph">
+      Ontdek een zorgvuldig samengestelde selectie van 's werelds meest verfijnde jachten. 
+      Bij The Vault verenigen we traditie met innovatie, en bieden we iconische modellen 
+      die de essentie van luxe en prestaties op het water belichamen.
+    </p>
+  </section>
+  <!-- END: Introductory Text Section for Jachten -->
+
+  <main class="container mt-5 content-wrapper" id="jacht-collectie">
     <!-- Full Screen Yacht Display 1: Sunseeker Manhattan 84 -->
-    <section class="full-screen-watch-display sunseeker-manhattan-bg animate-on-scroll">
+    <section id="jacht-collectie" class="full-screen-watch-display sunseeker-manhattan-bg animate-on-scroll">
       <div class="watch-display-content">
         <h2 class="watch-display-name">2000 Sunseeker Manhattan 84 | 26m</h2>
         <p class="watch-display-tagline">Luxe en comfort gecombineerd met krachtige prestaties op zee.</p>
-        <a href="#" class="btn-discover-more">Ontdek meer <span class="arrow">&rsaquo;</span></a>
+        <a href="./jacht-detail-sunseeker-manhattan-84.html" class="btn-discover-more">Ontdek meer <span class="arrow">&rsaquo;</span></a>
         <a href="../Rest/cart.html" class="btn-add-to-cart-fs">Toevoegen aan winkelwagen</a>
       </div>
       <div class="watch-display-image">
@@ -530,7 +697,7 @@
       <div class="watch-display-content">
         <h2 class="watch-display-name">2022 Tecnomar Lamborghini 63 | 20m</h2>
         <p class="watch-display-tagline">Exclusief design geïnspireerd op de snelheid en elegantie van Lamborghini.</p>
-        <a href="#" class="btn-discover-more">Ontdek meer <span class="arrow">&rsaquo;</span></a>
+        <a href="./jacht-detail-tecnomar-lamborghini-63.html" class="btn-discover-more">Ontdek meer <span class="arrow">&rsaquo;</span></a>
         <a href="../Rest/cart.html" class="btn-add-to-cart-fs">Toevoegen aan winkelwagen</a>
       </div>
       <div class="watch-display-image">
@@ -543,7 +710,7 @@
       <div class="watch-display-content">
         <h2 class="watch-display-name">2020 Sunseeker 116 Yacht | 35m</h2>
         <p class="watch-display-tagline">Een meesterwerk van luxe, ruimte en innovatie voor ultieme ontspanning.</p>
-        <a href="#" class="btn-discover-more">Ontdek meer <span class="arrow">&rsaquo;</span></a>
+        <a href="./jacht-detail-sunseeker-116-yacht.html" class="btn-discover-more">Ontdek meer <span class="arrow">&rsaquo;</span></a>
         <a href="../Rest/cart.html" class="btn-add-to-cart-fs">Toevoegen aan winkelwagen</a>
       </div>
       <div class="watch-display-image">
@@ -556,7 +723,7 @@
       <div class="watch-display-content">
         <h2 class="watch-display-name">2003 Mangusta 108 | 33m</h2>
         <p class="watch-display-tagline">Krachtig en stijlvol, perfect voor avontuurlijke zeevaarders.</p>
-        <a href="#" class="btn-discover-more">Ontdek meer <span class="arrow">&rsaquo;</span></a>
+        <a href="./jacht-detail-mangusta-108.html" class="btn-discover-more">Ontdek meer <span class="arrow">&rsaquo;</span></a>
         <a href="../Rest/cart.html" class="btn-add-to-cart-fs">Toevoegen aan winkelwagen</a>
       </div>
       <div class="watch-display-image">
@@ -569,7 +736,7 @@
       <div class="watch-display-content">
         <h2 class="watch-display-name">2025 Ada Yacht 50Z | 50m</h2>
         <p class="watch-display-tagline">Tijdloos elegant, een exclusief meesterwerk op het water.</p>
-        <a href="#" class="btn-discover-more">Ontdek meer <span class="arrow">&rsaquo;</span></a>
+        <a href="./jacht-detail-ada-yacht-50z.html" class="btn-discover-more">Ontdek meer <span class="arrow">&rsaquo;</span></a>
         <a href="../Rest/cart.html" class="btn-add-to-cart-fs">Toevoegen aan winkelwagen</a>
       </div>
       <div class="watch-display-image">
@@ -582,7 +749,7 @@
       <div class="watch-display-content">
         <h2 class="watch-display-name">2011 Benetti 60 | 60m</h2>
         <p class="watch-display-tagline">Exclusiviteit, precisie en traditie in één majestueus jacht.</p>
-        <a href="#" class="btn-discover-more">Ontdek meer <span class="arrow">&rsaquo;</span></a>
+        <a href="./jacht-detail-benetti-60.html" class="btn-discover-more">Ontdek meer <span class="arrow">&rsaquo;</span></a>
         <a href="../Rest/cart.html" class="btn-add-to-cart-fs">Toevoegen aan winkelwagen</a>
       </div>
       <div class="watch-display-image">

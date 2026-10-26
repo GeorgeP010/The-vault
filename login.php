@@ -316,9 +316,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 </head>
 <body>
   <header>
-    <div class="logo">The Vault</div>
+    <a href="../Rest/index.php" class="logo">The Vault</a>
     <nav>
-      <a href="auto's/autos.html">Auto's</a>
+      <a href="Rest/categorieën.php">Catagories</a>
       <a href="register.php">Register</a>
       <button id="theme-toggle">Dark</button>
     </nav>

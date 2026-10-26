@@ -12,7 +12,7 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
 
   <style>
-    /* Copied from categorieën.html - CSS custom properties */
+    /* Copied from categorieën.php - CSS custom properties */
     :root {
       --bg-light: #f8f9fa;
       --bg-dark: #121212;
@@ -244,6 +244,7 @@
       border-bottom: 1px solid transparent; /* For hover effect */
       transition: color 0.3s ease, border-color 0.3s ease;
       align-self: flex-start; /* Align button to the start of the flex container */
+      margin-bottom: 1.2rem;
     }
 
     .watch-display-content .btn-discover-more:hover {
@@ -544,6 +545,128 @@
         transform: translateY(0);
     }
 
+    /* Video Hero Section Styles */
+    .video-hero-section {
+        position: relative;
+        height: 85vh; /* Adjust height as needed */
+        width: 100%;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        color: #fff; /* Default text color for hero */
+    }
+    .video-hero-background {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1; /* Behind content and overlay */
+    }
+    .video-hero-background video {
+        width: 100%;
+        height: 100%;
+        object-fit: cover; /* Cover the area, might crop */
+    }
+    .video-hero-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.4); /* Dark overlay for text readability */
+        z-index: 0;
+    }
+    .video-hero-content {
+        position: relative;
+        z-index: 1;
+        padding: 2rem;
+        max-width: 800px;
+    }
+    .video-hero-content .hero-subtitle {
+        font-family: 'Montserrat', sans-serif;
+        font-size: 1rem;
+        font-weight: 500;
+        text-transform: uppercase;
+        letter-spacing: 0.15em;
+        margin-bottom: 0.75rem;
+        opacity: 0.9;
+    }
+    .video-hero-content .hero-title {
+        font-family: 'Didot', serif;
+        font-size: 4.5rem; /* Large, impactful title */
+        font-weight: 700;
+        line-height: 1.1;
+        margin-bottom: 1.5rem;
+        text-shadow: 2px 2px 8px rgba(0,0,0,0.3);
+    }
+    .video-hero-content .hero-cta {
+        font-family: 'Montserrat', sans-serif;
+        font-size: 0.9rem;
+        font-weight: 600;
+        color: #fff;
+        background-color: rgba(255, 255, 255, 0.15); /* Subtle background for the button */
+        border: 1px solid rgba(255, 255, 255, 0.7);
+        padding: 0.75rem 1.5rem;
+        text-decoration: none;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        border-radius: 30px; /* Rounded button like in example */
+        transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+        display: inline-block;
+    }
+    .video-hero-content .hero-cta:hover {
+        background-color: rgba(255, 255, 255, 0.9);
+        color: #000;
+        border-color: rgba(255, 255, 255, 0.9);
+    }
+
+    /* Adjustments for hero on smaller screens */
+    @media (max-width: 768px) {
+        .video-hero-section {
+            height: 70vh;
+        }
+        .video-hero-content .hero-title {
+            font-size: 3rem;
+        }
+        .video-hero-content .hero-subtitle {
+            font-size: 0.9rem;
+        }
+        .video-hero-content .hero-cta {
+            font-size: 0.8rem;
+            padding: 0.6rem 1.2rem;
+        }
+    }
+
+    .btn-add-to-cart-detail {
+      font-family: 'Montserrat', sans-serif;
+      background-color: var(--button-primary-bg);
+      color: var(--button-primary-text);
+      border: none;
+      padding: 1rem 2rem;
+      font-size: 1rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
+      text-decoration: none;
+      display: block;
+      width: 100%;
+      text-align: center;
+    }
+    .btn-add-to-cart-detail:hover {
+      background-color: var(--button-primary-hover-bg);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    }
+    body.dark .btn-add-to-cart-detail {
+      color: #121212;
+    }
+
   </style>
 </head>
 <body>
@@ -554,17 +677,33 @@
       <span class="hamburger"></span>
     </button>
     <nav class="nav-links-container">
-      <a href="../Rest/index.html">Home</a>
-      <a href="../Rest/categorieën.html">Categorieën</a>
-      <a href="../jachten/jachten.html">Jachten</a>
-      <a href="../Rest/cart.html">Account</a>
+      <a href="../Rest/index.php">Home</a>
+      <a href="../Rest/categorieën.php">Categorieën</a>
+      <a href="../jachten/jachten.php">Jachten</a>
+      <a href="../dashboard.php">Account</a>
       <button id="theme-toggle" aria-label="Toggle dark mode">🌙</button>
     </nav>
   </header>
 
 <main class="content-wrapper">
-  <!-- New: Introductory Text Section -->
-  <section class="intro-text-section animate-on-scroll">
+  <!-- New Video Hero Section -->
+  <section class="video-hero-section">
+    <div class="video-hero-background">
+      <video autoplay muted loop playsinline poster="../images/rolex_hero_poster.jpg"> <!-- Add a poster image as fallback/before load -->
+        <source src="../videos/header.mp4" type="video/mp4"> <!-- REPLACE THIS with your actual video path -->
+        Your browser does not support the video tag.
+      </video>
+    </div>
+    <div class="video-hero-overlay"></div>
+    <div class="video-hero-content">
+      <p class="hero-subtitle">De Collectie</p>
+      <h1 class="hero-title">Onze Horloges</h1>
+      <a href="#intro-text-section" class="hero-cta">Ontdek de collectie van 2025 &rsaquo;</a> <!-- Link to an anchor or another page -->
+    </div>
+  </section>
+
+  <!-- Existing Introductory Text Section -->
+  <section class="intro-text-section animate-on-scroll" id="intro-text-section"> <!-- Added ID for CTA link -->
     <h1 class="intro-heading">Tijdloze Elegantie, Ongeëvenaard Vakmanschap</h1>
     <p class="intro-paragraph">
       Ontdek een zorgvuldig samengestelde selectie van 's werelds meest verfijnde uurwerken. Bij The Vault verenigen we traditie met innovatie, en bieden we iconische modellen die de essentie van luxe en precisie belichamen.
@@ -577,7 +716,7 @@
       <h2 class="watch-display-name">Relic</h2>
       <p class="watch-display-tagline">Met de wereld als tijdzone.</p>
       <a href="relic-detail.html" class="btn-discover-more">Ontdek meer <span class="arrow">&rsaquo;</span></a>
-      <a href="../Rest/cart.html" class="btn-add-to-cart-fs">Toevoegen aan winkelwagen</a>
+      <a href="../dashboard.php" class="btn-add-to-cart-detail">Bieding doen</a>
     </div>
     <div class="watch-display-image">
       <img src="../images/horloge1.jpg" alt="Sky-Dweller Horloge">
@@ -590,7 +729,7 @@
       <h2 class="watch-display-name">Omega-Seamaster</h2>
       <p class="watch-display-tagline">Vertrouwen uitdragen met elegantie.</p>
       <a href="omega-seamaster-detail.html" class="btn-discover-more">Ontdek meer <span class="arrow">&rsaquo;</span></a>
-      <a href="../Rest/cart.html" class="btn-add-to-cart-fs">Toevoegen aan winkelwagen</a>
+      <a href="../dashboard.php" class="btn-add-to-cart-detail">Bieding doen</a>
     </div>
     <div class="watch-display-image">
       <img src="../images/horloge2.jpg" alt="Lady-Datejust Horloge">
@@ -603,7 +742,7 @@
       <h2 class="watch-display-name">Tissot</h2>
       <p class="watch-display-tagline">Een nieuw perspectief.</p>
       <a href="tissot-detail.html" class="btn-discover-more">Ontdek meer <span class="arrow">&rsaquo;</span></a>
-      <a href="../Rest/cart.html" class="btn-add-to-cart-fs">Toevoegen aan winkelwagen</a>
+      <a href="../dashboard.php" class="btn-add-to-cart-detail">Bieding doen</a>
     </div>
     <div class="watch-display-image">
       <img src="https://images.unsplash.com/photo-1522312346375-d1a52e2b99b3?auto=format&fit=crop&w=1000&q=80" alt="Land-Dweller Horloge">
@@ -616,7 +755,7 @@
       <h2 class="watch-display-name">Breitling</h2>
       <p class="watch-display-tagline">Voor de echte horlogeneuro</p>
       <a href="breitling-detail.html" class="btn-discover-more">Ontdek meer <span class="arrow">&rsaquo;</span></a>
-      <a href="../Rest/cart.html" class="btn-add-to-cart-fs">Toevoegen aan winkelwagen</a>
+      <a href="../dashboard.php" class="btn-add-to-cart-detail">Bieding doen</a>
     </div>
     <div class="watch-display-image">
       <img src="../images/Watch4.jpg" alt="Nieuw Horloge 1">
@@ -629,7 +768,7 @@
       <h2 class="watch-display-name">Seiko</h2>
       <p class="watch-display-tagline">Tijdloos, elegant, exclusief, meesterwerk</p>
       <a href="seiko-detail.html" class="btn-discover-more">Ontdek meer <span class="arrow">&rsaquo;</span></a>
-      <a href="../Rest/cart.html" class="btn-add-to-cart-fs">Toevoegen aan winkelwagen</a>
+      <a href="../dashboard.php" class="btn-add-to-cart-detail">Bieding doen</a>
     </div>
     <div class="watch-display-image">
       <img src="../images/watch5.jpg" alt="Nieuw Horloge 2">
@@ -642,7 +781,7 @@
       <h2 class="watch-display-name">Rolex-Datejust</h2>
       <p class="watch-display-tagline">Exclusiviteit, precisie, traditie, klasse</p>
       <a href="rolex-datejust-detail.html" class="btn-discover-more">Ontdek meer <span class="arrow">&rsaquo;</span></a>
-      <a href="../Rest/cart.html" class="btn-add-to-cart-fs">Toevoegen aan winkelwagen</a>
+      <a href="../dashboard.php" class="btn-add-to-cart-detail">Bieding doen</a>
     </div>
     <div class="watch-display-image">
       <img src="../images/Watch6.jpg" alt="Nieuw Horloge 3">

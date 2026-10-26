@@ -1,3 +1,4 @@
+<?php require_once '../config.php'; ?>
 <!DOCTYPE html>
 <html lang="nl">
 <head>
@@ -459,11 +460,15 @@
       <span class="hamburger"></span>
     </button>
     <nav class="nav-links-container">
-      <a href="index.html">Home</a>
-      <a href="../horloge/horloges.html">Horloges</a>
-      <a href="../auto's/autos.html">Auto's</a>
-      <a href="../jachten/jachten.html">Jachten</a>
-      <a href="cart.html">Account</a>
+      <a href="index.php">Home</a>
+      <a href="../horloge/horloges.php">Horloges</a>
+      <a href="../auto's/autos.php">Auto's</a>
+      <a href="../jachten/jachten.php">Jachten</a>
+      <?php if (function_exists('isLoggedIn') && isLoggedIn()): ?>
+        <a href="../dashboard.php" title="Account"><img src="../images/user.png" alt="Account" style="height:1.5em;width:1.5em;vertical-align:middle;border-radius:50%;object-fit:cover;" /></a>
+      <?php else: ?>
+        <a href="../login.php">Login</a>
+      <?php endif; ?>
       <button id="theme-toggle" aria-label="Toggle dark mode">🌙</button>
     </nav>
   </header>
@@ -478,7 +483,7 @@
     </section>
  
   <section class="categories container">
-    <a href="../horloge/horloges.html" class="category-card" aria-label="Horloges categorie">
+    <a href="../horloge/horloges.php" class="category-card" aria-label="Horloges categorie">
       <div class="media-wrapper">
         <img src="../images/rolex.jpeg" alt="Horloges" class="category-image" />
         <video class="category-video" muted loop preload="metadata" playsinline>
@@ -491,7 +496,7 @@
         <p class="category-description">Exclusieve limited edition horloges en design stukken.</p>
       </div>
     </a>
-    <a href="../jachten/jachten.html" class="category-card" aria-label="Jachten categorie">
+    <a href="../jachten/jachten.php" class="category-card" aria-label="Jachten categorie">
       <div class="media-wrapper">
         <img src="../images1/yacht.jpg" alt="jachten" class="category-image" />
         <video class="category-video" muted loop preload="metadata" playsinline>
@@ -504,9 +509,9 @@
         <p class="category-description">Luxe jachten met stijlvol design en topkwaliteit.</p>
       </div>
     </a>
-    <a href="../auto's/autos.html" class="category-card" aria-label="Auto\'s categorie">
+    <a href="../auto's/autos.php" class="category-card" aria-label="Auto's categorie">
       <div class="media-wrapper">
-        <img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=600&q=80" alt="Auto\'s" class="category-image" />
+        <img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=600&q=80" alt="Auto's" class="category-image" />
         <video class="category-video" muted loop preload="metadata" playsinline>
           <source src="../Videos/auto video.mp4" type="video/mp4" />
           <source src="https://cdn.videvo.net/videvo_files/video/free/2017-08/small_watermarked/170725_06_Sports_Car_04_preview.webm" type="video/webm" />

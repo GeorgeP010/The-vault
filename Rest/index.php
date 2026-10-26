@@ -1,3 +1,4 @@
+<?php require_once '../config.php'; ?>
 <!DOCTYPE html>
 <html lang="nl">
 <head>
@@ -675,9 +676,13 @@
       <span class="hamburger"></span>
     </button>
     <nav class="nav-links-container">
-      <a href="categorieën.html">Categorieën</a>
-      <a href="../Rest/berichten.html">Berichten</a>
-      <a href="Rest/cart.html">Account</a>
+      <a href="categorieën.php">Categorieën</a>
+      <a href="berichten.php">Berichten</a>
+      <?php require_once '../config.php'; if (function_exists('isLoggedIn') && isLoggedIn()): ?>
+        <a href="../dashboard.php" title="Account"><img src="../images/user.png" alt="Account" style="height:1.5em;width:1.5em;vertical-align:middle;border-radius:50%;object-fit:cover;" /></a>
+      <?php else: ?>
+        <a href="../login.php">Login</a>
+      <?php endif; ?>
       <button id="theme-toggle" aria-label="Toggle dark mode">🌙</button>
     </nav>
   </header>
@@ -687,7 +692,7 @@
     <div class="hero-content">
       <h1>Exclusieve Luxeproducten<br>voor de Elite</h1>
       <p>Ontdek de meest exclusieve villa\'s, horloges, auto\'s en meer</p>
-      <a href="categorieën.html" class="btn btn-primary">Bekijk aanbod</a>
+      <a href="categorieën.php" class="btn btn-primary">Bekijk aanbod</a>
     </div>
   </section>
 
@@ -704,7 +709,7 @@
           <div class="card-footer bg-transparent border-top-0">
             <div class="d-flex justify-content-between align-items-center">
               <span class="price text-accent">€POA</span>
-              <a href="../jachten/jachten.html" class="btn btn-outline-primary">Bekijk</a>
+              <a href="../jachten/jachten.php" class="btn btn-outline-primary">Bekijk</a>
             </div>
           </div>
         </div>
@@ -718,7 +723,7 @@
             <div class="card-footer bg-transparent border-top-0">
               <div class="d-flex justify-content-between align-items-center">
                 <span class="price text-accent">€POA</span>
-                <a href="../horloge/horloges.html" class="btn btn-outline-primary">Bekijk</a>
+                <a href="../horloge/horloges.php" class="btn btn-outline-primary">Bekijk</a>
               </div>
             </div>
           </div>
@@ -733,7 +738,7 @@
             <div class="card-footer bg-transparent border-top-0">
               <div class="d-flex justify-content-between align-items-center">
                 <span class="price text-accent">€POA</span>
-                <a href="../auto's/lamborghini-urus-detail.html" class="btn btn-outline-primary">Bekijk</a>
+                <a href="../auto's/autos.php" class="btn btn-outline-primary">Bekijk</a>
               </div>
             </div>
           </div>
@@ -784,7 +789,7 @@
     });
   });
 
-  // Dark Mode Toggle Script (from categorieën.html)
+  // Dark Mode Toggle Script (from categorieën.php)
   const themeToggle = document.getElementById('theme-toggle');
   const currentTheme = localStorage.getItem('theme');
 
@@ -831,9 +836,9 @@
   const chatbotSendBtn = document.getElementById('chatbot-send-btn');
 
   const predefinedQA = {
-    "waar kan ik spullen kopen?": "U kunt items bekijken en kopen op onze <a href='categorieën.html'>Categorieën</a> pagina. Veel winkelplezier!",
+    "waar kan ik spullen kopen?": "U kunt items bekijken en kopen op onze <a href='categorieën.php'>Categorieën</a> pagina. Veel winkelplezier!",
     "hoe kan ik iets verkopen?": "Momenteel is de functionaliteit om zelf items te verkopen nog in ontwikkeling. Houd onze updates in de gaten!",
-    "wat voor soort producten zijn er?": "Wij bieden een breed scala aan luxe producten, waaronder exclusieve auto's, horloges en jachten. Neem een kijkje op de <a href='categorieën.html'>Categorieën</a> pagina voor het volledige aanbod.",
+    "wat voor soort producten zijn er?": "Wij bieden een breed scala aan luxe producten, waaronder exclusieve auto's, horloges en jachten. Neem een kijkje op de <a href='categorieën.php'>Categorieën</a> pagina voor het volledige aanbod.",
     "is er een klantenservice?": "Zeker! Voor specifieke vragen kunt u contact opnemen via het (denkbeeldige) contactformulier of een e-mail sturen naar info@thevault.example.com.",
     "hoe werkt de website?": "The Vault is een exclusieve online marktplaats. U kunt door categorieën bladeren om items te ontdekken en te kopen. Voor verkopen, zie de eerdere vraag.",
     "openingstijden": "Wij zijn een online winkel en dus 24/7 bereikbaar!",

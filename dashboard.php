@@ -247,9 +247,9 @@ requireLogin();
 </head>
 <body>
   <header>
-    <div class="logo">The Vault</div>
+    <a href="../Rest/index.php" class="logo">The Vault</a>
     <nav>
-      <a href="auto's/autos.html">Auto's</a>
+      <a href="Rest/categorieën.php">Catagories</a>
       <a href="logout.php">Logout</a>
       <button id="theme-toggle">Dark</button>
     </nav>
@@ -266,9 +266,9 @@ requireLogin();
 
     <div class="dashboard-cards">
       <div class="dashboard-card">
-        <h3 class="card-title">Luxury Automobiles</h3>
+        <h3 class="card-title">Categories</h3>
         <p class="card-text">Explore our exclusive collection of premium vehicles including Porsche, Lamborghini, and Bugatti.</p>
-        <a href="auto's/autos.html" class="btn-outline">View Collection</a>
+        <a href="../Rest/categorieën.php" class="btn-outline">View Categories</a>
       </div>
 
       <div class="dashboard-card">

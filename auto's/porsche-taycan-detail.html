@@ -1,3 +1,4 @@
+<?php require_once '../config.php'; ?>
 <!DOCTYPE html>
 <html lang="nl">
 <head>
@@ -755,18 +756,20 @@
 <body>
 
 <header>
-  <div class="logo">THE VAULT</div>
+  <a href="../Rest/index.php" class="logo">THE VAULT</a>
   <button class="nav-toggle" aria-label="toggle navigation">
-    <span class="hamburger"></span>
-    <span class="hamburger"></span>
     <span class="hamburger"></span>
   </button>
   <nav class="nav-links-container">
-    <a href="../Rest/index.html">Home</a>
-    <a href="../Rest/categorieën.html">Categorieën</a>
-    <a href="../auto's/autos.html">Auto's</a>
-    <a href="../jachten/jachten.html">Jachten</a>
-    <a href="../Rest/cart.html">Account</a>
+    <a href="../Rest/index.php">Home</a>
+    <a href="../Rest/categorieën.php">Categorieën</a>
+    <a href="../auto's/autos.php">Auto's</a>
+    <a href="../jachten/jachten.php">Jachten</a>
+    <?php if (function_exists('isLoggedIn') && isLoggedIn()): ?>
+      <a href="../dashboard.php" title="Account"><img src="../images/user.png" alt="Account" style="height:1.5em;width:1.5em;vertical-align:middle;border-radius:50%;object-fit:cover;" /></a>
+    <?php else: ?>
+      <a href="../login.php">Login</a>
+    <?php endif; ?>
     <button id="theme-toggle" aria-label="Toggle dark mode">🌙</button>
   </nav>
 </header>
@@ -801,7 +804,7 @@
         <h3 class="product-title-wf">Porsche Taycan 4 Sedan</h3>
         <p class="product-desc-wf">De Taycan is klaar voor de toekomst, dankzij zijn innovatieve concept. Hij wordt gekenmerkt door de features die een Porsche altijd hebben gedefinieerd: pure emotie en maximaal rijplezier.</p>
         <p class="product-price-wf">vanaf € 107.700</p>
-        <a href="../Rest/cart.html" class="btn-add-to-cart-wf">Interesse tonen</a>
+        <a href="<?php echo (function_exists('isLoggedIn') && isLoggedIn()) ? '../dashboard.php' : '../login.php'; ?>" class="btn-add-to-cart-wf">Interesse tonen</a>
         <div class="thumbnail-gallery">
             <div class="thumb"><img src="../images/auto's/Main.jpg" alt="Thumbnail 1"></div>
             <div class="thumb"><img src="../images/auto's/car1.jpg" alt="Thumbnail 2"></div>

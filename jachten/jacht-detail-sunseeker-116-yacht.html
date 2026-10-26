@@ -1,0 +1,1208 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>The Vault - Sunseeker 116 Yacht Details</title>
+
+  <!-- jsPDF Library -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Didot&family=Montserrat:wght@400;700&display=swap" rel="stylesheet" />
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+  <style>
+    /* Common styles from jachten.html */
+    :root {
+      --bg-light: #f8f9fa;
+      --bg-dark: #121212;
+      --text-light: #111;
+      --text-dark: #eee;
+      --accent-light: #bfa14a;
+      --accent-dark: #d4af37;
+      --accent-hover-light: #9a7f36;
+      --accent-hover-dark: #a5820a;
+      --card-bg-light: #fff;
+      --card-bg-dark: #1f1f1f;
+      --border-light: #e9ecef;
+      --border-dark: #333;
+      --header-bg-light: #fff;
+      --header-bg-dark: #1c1c1c;
+      --header-border-light: #e0e0e0;
+      --header-border-dark: #333;
+      --footer-bg-light: #111;
+      --footer-bg-dark: #1c1c1c;
+      --footer-text-light: #ccc;
+      --footer-text-dark: #ccc;
+    }
+    /* Default to light mode variables, body.dark will override */
+    body {
+      --bg-color: var(--bg-light);
+      --text-color: var(--text-light);
+      --accent-color: var(--accent-light);
+      --accent-hover: var(--accent-hover-light);
+      --header-bg: var(--header-bg-light);
+      --header-border: var(--border-light);
+      --footer-bg: var(--footer-bg-light);
+      --footer-text: var(--footer-text-light);
+      --card-bg: var(--card-bg-light);
+      --card-border: var(--border-light);
+      --button-primary-bg: var(--accent-light);
+      --button-primary-text: #fff; /* White text on accent for light mode button */
+      --button-primary-hover-bg: var(--accent-hover-light);
+    }
+    body.dark {
+      --bg-color: var(--bg-dark);
+      --text-color: var(--text-dark);
+      --accent-color: var(--accent-dark);
+      --accent-hover: var(--accent-hover-dark);
+      --header-bg: var(--header-bg-dark);
+      --header-border: var(--border-dark);
+      --footer-bg: var(--footer-bg-dark);
+      --footer-text: var(--footer-text-dark);
+      --card-bg: var(--card-bg-dark);
+      --card-border: var(--border-dark);
+      --button-primary-bg: var(--accent-dark);
+      --button-primary-text: #121212; /* Darker text on accent for dark mode button */
+      --button-primary-hover-bg: var(--accent-hover-dark);
+    }
+    html {
+      height: 100%;
+    }
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      margin: 0;
+      padding: 0;
+      transition: background-color 0.5s ease, color 0.5s ease;
+      display: flex; 
+      flex-direction: column; 
+      min-height: 100vh;
+    }
+    main.content-wrapper {
+      flex-grow: 1;
+    }
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.5rem 4rem;
+      background-color: var(--header-bg);
+      border-bottom: 1px solid var(--header-border);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      transition: background-color 0.5s ease, border-color 0.5s ease;
+    }
+    .logo {
+      font-family: 'Didot', serif;
+      font-size: 2.5rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      color: inherit;
+      user-select: none;
+      text-transform: uppercase;
+      cursor: default;
+      transition: color 0.4s ease;
+    }
+    nav a {
+      color: inherit;
+      text-decoration: none;
+      font-weight: 500;
+      margin-left: 3rem;
+      font-size: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      position: relative;
+      transition: color 0.3s ease;
+    }
+    nav a::after {
+      content: '';
+      position: absolute;
+      width: 0%;
+      height: 2px;
+      bottom: -4px;
+      left: 0;
+      background-color: var(--accent-color);
+      transition: width 0.3s ease;
+    }
+    nav a:hover::after {
+      width: 100%;
+    }
+    nav a:hover {
+      color: var(--accent-color);
+    }
+    #theme-toggle {
+      background: none;
+      border: 1px solid currentColor;
+      color: inherit;
+      padding: 0.5rem 0.8rem;
+      margin-left: 3rem;
+      font-size: 1rem;
+      cursor: pointer;
+      border-radius: 5px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+      user-select: none;
+    }
+    #theme-toggle:hover {
+      background-color: var(--accent-color);
+      color: var(--bg-color);
+      border-color: var(--accent-color);
+    }
+    footer {
+      background-color: var(--footer-bg);
+      color: var(--footer-text);
+      text-align: center;
+      padding: 2rem 1rem;
+      font-size: 0.9rem;
+      letter-spacing: 0.05em;
+      user-select: none;
+      transition: background-color 0.5s ease, color 0.5s ease;
+      border-top: 1px solid transparent; 
+    }
+    body.dark footer {
+        border-top: 1px solid var(--header-border); 
+    }
+    .nav-toggle {
+        display: none; 
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        padding: 0.5rem;
+        z-index: 1001;
+    }
+    .hamburger {
+        display: block;
+        position: relative;
+        width: 25px;
+        height: 3px;
+        background-color: var(--text-color);
+        transition: all 0.3s ease-in-out;
+    }
+    .hamburger::before,
+    .hamburger::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        width: 100%;
+        height: 3px;
+        background-color: var(--text-color);
+        transition: all 0.3s ease-in-out;
+    }
+    .hamburger::before { top: -8px; }
+    .hamburger::after { bottom: -8px; }
+    .nav-toggle.active .hamburger { background-color: transparent; }
+    .nav-toggle.active .hamburger::before { transform: translateY(8px) rotate(45deg); }
+    .nav-toggle.active .hamburger::after { transform: translateY(-8px) rotate(-45deg); }
+    .nav-links-container {
+        display: flex;
+        align-items: center;
+    }
+
+    /* Responsive adjustments for header/footer */
+    @media (max-width: 1024px) {
+        header { padding: 1rem 2rem; }
+        .logo { font-size: 2rem; }
+        .nav-links-container a { margin-left: 1.5rem; font-size: 0.9rem; }
+        .nav-links-container #theme-toggle { margin-left: 1.5rem; font-size: 0.9rem; }
+    }
+    @media (max-width: 768px) {
+        .nav-toggle { display: block; }
+        header { justify-content: space-between; align-items: center; }
+        .nav-links-container {
+            position: absolute; top: 100%; left: 0; right: 0;
+            background-color: var(--header-bg);
+            flex-direction: column; align-items: center;
+            padding: 1rem 0;
+            border-top: 1px solid var(--header-border);
+            transform: translateY(-150%);
+            transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+            opacity: 0; pointer-events: none; z-index: 1000;
+        }
+        .nav-links-container.active { transform: translateY(0); opacity: 1; pointer-events: auto; }
+        .nav-links-container a { margin: 1rem 0; font-size: 1.1rem; }
+        .nav-links-container #theme-toggle { margin: 1rem 0; }
+    }
+     @media (max-width: 480px) {
+        header { padding: 1rem 1rem; flex-direction: row; }
+        .logo { margin-bottom: 0; font-size: 1.8rem; }
+    }
+
+    /* NEW STYLES FOR YACHT DETAIL PAGE - V5: Fraser Inspired with Hero Image & Clearer Info */
+
+    .fraser-inspired-page-v5 {
+        max-width: 1800px; /* Max width for the main content area */
+        margin: 0 auto;
+        padding: 0; /* No padding on the main wrapper, hero will be full width */
+        background-color: var(--bg-color);
+    }
+
+    /* Breadcrumbs V5 */
+    .breadcrumb-nav-v5 {
+        padding: 1rem 1.5rem; /* Padding for breadcrumbs inside the max-width */
+        margin-bottom: 0;
+        font-size: 0.9rem;
+        background-color: var(--card-bg); /* Subtle background for breadcrumb bar */
+        border-bottom: 1px solid var(--card-border);
+    }
+    body.dark .breadcrumb-nav-v5 {
+        background-color: var(--header-bg-dark); /* Match header in dark mode */
+    }
+    .breadcrumb-nav-v5 .breadcrumb {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+    }
+    .breadcrumb-nav-v5 .breadcrumb-item a {
+        color: var(--accent-color);
+        text-decoration: none;
+    }
+    .breadcrumb-nav-v5 .breadcrumb-item.active {
+        color: var(--text-color);
+        opacity: 0.7;
+    }
+    .breadcrumb-nav-v5 .breadcrumb-item + .breadcrumb-item::before {
+        content: "/";
+        padding: 0 0.5rem;
+        color: var(--text-color);
+        opacity: 0.5;
+    }
+
+    /* Hero Section V5 */
+    .yacht-hero-section-v5 {
+        position: relative;
+        width: 100%;
+        height: 70vh; /* Adjust height as needed */
+        overflow: hidden;
+    }
+    #heroYachtImageV5 {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+    }
+    .hero-overlay-v5 {
+        position: absolute;
+        top: 0; left: 0; right: 0; bottom: 0;
+        background: linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.6) 100%);
+        z-index: 1;
+    }
+    .hero-text-content-v5 {
+        position: absolute;
+        bottom: 10%; /* Position text towards the bottom */
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 2;
+        color: #fff;
+        text-align: center;
+        width: 90%;
+        max-width: 800px;
+    }
+    .hero-text-content-v5 h1 {
+        font-family: 'Didot', serif;
+        font-size: 4rem; /* Prominent hero title */
+        font-weight: bold;
+        margin-bottom: 0.5rem;
+        text-shadow: 2px 2px 8px rgba(0,0,0,0.7);
+    }
+    .hero-tagline-v5 {
+        font-family: 'Montserrat', sans-serif;
+        font-size: 1.5rem;
+        font-weight: 300;
+        opacity: 0.9;
+        text-shadow: 1px 1px 6px rgba(0,0,0,0.6);
+    }
+
+    /* Header Content Below Hero V5 */
+    .yacht-header-content-v5 {
+        padding: 2.5rem 1.5rem; /* Padding for content area */
+        background-color: var(--card-bg);
+        margin-bottom: 2rem; /* Space before next sections */
+    }
+    body.dark .yacht-header-content-v5 {
+         background-color: var(--card-bg-dark);
+    }
+
+    .yacht-title-area-v5 .availability-fi {
+        font-family: 'Montserrat', sans-serif;
+        font-size: 0.9rem;
+        font-weight: 500;
+        color: var(--text-color);
+        opacity: 0.8;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        margin-bottom: 1.5rem; 
+        display: block;
+    }
+
+    .yacht-price-and-actions-v5 {
+        display: flex;
+        flex-direction: column; 
+        gap: 1.5rem;
+        align-items: flex-start; 
+        margin-bottom: 2rem;
+    }
+    @media (min-width: 768px) { 
+        .yacht-price-and-actions-v5 {
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+        }
+    }
+
+    .price-prominent-v5 {
+        text-align: left;
+    }
+    .price-label-v5 {
+        display: block;
+        font-family: 'Montserrat', sans-serif;
+        font-size: 0.9rem;
+        color: var(--text-color);
+        opacity: 0.7;
+        margin-bottom: 0.25rem;
+    }
+    .price-amount-v5 {
+        font-family: 'Didot', serif; 
+        font-size: 2.8rem;
+        font-weight: bold;
+        color: var(--accent-color);
+        line-height: 1.1;
+    }
+
+    .actions-fi-v5 {
+        display: flex;
+        gap: 1rem;
+        flex-wrap: wrap; 
+    }
+    .btn-fi-v5 {
+        font-family: 'Montserrat', sans-serif;
+        padding: 0.9rem 1.8rem;
+        font-size: 0.9rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-decoration: none;
+        text-align: center;
+        border: 1px solid transparent;
+        min-width: 180px; 
+    }
+    .btn-brochure-fi-v5 {
+        background-color: var(--accent-color);
+        color: var(--button-primary-text);
+    }
+    body.dark .btn-brochure-fi-v5 { color: #121212; }
+    .btn-brochure-fi-v5:hover {
+        background-color: var(--accent-hover);
+    }
+    .btn-inquire-fi-v5 {
+        background-color: transparent;
+        color: var(--accent-color);
+        border: 1px solid var(--accent-color);
+    }
+    .btn-inquire-fi-v5:hover {
+        background-color: var(--accent-color);
+        color: var(--button-primary-text);
+    }
+    body.dark .btn-inquire-fi-v5:hover { color: #121212; }
+    
+    .yacht-key-specs-summary-v5 {
+        padding-top: 1.5rem;
+        border-top: 1px solid var(--card-border);
+    }
+    .yacht-key-specs-summary-v5 h3 {
+        font-family: 'Montserrat', sans-serif;
+        font-size: 1.2rem;
+        font-weight: 600;
+        color: var(--text-color);
+        margin-bottom: 1rem;
+    }
+    .key-specs-grid-v5 {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: 0.75rem 1.5rem; 
+        font-family: 'Montserrat', sans-serif;
+        font-size: 0.95rem;
+    }
+    .spec-item-v5 span {
+        font-weight: 500; 
+        color: var(--text-color);
+        opacity: 0.8;
+        margin-right: 0.5em;
+    }
+    .spec-item-v5 {
+        color: var(--text-color);
+        opacity: 0.9;
+    }
+
+    .yacht-gallery-fi-v5, .yacht-about-fi-v5, .yacht-special-features-fi-v5, .yacht-specification-table-fi-v5 {
+        padding: 2rem 1.5rem; 
+        margin-bottom: 2rem;
+        background-color: var(--card-bg);
+    }
+    .yacht-gallery-fi-v5:last-child, .yacht-about-fi-v5:last-child, 
+    .yacht-special-features-fi-v5:last-child, .yacht-specification-table-fi-v5:last-child {
+        margin-bottom: 0;
+    }
+
+    .yacht-gallery-fi-v5 h3, .yacht-about-fi-v5 h2, .yacht-special-features-fi-v5 h2, .yacht-specification-table-fi-v5 h2 {
+        font-family: 'Montserrat', sans-serif;
+        font-size: 1.8rem;
+        font-weight: 600;
+        color: var(--text-color);
+        margin-bottom: 1.5rem;
+        padding-bottom: 0.75rem;
+        border-bottom: 2px solid var(--accent-color);
+        display: inline-block;
+    }
+
+    .thumbnail-preview-fi-v5 {
+        display: flex;
+        gap: 1rem;
+        flex-wrap: wrap; 
+        margin-top: 0.5rem;
+    }
+    .thumbnail-fi-v5 {
+        width: 100px;
+        height: 75px;
+        object-fit: cover;
+        border-radius: 4px;
+        cursor: pointer;
+        border: 2px solid var(--border-light);
+        transition: all 0.2s ease;
+    }
+    body.dark .thumbnail-fi-v5 { border-color: var(--border-dark); }
+    .thumbnail-fi-v5.active, .thumbnail-fi-v5:hover {
+        border-color: var(--accent-color);
+        transform: scale(1.05);
+    }
+
+    /* Styles for dedicated gallery image display */
+    .main-gallery-image-container-v5 {
+        margin-bottom: 1.5rem;
+        text-align: center; 
+    }
+    #mainGalleryImageDisplayV5 {
+        width: 100%;
+        max-width: 800px; 
+        max-height: 600px; 
+        object-fit: contain; 
+        border-radius: 4px;
+        border: 1px solid var(--card-border); 
+        background-color: var(--bg-color); 
+        cursor: zoom-in; /* Indicate the image is clickable for lightbox */
+    }
+
+    /* Lightbox Styles */
+    .lightbox-overlay-v5 {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.85); 
+        display: none; /* Hidden by default */
+        justify-content: center;
+        align-items: center;
+        z-index: 10000; 
+        padding: 20px;
+        box-sizing: border-box;
+    }
+    .lightbox-content-v5 {
+        max-width: 90%;
+        max-height: 90%;
+        display: block;
+        object-fit: contain; 
+        border-radius: 4px;
+        box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+    }
+    .lightbox-close-v5 {
+        position: absolute;
+        top: 20px;
+        right: 35px;
+        color: #fff;
+        font-size: 40px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: color 0.3s ease;
+        user-select: none;
+    }
+    .lightbox-close-v5:hover {
+        color: #bbb;
+    }
+
+    /* Responsive Adjustments for V5 Layout */
+    @media (max-width: 991px) {
+        .yacht-hero-section-v5 { height: 60vh; }
+        .hero-text-content-v5 h1 { font-size: 3rem; }
+        .hero-tagline-v5 { font-size: 1.3rem; }
+        .price-amount-v5 { font-size: 2.4rem; }
+    }
+
+    @media (max-width: 767px) {
+        .fraser-inspired-page-v5 { padding: 0; }
+        .breadcrumb-nav-v5 { padding: 0.75rem 1rem; }
+        .yacht-hero-section-v5 { height: 50vh; }
+        .hero-text-content-v5 h1 { font-size: 2.2rem; }
+        .hero-tagline-v5 { font-size: 1.1rem; }
+
+        .yacht-header-content-v5 {
+            padding: 2rem 1rem;
+            margin-bottom: 1.5rem;
+        }
+        .price-amount-v5 { font-size: 2rem; }
+        .actions-fi-v5 { flex-direction: column; align-items: stretch; }
+        .btn-fi-v5 { width: 100%; margin-bottom: 0.5rem; }
+        .key-specs-grid-v5 { grid-template-columns: 1fr; }
+
+        .yacht-gallery-fi-v5, .yacht-about-fi-v5, .yacht-special-features-fi-v5, .yacht-specification-table-fi-v5 {
+            padding: 1.5rem 1rem;
+            margin-bottom: 1.5rem;
+        }
+        .yacht-gallery-fi-v5 h3, .yacht-about-fi-v5 h2, .yacht-special-features-fi-v5 h2, .yacht-specification-table-fi-v5 h2 {
+            font-size: 1.5rem;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .hero-text-content-v5 h1 { font-size: 1.8rem; }
+        .hero-tagline-v5 { font-size: 1rem; }
+        .price-amount-v5 { font-size: 1.8rem; }
+        .yacht-key-specs-summary-v5 h3 {font-size: 1.1rem;}
+        .spec-item-v5 { font-size: 0.9rem; }
+        .thumbnail-fi-v5 { width: 80px; height: 60px; }
+    }
+
+    /* NEW: CSS for Bidding Section V5 (including bid history) */
+    .yacht-bidding-section-v5 {
+        padding: 2rem 1.5rem;
+        margin-top: 0; 
+        margin-bottom: 2rem;
+        background-color: var(--card-bg);
+        border-radius: 0; 
+    }
+    .yacht-bidding-section-v5 h3 { 
+        font-family: 'Montserrat', sans-serif;
+        font-size: 1.8rem;
+        font-weight: 600;
+        color: var(--text-color);
+        margin-bottom: 1.5rem;
+        padding-bottom: 0.75rem;
+        border-bottom: 2px solid var(--accent-color);
+        display: inline-block;
+    }
+    .bidding-info-grid-v5 {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1rem;
+        margin-bottom: 1.5rem;
+        font-size: 1rem;
+    }
+    .bidding-info-item-v5 {
+        background-color: var(--bg-color);
+        padding: 1rem;
+        border-radius: 4px;
+        border: 1px solid var(--card-border);
+    }
+    body.dark .bidding-info-item-v5 {
+        background-color: var(--header-bg-dark);
+    }
+    .bidding-info-item-v5 .label {
+        display: block;
+        font-size: 0.85rem;
+        font-weight: 500;
+        color: var(--text-color);
+        opacity: 0.7;
+        margin-bottom: 0.25rem;
+        text-transform: uppercase;
+    }
+    .bidding-info-item-v5 .value {
+        font-size: 1.2rem;
+        font-weight: 600;
+        color: var(--accent-color);
+    }
+    .bid-history-v5 { 
+        margin-top: 1.5rem;
+        margin-bottom: 1.5rem;
+    }
+    .bid-history-v5 h4 { 
+        font-family: 'Montserrat', sans-serif;
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: var(--text-color);
+        margin-bottom: 0.75rem;
+        padding-bottom: 0.5rem;
+        border-bottom: 1px solid var(--card-border);
+    }
+    .bid-history-list-v5 {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        max-height: 200px;
+        overflow-y: auto;
+        border: 1px solid var(--card-border);
+        border-radius: 4px;
+    }
+    .bid-history-item-v5 {
+        padding: 0.75rem 1rem;
+        font-size: 0.9rem;
+        color: var(--text-color);
+        opacity: 0.9;
+        border-bottom: 1px solid var(--card-border);
+    }
+    .bid-history-item-v5:last-child {
+        border-bottom: none;
+    }
+    .bid-history-item-v5:nth-child(even) {
+        background-color: var(--bg-color); 
+    }
+    body.dark .bid-history-item-v5:nth-child(even) {
+        background-color: #2a2a2a; 
+    }
+    .bidder-name-v5 {
+        font-weight: 600;
+    }
+    .bid-amount-v5 {
+        color: var(--accent-color);
+        font-weight: 500;
+    }
+    .bid-timestamp-v5 {
+        font-size: 0.8rem;
+        opacity: 0.7;
+        margin-left: 0.5em;
+    }
+    .bidding-form-v5 label {
+        display: block;
+        font-family: 'Montserrat', sans-serif;
+        font-size: 0.9rem;
+        font-weight: 500;
+        margin-bottom: 0.5rem;
+        color: var(--text-color);
+    }
+    .bidding-form-v5 input[type="number"] {
+        width: 100%;
+        padding: 0.75rem 1rem;
+        font-family: 'Montserrat', sans-serif;
+        font-size: 1rem;
+        border: 1px solid var(--card-border);
+        border-radius: 4px;
+        background-color: var(--bg-color);
+        color: var(--text-color);
+        margin-bottom: 1rem;
+        box-sizing: border-box;
+    }
+    body.dark .bidding-form-v5 input[type="number"] {
+        background-color: var(--header-bg-dark);
+    }
+    .bidding-form-v5 .btn-place-bid-v5 {
+        font-family: 'Montserrat', sans-serif;
+        padding: 0.9rem 1.8rem;
+        font-size: 1rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-decoration: none;
+        text-align: center;
+        border: none;
+        background-color: var(--accent-color);
+        color: var(--button-primary-text);
+        display: inline-block;
+        width: 100%; 
+    }
+    body.dark .bidding-form-v5 .btn-place-bid-v5 { color: #121212; }
+    .bidding-form-v5 .btn-place-bid-v5:hover {
+        background-color: var(--accent-hover);
+        transform: translateY(-2px);
+        box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    }
+    /* END: CSS for Bidding Section V5 */
+
+    .yacht-special-features-fi-v5 ul {
+        list-style: disc;
+        padding-left: 20px;
+        font-family: 'Montserrat', sans-serif;
+        font-size: 1rem;
+        line-height: 1.7;
+        color: var(--text-color);
+        opacity: 0.85;
+    }
+    .yacht-special-features-fi-v5 li { margin-bottom: 0.5rem; }
+
+    .spec-table-container-fi-v5 {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+    @media (min-width: 768px) {
+        .spec-table-container-fi-v5 {
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+        }
+    }
+    .spec-category-fi-v5 h3 {
+        font-family: 'Montserrat', sans-serif;
+        font-size: 1.3rem;
+        font-weight: 600;
+        color: var(--text-color);
+        margin-bottom: 1rem;
+        padding-bottom: 0.5rem;
+        border-bottom: 1px solid var(--card-border); 
+    }
+    .spec-category-fi-v5 table {
+        width: 100%;
+        border-collapse: collapse;
+        font-family: 'Montserrat', sans-serif;
+        font-size: 0.95rem;
+    }
+    .spec-category-fi-v5 td {
+        padding: 0.6rem 0.25rem;
+        border-bottom: 1px solid var(--border-light);
+        color: var(--text-color);
+        opacity: 0.8;
+    }
+    body.dark .spec-category-fi-v5 td { border-bottom-color: var(--border-dark); }
+    .spec-category-fi-v5 tr:last-child td { border-bottom: none; }
+    .spec-category-fi-v5 td:first-child {
+        font-weight: 500;
+        opacity: 0.9;
+        min-width: 130px; 
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="logo">THE VAULT</div>
+    <button class="nav-toggle" aria-label="toggle navigation">
+      <span class="hamburger"></span>
+    </button>
+    <nav class="nav-links-container">
+      <a href="../Rest/index.php">Home</a>
+      <a href="../Rest/categorieën.html">Categorieën</a>
+      <a href="../horloge/horloges.php">Horloges</a>
+      <a href="./jachten.php">Jachten</a>
+      <a href="../Rest/cart.html">Account</a>
+      <button id="theme-toggle" aria-label="Toggle dark mode">🌙</button>
+    </nav>
+  </header>
+
+  <div class="fraser-inspired-page-v5 content-wrapper">
+    <nav aria-label="breadcrumb" class="breadcrumb-nav-v5">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="../Rest/index.php">Home</a></li>
+        <li class="breadcrumb-item"><a href="./jachten.php">Jachten</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Sunseeker 116 Yacht</li>
+      </ol>
+    </nav>
+
+    <section class="yacht-hero-section-v5">
+      <img src="../images1/boot3.jpg" alt="Sunseeker 116 Yacht Hoofdafbeelding" id="heroYachtImageV5">
+      <div class="hero-overlay-v5"></div>
+      <div class="hero-text-content-v5">
+        <h1>Sunseeker 116 Yacht</h1>
+        <p class="hero-tagline-v5">Ongeëvenaarde Luxe en Prestaties op Grootschalig Niveau.</p>
+      </div>
+    </section>
+
+    <section class="yacht-header-content-v5">
+      <div class="yacht-title-area-v5">
+        <p class="availability-fi">Nu Beschikbaar</p>
+      </div>
+      
+      <div class="yacht-price-and-actions-v5">
+        <div class="price-prominent-v5">
+          <span class="price-label-v5">Prijs</span>
+          <span class="price-amount-v5">€12.000.000</span>
+        </div>
+        <div class="actions-fi-v5">
+          <a href="javascript:void(0);" id="downloadBrochureBtn" class="btn-fi-v5 btn-brochure-fi-v5">Brochure</a>
+          <a href="mailto:eigenaar@thevault.com?subject=Interesse%20in%20Sunseeker%20116%20Yacht" class="btn-fi-v5 btn-inquire-fi-v5">Contact Eigenaar</a>
+        </div>
+      </div>
+
+      <div class="yacht-key-specs-summary-v5">
+        <h3>Korte Specificaties</h3>
+        <div class="key-specs-grid-v5">
+          <div class="spec-item-v5"><span>Bouwer:</span> Sunseeker</div>
+          <div class="spec-item-v5"><span>Lengte:</span> 35m/116ft</div>
+          <div class="spec-item-v5"><span>Bouwjaar:</span> 2020</div>
+          <div class="spec-item-v5"><span>Gasten:</span> 10-12</div>
+          <div class="spec-item-v5"><span>Hutten:</span> 5</div>
+          <div class="spec-item-v5"><span>Bemanning:</span> 5</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- NEW: Bidding Section V5 -->
+    <section class="yacht-bidding-section-v5">
+      <h3>Plaats een Bod</h3>
+      <div class="bidding-info-grid-v5">
+        <div class="bidding-info-item-v5">
+          <span class="label">Huidig Hoogste Bod</span>
+          <span class="value" id="currentHighestBidV5SS116">€12.000.000</span> 
+        </div>
+        <div class="bidding-info-item-v5">
+          <span class="label">Minimale Bodverhoging</span>
+          <span class="value">€10.000</span>
+        </div>
+      </div>
+
+      <div class="bid-history-v5">
+        <h4>Recente Biedingen</h4>
+        <ul class="bid-history-list-v5" id="bidHistoryListSS116">
+          <li class="bid-history-item-v5">
+            <span class="bidder-name-v5">Admiraal Ansjovis</span> - 
+            <span class="bid-amount-v5">€11.990.000</span>
+            <span class="bid-timestamp-v5">(12 minuten geleden)</span>
+          </li>
+          <li class="bid-history-item-v5">
+            <span class="bidder-name-v5">Kapitein Kabeljauw</span> - 
+            <span class="bid-amount-v5">€12.000.000</span>
+            <span class="bid-timestamp-v5">(7 minuten geleden)</span>
+          </li>
+        </ul>
+      </div>
+
+      <form class="bidding-form-v5" id="placeBidFormV5SS116">
+        <label for="bidAmountV5SS116">Uw bod (€):</label>
+        <input type="number" id="bidAmountV5SS116" name="bidAmountSS116" placeholder="Voer uw bod in" required min="12010000"> 
+        <button type="submit" class="btn-fi-v5 btn-place-bid-v5">Plaats Bod</button>
+      </form>
+    </section>
+    <!-- END: Bidding Section V5 -->
+
+    <section class="yacht-gallery-fi-v5">
+      <h3>Fotogalerij</h3>
+      <div class="main-gallery-image-container-v5">
+        <img src="" alt="Grote afbeelding Sunseeker 116 Yacht" id="mainGalleryImageDisplayV5">
+      </div>
+      <div class="thumbnail-preview-fi-v5">
+        <img src="../images1/boot3.jpg" alt="Thumbnail 1" class="thumbnail-fi-v5 active" onclick="updateMainGalleryImageV5(this, '../images1/boot3.jpg')">
+        <img src="../images1/sunseeker 16 buiten.jpg" alt="Thumbnail 2" class="thumbnail-fi-v5" onclick="updateMainGalleryImageV5(this, '../images1/sunseeker 16 buiten.jpg')">
+        <img src="../images1/sunseeker 16 binnen.jpg" alt="Thumbnail 3" class="thumbnail-fi-v5" onclick="updateMainGalleryImageV5(this, '../images1/sunseeker 16 binnen.jpg')">
+      </div>
+    </section>
+
+    <section class="yacht-about-fi-v5">
+      <h2>Meer over de Sunseeker 116 Yacht</h2>
+      <p>De Sunseeker 116 Yacht is een meesterwerk van design en engineering, en vertegenwoordigt het toppunt van luxe in de Sunseeker-lijn. Met zijn indrukwekkende lengte van 35 meter biedt dit jacht een ongekende hoeveelheid ruimte en comfort. Het exterieurontwerp is zowel elegant als sportief, met vloeiende lijnen en een imposante aanwezigheid op het water.</p>
+      <p>Het interieur kan volledig naar wens van de eigenaar worden aangepast, met opties voor vijf ruime hutten die plaats bieden aan maximaal 10-12 gasten. De master suite op het hoofddek is een oase van rust en luxe. Uitgebreide entertainmentgebieden, waaronder een grote flybridge en een beach club, maken dit jacht perfect voor het ontvangen van gasten of voor langere verblijven op zee.</p>
+      <p><em>Prijs en volledige specificaties zijn op aanvraag beschikbaar.</em></p>
+    </section>
+
+    <section class="yacht-special-features-fi-v5">
+      <h2>Bijzondere Kenmerken</h2>
+      <ul>
+        <li>Volledig op maat gemaakt interieur</li>
+        <li>Ruime master suite op het hoofddek</li>
+        <li>Expansieve flybridge met jacuzzi (optioneel)</li>
+        <li>Beach club met directe toegang tot het water</li>
+        <li>Geavanceerde stabilisatiesystemen voor comfort</li>
+        <li>Accommodatie voor een professionele bemanning</li>
+        <li>Indrukwekkend vaarbereik en prestaties</li>
+      </ul>
+    </section>
+
+    <section class="yacht-specification-table-fi-v5">
+      <h2>Specificaties: Sunseeker 116 Yacht</h2>
+      <div class="spec-table-container-fi-v5">
+        <div class="spec-category-fi-v5">
+          <h3>Accommodatie</h3>
+          <table>
+            <tr><td>Gasten</td><td>10-12</td></tr>
+            <tr><td>Hutten</td><td>5</td></tr>
+            <tr><td>Hutconfiguratie</td><td>1 Master, 2 VIP, 2 Twin</td></tr>
+            <tr><td>Bemanning</td><td>5</td></tr>
+          </table>
+        </div>
+        <div class="spec-category-fi-v5">
+          <h3>Constructie & Ontwerp</h3>
+          <table>
+            <tr><td>Bouwjaar</td><td>2020 (of op bestelling)</td></tr>
+            <tr><td>Bouwer</td><td>Sunseeker</td></tr>
+            <tr><td>Cascomateriaal</td><td>GRP (Polyester)</td></tr>
+            <tr><td>Exterieur Ontwerper</td><td>Sunseeker Design</td></tr>
+            <tr><td>Interieur Ontwerper</td><td>Sunseeker Design / Klant specificatie</td></tr>
+          </table>
+        </div>
+        <div class="spec-category-fi-v5">
+          <h3>Afmetingen & Volume</h3>
+          <table>
+            <tr><td>Lengte</td><td>~35.2m (116 ft)</td></tr>
+            <tr><td>Breedte</td><td>~7.3m</td></tr>
+            <tr><td>Diepgang</td><td>~2.4m</td></tr>
+            <tr><td>Brutotonnage</td><td>Details op aanvraag</td></tr>
+          </table>
+        </div>
+        <div class="spec-category-fi-v5">
+          <h3>Prestaties & Motoren</h3>
+          <table>
+            <tr><td>Kruissnelheid</td><td>Ca. 19 knopen</td></tr>
+            <tr><td>Max snelheid</td><td>Ca. 26 knopen</td></tr>
+            <tr><td>Bereik</td><td>~1250 zeemijl (bij kruissnelheid)</td></tr>
+            <tr><td>Motoren</td><td>Configuraties variëren (bijv. 2x MTU)</td></tr>
+            <tr><td>Generatoren</td><td>Details op aanvraag</td></tr>
+          </table>
+        </div>
+        <div class="spec-category-fi-v5">
+          <h3>Kenmerken</h3>
+          <table>
+            <tr><td>Stabilisatoren</td><td>Ja (bij anker & varend)</td></tr>
+            <tr><td>Airconditioning</td><td>Ja, volledig</td></tr>
+            <tr><td>Jacuzzi</td><td>Optioneel op flybridge</td></tr>
+            <tr><td>Garage</td><td>Voor tender en waterspeelgoed</td></tr>
+          </table>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <div id="imageLightboxV5" class="lightbox-overlay-v5">
+    <span class="lightbox-close-v5" title="Sluiten">&times;</span>
+    <img class="lightbox-content-v5" id="lightboxImageV5" src="" alt="Vergrote afbeelding Sunseeker 116 Yacht">
+  </div>
+
+  <footer>
+    &copy; 2025 The Vault — Alle rechten voorbehouden.
+  </footer>
+
+  <script>
+    // Dark Mode Toggle Script
+    const themeToggle = document.getElementById('theme-toggle');
+    const currentTheme = localStorage.getItem('theme');
+
+    function applyTheme(theme) {
+        if (theme === 'dark') {
+            document.body.classList.add('dark');
+            themeToggle.textContent = '☀️'; 
+        } else {
+            document.body.classList.remove('dark');
+            themeToggle.textContent = '🌙';
+        }
+    }
+
+    if (currentTheme) {
+        applyTheme(currentTheme);
+    } else {
+        applyTheme('light'); 
+    }
+
+    themeToggle.addEventListener('click', () => {
+      let theme = 'light';
+      if (document.body.classList.contains('dark')) {
+        document.body.classList.remove('dark');
+        themeToggle.textContent = '🌙';
+      } else {
+        document.body.classList.add('dark');
+        themeToggle.textContent = '☀️';
+        theme = 'dark';
+      }
+      localStorage.setItem('theme', theme);
+    });
+
+    // Hamburger Menu Toggle Script
+    const navToggle = document.querySelector('.nav-toggle');
+    const navLinksContainer = document.querySelector('.nav-links-container');
+
+    if (navToggle && navLinksContainer) {
+      navToggle.addEventListener('click', () => {
+        navToggle.classList.toggle('active');
+        navLinksContainer.classList.toggle('active');
+      });
+    }
+
+    // Image Gallery Script for V5 Layout (updates main gallery image display)
+    function updateMainGalleryImageV5(thumbnailElement, newImageSrc) {
+        document.getElementById('mainGalleryImageDisplayV5').src = newImageSrc;
+        
+        const thumbnails = document.querySelectorAll('.thumbnail-preview-fi-v5 .thumbnail-fi-v5');
+        thumbnails.forEach(thumb => thumb.classList.remove('active'));
+        if (thumbnailElement) {
+            thumbnailElement.classList.add('active');
+        }
+    }
+    
+    // Lightbox Functions
+    function openImageLightboxV5() {
+        const mainImageSrc = document.getElementById('mainGalleryImageDisplayV5').src;
+        if (mainImageSrc) {
+            document.getElementById('lightboxImageV5').src = mainImageSrc;
+            document.getElementById('imageLightboxV5').style.display = 'flex';
+        }
+    }
+
+    function closeImageLightboxV5() {
+        document.getElementById('imageLightboxV5').style.display = 'none';
+        document.getElementById('lightboxImageV5').src = ''; 
+    }
+
+    // NEW: PDF Generation Script
+    async function generateAndDownloadPdf() {
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF('p', 'mm', 'a4');
+
+        let yPos = 15; 
+        const pageMargin = 15;
+        const pageWidth = doc.internal.pageSize.getWidth();
+        const contentWidth = pageWidth - (2 * pageMargin);
+        const baseLineHeight = 7; 
+
+        function addText(text, size, style, x = pageMargin, align = 'left', isSectionTitle = false) {
+            if (!text || text.trim() === '') return; 
+            
+            doc.setFontSize(size);
+            doc.setFont(undefined, style); 
+            
+            const splitText = doc.splitTextToSize(text, contentWidth);
+
+            if (yPos + (splitText.length * (size * 0.35)) > doc.internal.pageSize.getHeight() - pageMargin) { 
+                doc.addPage();
+                yPos = pageMargin;
+            }
+            
+            doc.text(splitText, x, yPos, { align: align });
+            yPos += (splitText.length * (size * 0.35 + 1.5)); 
+            if (isSectionTitle) yPos += baseLineHeight * 0.5; 
+        }
+        
+        const yachtNameForTitle = document.querySelector('.hero-text-content-v5 h1')?.innerText.trim() || 'Jacht Brochure';
+        doc.setProperties({ title: yachtNameForTitle });
+
+        addText(yachtNameForTitle, 20, 'bold', pageWidth / 2, 'center', true);
+        yPos += baseLineHeight * 0.5;
+
+        const mainImageElement = document.getElementById('heroYachtImageV5');
+        if (mainImageElement && mainImageElement.src) {
+            try {
+                const imgData = mainImageElement; 
+                const naturalWidth = mainImageElement.naturalWidth || 1600; 
+                const naturalHeight = mainImageElement.naturalHeight || 900; 
+                const aspectRatio = naturalWidth / naturalHeight;
+                
+                let imgWidthPDF = contentWidth * 0.8; 
+                let imgHeightPDF = imgWidthPDF / aspectRatio;
+
+                if (imgHeightPDF > 80) { 
+                    imgHeightPDF = 80;
+                    imgWidthPDF = imgHeightPDF * aspectRatio;
+                }
+                 if (yPos + imgHeightPDF > doc.internal.pageSize.getHeight() - pageMargin) {
+                    doc.addPage();
+                    yPos = pageMargin;
+                }
+                await doc.addImage(imgData, 'JPEG', pageMargin + (contentWidth - imgWidthPDF) / 2, yPos, imgWidthPDF, imgHeightPDF);
+                yPos += imgHeightPDF + baseLineHeight;
+            } catch (e) {
+                console.error("Error adding image to PDF:", e);
+                addText("Hoofdafbeelding kon niet geladen worden.", 10, 'italic');
+            }
+        }
+
+        const tagline = document.querySelector('.hero-tagline-v5')?.innerText.trim();
+        if (tagline) addText(tagline, 12, 'italic', pageWidth / 2, 'center', true);
+
+        const priceLabel = document.querySelector('.price-label-v5')?.innerText.trim();
+        const priceAmount = document.querySelector('.price-amount-v5')?.innerText.trim();
+        if (priceLabel && priceAmount) {
+            addText(`${priceLabel}: ${priceAmount}`, 14, 'bold');
+        }
+        const availability = document.querySelector('.availability-fi')?.innerText.trim();
+        if (availability) addText(availability, 9, 'normal');
+        yPos += baseLineHeight * 0.5;
+
+        addText('Korte Specificaties', 16, 'bold', pageMargin, 'left', true);
+        const keySpecsItems = document.querySelectorAll('.key-specs-grid-v5 .spec-item-v5');
+        keySpecsItems.forEach(item => {
+            addText(`- ${item.innerText.trim().replace(/\n/g, ' ')}`, 10, 'normal');
+        });
+        yPos += baseLineHeight;
+
+        const aboutTitle = document.querySelector('.yacht-about-fi-v5 h2')?.innerText.trim();
+        addText(aboutTitle || 'Meer over dit Jacht', 16, 'bold', pageMargin, 'left', true);
+        document.querySelectorAll('.yacht-about-fi-v5 p').forEach(p => {
+            addText(p.innerText.trim(), 10, 'normal');
+        });
+        yPos += baseLineHeight;
+
+        const featuresTitle = document.querySelector('.yacht-special-features-fi-v5 h2')?.innerText.trim();
+        addText(featuresTitle || 'Bijzondere Kenmerken', 16, 'bold', pageMargin, 'left', true);
+        document.querySelectorAll('.yacht-special-features-fi-v5 li').forEach(li => {
+            addText(`• ${li.innerText.trim()}`, 10, 'normal');
+        });
+        yPos += baseLineHeight;
+
+        addText('Volledige Specificaties', 16, 'bold', pageMargin, 'left', true);
+        document.querySelectorAll('.spec-category-fi-v5').forEach(category => {
+            const categoryTitle = category.querySelector('h3')?.innerText.trim();
+            if (categoryTitle) addText(categoryTitle, 12, 'bold', pageMargin, 'left', true);
+            category.querySelectorAll('table tr').forEach(row => {
+                const cells = row.querySelectorAll('td');
+                if (cells.length === 2) {
+                    addText(`${cells[0].innerText.trim()}: ${cells[1].innerText.trim()}`, 10, 'normal');
+                }
+            });
+            yPos += baseLineHeight * 0.25;
+        });
+
+        doc.save(`${yachtNameForTitle.replace(/[^a-zA-Z0-9]/g, '_')}_Brochure.pdf`);
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const firstThumbnailV5 = document.querySelector('.thumbnail-preview-fi-v5 .thumbnail-fi-v5');
+        if (firstThumbnailV5) {
+            firstThumbnailV5.classList.add('active');
+            const initialImageSrcMatch = firstThumbnailV5.getAttribute('onclick').match(/onclick="updateMainGalleryImageV5\\(this, '([^']*)'\\)"/);
+            if (initialImageSrcMatch && initialImageSrcMatch[1]) {
+                 document.getElementById('mainGalleryImageDisplayV5').src = initialImageSrcMatch[1];
+            } else {
+                console.warn('Could not extract initial image for gallery from onclick for Sunseeker 116.');
+                 document.getElementById('mainGalleryImageDisplayV5').src = firstThumbnailV5.src;
+            }
+        }
+
+        const downloadBtn = document.getElementById('downloadBrochureBtn');
+        if (downloadBtn) {
+            downloadBtn.addEventListener('click', generateAndDownloadPdf);
+        }
+
+        const mainGalleryImage = document.getElementById('mainGalleryImageDisplayV5');
+        if (mainGalleryImage) {
+            mainGalleryImage.addEventListener('click', openImageLightboxV5);
+        }
+
+        const lightboxOverlay = document.getElementById('imageLightboxV5');
+        const lightboxCloseBtn = document.querySelector('.lightbox-close-v5');
+
+        if (lightboxOverlay) {
+            lightboxOverlay.addEventListener('click', function(event) {
+                if (event.target === lightboxOverlay) {
+                    closeImageLightboxV5();
+                }
+            });
+        }
+        if (lightboxCloseBtn) {
+            lightboxCloseBtn.addEventListener('click', closeImageLightboxV5);
+        }
+
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape' && document.getElementById('imageLightboxV5').style.display === 'flex') {
+                closeImageLightboxV5();
+            }
+        });
+    });
+  </script>
+
+</body>
+</html> 

@@ -276,6 +276,20 @@
         text-align: right;
     }
 
+    .btn-discover-more {
+      font-size: 1.3rem;
+      font-weight: bold;
+      color: var(--accent-color) !important;
+      background: none;
+      border: none;
+      text-decoration: underline;
+      padding: 0.5rem 0;
+      transition: color 0.3s ease;
+    }
+    .btn-discover-more:hover {
+      color: var(--accent-hover) !important;
+      text-decoration: underline;
+    }
     .btn-add-to-cart-detail {
       font-family: 'Montserrat', sans-serif;
       background-color: var(--button-primary-bg);
@@ -374,6 +388,244 @@
         .watch-specs-table th, .watch-specs-table td { padding: 0.5rem; }
     }
 
+    /* Movement Section Styles (Copied from Breitling) */
+    .movement-section {
+        max-width: 1200px;
+        margin: 3rem auto;
+        padding: 2rem;
+        background-color: var(--card-bg);
+        border-radius: 8px;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 3rem;
+        align-items: center;
+    }
+    .movement-info {
+        padding-right: 2rem;
+    }
+    .movement-info .section-subtitle {
+        font-family: 'Montserrat', sans-serif;
+        font-size: 0.9rem;
+        color: var(--text-color);
+        opacity: 0.7;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        margin-bottom: 0.5rem;
+    }
+    .movement-info .calibre-name {
+        font-family: 'Didot', serif;
+        font-size: 3rem;
+        color: var(--accent-color);
+        margin-bottom: 1rem;
+        line-height: 1.2;
+    }
+    .movement-info .movement-description {
+        font-size: 0.95rem;
+        line-height: 1.6;
+        margin-bottom: 1.5rem;
+        color: var(--text-color);
+        opacity: 0.85;
+    }
+    .movement-specs {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+    .movement-specs li {
+        font-family: 'Montserrat', sans-serif;
+        font-size: 0.9rem;
+        color: var(--text-color);
+        margin-bottom: 0.8rem;
+        display: flex;
+        align-items: center;
+    }
+    .movement-specs li .spec-icon {
+        margin-right: 0.75rem;
+        font-size: 1.2rem;
+        color: var(--accent-color);
+        width: 20px;
+        text-align: center;
+    }
+    .movement-image-container {
+        text-align: center;
+    }
+    .movement-image {
+        max-width: 100%;
+        height: auto;
+        border-radius: 8px;
+        object-fit: contain;
+    }
+
+    /* You Might Also Like Section - Carousel Styles (Copied from Breitling) */
+    .related-products-section {
+        max-width: 1200px;
+        margin: 3rem auto;
+        padding: 0 2rem;
+    }
+    .related-products-heading {
+        font-family: 'Didot', serif;
+        font-size: 2.5rem;
+        color: var(--text-color);
+        text-align: center;
+        margin-bottom: 2rem;
+    }
+    .related-products-grid { /* This is the track for the carousel */
+        display: flex;
+        overflow-x: hidden;
+        padding-bottom: 1rem;
+        position: relative;
+        justify-content: center; /* Added to center cards when not overflowing */
+    }
+    .related-products-carousel-wrapper {
+        position: relative;
+    }
+    .related-product-card {
+        background-color: var(--card-bg);
+        border: 1px solid var(--card-border);
+        border-radius: 8px;
+        overflow: hidden;
+        text-decoration: none;
+        color: var(--text-color);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        display: flex;
+        flex-direction: column;
+        min-width: 280px;
+        margin-right: 1.5rem;
+        position: relative;
+    }
+    .related-product-card:last-child {
+        margin-right: 0;
+    }
+    .related-product-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+    }
+    body.dark .related-product-card:hover {
+        box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+    }
+    .related-product-image-container {
+        width: 100%;
+        padding-top: 65%;
+        position: relative;
+        overflow: hidden;
+        background-color: #f0f0f0;
+    }
+    .related-product-image {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+    }
+    body.dark .related-product-image-container {
+        background-color: #2a2a2a;
+    }
+    .related-product-tag {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        background-color: var(--accent-color);
+        color: var(--bg-dark);
+        font-family: 'Montserrat', sans-serif;
+        font-size: 0.7rem;
+        font-weight: 700;
+        padding: 0.25rem 0.5rem;
+        border-radius: 3px;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        z-index: 1;
+    }
+    body.dark .related-product-tag {
+        color: var(--bg-light);
+    }
+    .related-product-info {
+        padding: 0.5rem;
+        text-align: center;
+        flex-grow: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+    }
+    .related-product-name {
+        font-family: 'Montserrat', sans-serif;
+        font-size: 0.8rem;
+        font-weight: 600;
+        margin-bottom: 0.1rem;
+        color: var(--text-color);
+        line-height: 1.1;
+    }
+    .related-product-price { /* Description line */
+        font-family: 'Montserrat', sans-serif;
+        font-size: 0.7rem;
+        color: var(--text-color);
+        opacity: 0.7;
+        font-weight: normal;
+        line-height: 1.1;
+    }
+    .carousel-nav {
+        text-align: center;
+        margin-top: 1.5rem;
+    }
+    .carousel-nav button {
+        background-color: transparent;
+        border: 1px solid var(--accent-color);
+        color: var(--accent-color);
+        padding: 0.5rem 0.8rem;
+        margin: 0 0.5rem;
+        cursor: pointer;
+        border-radius: 50%;
+        font-size: 1.2rem;
+        line-height: 1;
+        width: 40px;
+        height: 40px;
+        transition: background-color 0.3s ease, color 0.3s ease;
+    }
+    .carousel-nav button:hover {
+        background-color: var(--accent-color);
+        color: var(--button-primary-text);
+    }
+    body.dark .carousel-nav button {
+        border-color: var(--accent-dark);
+        color: var(--accent-dark);
+    }
+    body.dark .carousel-nav button:hover {
+        background-color: var(--accent-dark);
+        color: var(--bg-dark);
+    }
+
+    /* Responsive adjustments for Movement Section (Copied from Breitling) */
+    @media (max-width: 992px) {
+        .movement-section {
+            grid-template-columns: 1fr;
+            gap: 2rem;
+            padding: 1.5rem;
+        }
+        .movement-info {
+            padding-right: 0;
+            text-align: center;
+        }
+        .movement-specs li {
+            justify-content: center;
+        }
+        .movement-image-container {
+            order: -1;
+            margin-bottom: 1.5rem;
+        }
+        .movement-info .calibre-name {
+            font-size: 2.5rem;
+        }
+    }
+    @media (max-width: 768px) {
+        .movement-info .calibre-name {
+            font-size: 2rem;
+        }
+        .related-product-card { /* Copied from Breitling */
+            min-width: 250px;
+        }
+    }
+
   </style>
 </head>
 <body>
@@ -384,11 +636,11 @@
       <span class="hamburger"></span>
     </button>
     <nav class="nav-links-container">
-      <a href="../Rest/index.html">Home</a>
-      <a href="../Rest/categorieën.html">Categorieën</a>
-      <a href="horloges.html">Horloges</a>
-      <a href="../jachten/jachten.html">Jachten</a>
-      <a href="../Rest/cart.html">Account</a>
+      <a href="../Rest/index.php">Home</a>
+      <a href="../Rest/categorieën.php">Categorieën</a>
+      <a href="horloges.php">Horloges</a>
+      <a href="../jachten/jachten.php">Jachten</a>
+      <a href="../dashboard.php">Account</a>
       <button id="theme-toggle" aria-label="Toggle dark mode">🌙</button>
     </nav>
   </header>
@@ -463,10 +715,76 @@
         </table>
 
         <p class="watch-price">€ 5.250,-</p>
-        <a href="../Rest/cart.html" class="btn-add-to-cart-detail">Toevoegen aan winkelwagen</a>
+        <a href="../dashboard.php" class="btn-add-to-cart-detail">Bieding doen</a>
       </div>
     </div>
   </div>
+
+  <!-- Movement Section (Adapted for Relic) -->
+  <section class="movement-section">
+    <div class="movement-info">
+      <p class="section-subtitle">Movement</p>
+      <h2 class="calibre-name">CALIBRE SELLITA SW200-1</h2>
+      <p class="movement-description">
+        A robust and reliable self-winding Swiss movement, known for its precision and durability. The Sellita SW200-1 is a popular choice for quality timepieces, offering excellent performance.
+      </p>
+      <ul class="movement-specs">
+        <li><span class="spec-icon">⚙️</span> Self Winding</li>
+        <li><span class="spec-icon">⏳</span> Approx. 38 Hours Power Reserve</li>
+        <li><span class="spec-icon">🔊</span> Frequency 4 Hz (28,800 vph)</li>
+      </ul>
+    </div>
+    <div class="movement-image-container">
+      <img src="../images/movementrelic.png" alt="Sellita SW200-1 Calibre Movement" class="movement-image">
+    </div>
+  </section>
+
+  <!-- You Might Also Like Section (Adapted for Relic) -->
+  <section class="related-products-section">
+    <h2 class="related-products-heading">You Might Also Like</h2>
+    <div class="related-products-carousel-wrapper">
+      <div class="related-products-grid" id="relatedProductsTrack">
+          <!-- Card 1 -->
+          <a href="breitling-detail.html" class="related-product-card">
+              <span class="related-product-tag">Aviator</span>
+              <div class="related-product-image-container">
+                  <img src="../images/Watch4.jpg" alt="Breitling Navitimer" class="related-product-image">
+              </div>
+              <div class="related-product-info">
+                  <h3 class="related-product-name">Breitling Navitimer</h3>
+                  <p class="related-product-price">Iconic Pilot's Chronograph</p>
+              </div>
+          </a>
+          <!-- Card 2 -->
+          <a href="tissot-detail.html" class="related-product-card">
+              <span class="related-product-tag">Retro</span>
+              <div class="related-product-image-container">
+                  <img src="../images/Watch5.jpg" alt="Tissot PRX" class="related-product-image"> <!-- Assuming Watch5.jpg is a Tissot image -->
+              </div>
+              <div class="related-product-info">
+                  <h3 class="related-product-name">Tissot PRX</h3>
+                  <p class="related-product-price">Integrated Bracelet Design</p>
+              </div>
+          </a>
+          <!-- Card 3 -->
+          <a href="omega-seamaster-detail.html" class="related-product-card">
+              <span class="related-product-tag">Diver</span>
+              <div class="related-product-image-container">
+                  <img src="../images/horloge2.jpg" alt="Omega Seamaster" class="related-product-image"> <!-- Assuming horloge2.jpg is an Omega image -->
+              </div>
+              <div class="related-product-info">
+                  <h3 class="related-product-name">Omega Seamaster</h3>
+                  <p class="related-product-price">Professional Dive Watch</p>
+              </div>
+          </a>
+      </div>
+    </div>
+    <div class="carousel-nav">
+      <button id="prevRelated" aria-label="Previous related item">❮</button>
+      <button id="nextRelated" aria-label="Next related item">❯</button>
+    </div>
+  </section>
+
 </main>
 
 <footer>
@@ -511,6 +829,76 @@
       navToggle.classList.toggle('active');
       navLinksContainer.classList.toggle('active');
     });
+  }
+
+  // Related Products Carousel Script (Copied from Breitling)
+  const track = document.getElementById('relatedProductsTrack');
+  const prevButton = document.getElementById('prevRelated');
+  const nextButton = document.getElementById('nextRelated');
+  
+  if (track && prevButton && nextButton) {
+      // Ensure cards are loaded for offsetWidth calculation
+      let cardWidth = 0;
+      let gap = 24; // Default gap, matches 1.5rem
+      
+      const firstCard = track.querySelector('.related-product-card');
+      if (firstCard) {
+          cardWidth = firstCard.offsetWidth;
+          const cardStyle = getComputedStyle(firstCard);
+          gap = parseFloat(cardStyle.marginRight);
+      } else {
+          // Fallback if cards not immediately available (though they should be)
+          cardWidth = 280; // from min-width
+      }
+
+      const scrollAmount = cardWidth + gap;
+      let currentScroll = 0;
+
+      nextButton.addEventListener('click', () => {
+          const maxScroll = track.scrollWidth - track.clientWidth;
+          if (currentScroll < maxScroll) {
+              currentScroll += scrollAmount;
+              if (currentScroll > maxScroll) currentScroll = maxScroll;
+              track.style.transform = `translateX(-${currentScroll}px)`;
+          }
+          updateNavButtons(); // Update immediately
+      });
+
+      prevButton.addEventListener('click', () => {
+          if (currentScroll > 0) {
+              currentScroll -= scrollAmount;
+              if (currentScroll < 0) currentScroll = 0;
+              track.style.transform = `translateX(-${currentScroll}px)`;
+          }
+          updateNavButtons(); // Update immediately
+      });
+      
+      function updateNavButtons() {
+          const maxScroll = track.scrollWidth - track.clientWidth;
+          // A small tolerance for floating point issues
+          prevButton.style.display = currentScroll > 1 ? 'inline-block' : 'none';
+          nextButton.style.display = currentScroll < maxScroll - 1 ? 'inline-block' : 'none';
+      }
+      
+      // Initial state and on resize (basic implementation)
+      // Use a timeout to ensure layout is stable for initial calculation
+      setTimeout(() => {
+          // Recalculate cardWidth and gap in case of late styling or font loading
+          const firstCardUpdated = track.querySelector('.related-product-card');
+          if (firstCardUpdated) {
+              cardWidth = firstCardUpdated.offsetWidth;
+              const cardStyleUpdated = getComputedStyle(firstCardUpdated);
+              gap = parseFloat(cardStyleUpdated.marginRight);
+          }
+          // scrollAmount might need recalculation here if cardWidth/gap changed significantly
+          updateNavButtons();
+      }, 200); 
+
+      // Consider adding a resize listener to recalculate and updateNavButtons if layout is very dynamic
+      // window.addEventListener('resize', () => { /* ... recalculate ... */ updateNavButtons(); });
+
+  } else {
+      console.warn("Carousel elements not found for You Might Also Like section in relic-detail.html.");
   }
 
 </script>

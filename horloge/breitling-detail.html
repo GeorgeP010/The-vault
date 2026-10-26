@@ -226,6 +226,8 @@
     .watch-primary-image-container {
         text-align: center;
         margin-bottom: 1rem;
+        position: relative; /* Added for zoom effect */
+        overflow: hidden; /* Added for zoom effect */
     }
     .watch-primary-image {
         max-width: 100%;
@@ -234,6 +236,7 @@
         object-fit: contain;
         border-radius: 8px;
         border: 1px solid var(--card-border);
+        transition: transform 0.3s ease; /* Added for zoom effect */
     }
 
     .watch-description {
@@ -374,6 +377,294 @@
         .watch-specs-table th, .watch-specs-table td { padding: 0.5rem; }
     }
 
+    /* Styles for Image Zoom */
+    .img-zoom-result {
+        border: 1px solid var(--card-border);
+        width: 300px; /* Adjust as needed */
+        height: 300px; /* Adjust as needed */
+        position: absolute;
+        top: 0;
+        left: 105%; /* Position to the right of the main image */
+        display: none; /* Initially hidden */
+        background-repeat: no-repeat;
+        z-index: 100;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    }
+
+    /* Movement Section Styles */
+    .movement-section {
+        max-width: 1200px;
+        margin: 3rem auto;
+        padding: 2rem;
+        background-color: var(--card-bg); /* Or a slightly different bg if needed */
+        border-radius: 8px;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 3rem;
+        align-items: center;
+    }
+    .movement-info {
+        padding-right: 2rem; /* Add some space from the image */
+    }
+    .movement-info .section-subtitle {
+        font-family: 'Montserrat', sans-serif;
+        font-size: 0.9rem;
+        color: var(--text-color);
+        opacity: 0.7;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        margin-bottom: 0.5rem;
+    }
+    .movement-info .calibre-name {
+        font-family: 'Didot', serif;
+        font-size: 3rem; /* Adjusted from hero */
+        color: var(--accent-color); /* Using accent for the calibre name */
+        margin-bottom: 1rem;
+        line-height: 1.2;
+    }
+    .movement-info .movement-description {
+        font-size: 0.95rem;
+        line-height: 1.6;
+        margin-bottom: 1.5rem;
+        color: var(--text-color);
+        opacity: 0.85;
+    }
+    .movement-info .read-more-link {
+        font-family: 'Montserrat', sans-serif;
+        font-size: 0.9rem;
+        color: var(--accent-color);
+        text-decoration: underline;
+        cursor: pointer;
+        transition: color 0.3s ease;
+        display: inline-block;
+        margin-bottom: 2rem;
+    }
+    .movement-info .read-more-link:hover {
+        color: var(--accent-hover);
+    }
+    .movement-specs {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+    .movement-specs li {
+        font-family: 'Montserrat', sans-serif;
+        font-size: 0.9rem;
+        color: var(--text-color);
+        margin-bottom: 0.8rem;
+        display: flex;
+        align-items: center;
+    }
+    .movement-specs li .spec-icon {
+        margin-right: 0.75rem;
+        font-size: 1.2rem;
+        color: var(--accent-color);
+        width: 20px; /* For alignment */
+        text-align: center;
+    }
+    .movement-image-container {
+        text-align: center;
+    }
+    .movement-image {
+        max-width: 100%;
+        height: auto;
+        border-radius: 8px;
+        object-fit: contain;
+    }
+
+    /* You Might Also Like Section - Carousel Styles */
+    .related-products-section {
+        max-width: 1200px;
+        margin: 3rem auto;
+        padding: 0 2rem; /* Align with watch-detail-container padding */
+    }
+    .related-products-heading {
+        font-family: 'Didot', serif;
+        font-size: 2.5rem;
+        color: var(--text-color);
+        text-align: center;
+        margin-bottom: 2rem;
+    }
+    .related-products-grid {
+        display: flex; /* Changed from grid to flex for carousel behavior */
+        overflow-x: hidden; /* Hide native scrollbar */
+        scroll-snap-type: x mandatory; /* Optional: for snap scrolling */
+        -webkit-overflow-scrolling: touch; /* For smooth scrolling on iOS */
+        padding-bottom: 1rem; /* Space for potential scrollbar or just padding */
+        position: relative;
+        justify-content: center; /* Added to center cards when not overflowing */
+    }
+    .related-products-carousel-wrapper {
+        position: relative;
+    }
+    .related-products-track {
+        display: flex;
+        transition: transform 0.5s ease-in-out;
+    }
+    .related-product-card {
+        background-color: var(--card-bg);
+        border: 1px solid var(--card-border);
+        border-radius: 8px;
+        overflow: hidden;
+        text-decoration: none;
+        color: var(--text-color);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        display: flex; /* Ensure flex works for content alignment */
+        flex-direction: column;
+        min-width: 280px; /* Fixed width for carousel items */
+        margin-right: 1.5rem; /* Gap between cards */
+        scroll-snap-align: start; /* For snap scrolling */
+        position: relative; /* For tag positioning */
+    }
+    .related-product-card:last-child {
+        margin-right: 0;
+    }
+    .related-product-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+    }
+    body.dark .related-product-card:hover {
+        box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+    }
+    .related-product-image-container {
+        width: 100%;
+        padding-top: 65%; /* Reduced from 75% to make image area shorter */
+        position: relative;
+        overflow: hidden;
+        background-color: #f0f0f0; /* Placeholder bg for images */
+    }
+    .related-product-image {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: contain; /* Changed from cover to contain */
+    }
+    body.dark .related-product-image-container {
+        background-color: #2a2a2a;
+    }
+    .related-product-tag {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        background-color: var(--accent-color);
+        color: var(--bg-dark); /* Text color for tag */
+        font-family: 'Montserrat', sans-serif;
+        font-size: 0.7rem;
+        font-weight: 700;
+        padding: 0.25rem 0.5rem;
+        border-radius: 3px;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        z-index: 1;
+    }
+    body.dark .related-product-tag {
+        color: var(--bg-light); /* Ensure contrast in dark mode */
+    }
+    .related-product-info {
+        padding: 0.5rem; /* Further reduced padding */
+        text-align: center; 
+        flex-grow: 0; /* Stop it from growing vertically */
+        display: flex;
+        flex-direction: column;
+        align-items: center; /* Center h3/p if their text is short */
+        justify-content: flex-start; /* Align content to the top of this box */
+    }
+    .related-product-name {
+        font-family: 'Montserrat', sans-serif;
+        font-size: 0.8rem; /* Further reduced font size */
+        font-weight: 600; 
+        margin-bottom: 0.1rem; /* Further reduced margin */
+        color: var(--text-color); 
+        line-height: 1.1; /* Tightened line height */
+    }
+    .related-product-price { 
+        font-family: 'Montserrat', sans-serif;
+        font-size: 0.7rem; /* Further reduced font size */
+        color: var(--text-color);
+        opacity: 0.7;
+        font-weight: normal; 
+        line-height: 1.1; /* Tightened line height */
+    }
+    .carousel-nav {
+        text-align: center;
+        margin-top: 1.5rem;
+    }
+    .carousel-nav button {
+        background-color: transparent;
+        border: 1px solid var(--accent-color);
+        color: var(--accent-color);
+        padding: 0.5rem 0.8rem;
+        margin: 0 0.5rem;
+        cursor: pointer;
+        border-radius: 50%;
+        font-size: 1.2rem;
+        line-height: 1;
+        width: 40px;
+        height: 40px;
+        transition: background-color 0.3s ease, color 0.3s ease;
+    }
+    .carousel-nav button:hover {
+        background-color: var(--accent-color);
+        color: var(--button-primary-text); /* Using var for consistency */
+    }
+    body.dark .carousel-nav button {
+        border-color: var(--accent-dark);
+        color: var(--accent-dark);
+    }
+    body.dark .carousel-nav button:hover {
+        background-color: var(--accent-dark);
+        color: var(--bg-dark);
+    }
+
+    /* Responsive adjustments for Movement Section */
+    @media (max-width: 992px) {
+        .movement-section {
+            grid-template-columns: 1fr;
+            gap: 2rem;
+            padding: 1.5rem;
+        }
+        .movement-info {
+            padding-right: 0;
+            text-align: center;
+        }
+        .movement-specs li {
+            justify-content: center;
+        }
+        .movement-image-container {
+            order: -1; /* Image on top on mobile */
+            margin-bottom: 1.5rem;
+        }
+        .movement-info .calibre-name {
+            font-size: 2.5rem;
+        }
+    }
+    @media (max-width: 768px) {
+        .movement-info .calibre-name {
+            font-size: 2rem;
+        }
+        .related-product-card {
+            min-width: 250px; /* Slightly smaller cards on mobile */
+        }
+    }
+
+    /* Add this to the style section */
+    .btn-discover-more {
+      font-size: 1.3rem;
+      font-weight: bold;
+      color: var(--accent-color) !important;
+      background: none;
+      border: none;
+      text-decoration: underline;
+      padding: 0.5rem 0;
+      transition: color 0.3s ease;
+    }
+    .btn-discover-more:hover {
+      color: var(--accent-hover) !important;
+      text-decoration: underline;
+    }
+
   </style>
 </head>
 <body>
@@ -384,11 +675,11 @@
       <span class="hamburger"></span>
     </button>
     <nav class="nav-links-container">
-      <a href="../Rest/index.html">Home</a>
-      <a href="../Rest/categorieën.html">Categorieën</a>
-      <a href="horloges.html">Horloges</a>
-      <a href="../jachten/jachten.html">Jachten</a>
-      <a href="../Rest/cart.html">Account</a>
+      <a href="../Rest/index.php">Home</a>
+      <a href="../Rest/categorieën.php">Categorieën</a>
+      <a href="horloges.php">Horloges</a>
+      <a href="../jachten/jachten.php">Jachten</a>
+      <a href="../dashboard.php">Account</a>
       <button id="theme-toggle" aria-label="Toggle dark mode">🌙</button>
     </nav>
   </header>
@@ -400,6 +691,7 @@
       <div class="watch-image-column">
         <div class="watch-primary-image-container">
           <img src="../images/Watch4.jpg" alt="Breitling Horloge - Hoofdafbeelding" class="watch-primary-image" id="mainWatchImage">
+          <div id="imageZoomResult" class="img-zoom-result"></div>
         </div>
       </div>
 
@@ -463,11 +755,79 @@
         </table>
 
         <p class="watch-price">€ 8.500,-</p>
-        <a href="../Rest/cart.html" class="btn-add-to-cart-detail">Toevoegen aan winkelwagen</a>
+        <a href="../dashboard.php" class="btn-add-to-cart-detail">Bieding doen</a>
       </div>
     </div>
   </div>
+
+  <!-- Movement Section -->
+  <section class="movement-section">
+    <div class="movement-info">
+      <p class="section-subtitle">Movement</p>
+      <h2 class="calibre-name">CALIBRE BREITLING 01</h2>
+      <p class="movement-description">
+        Self-winding movement with a column wheel and vertical clutch. Certified Chronometer,
+        approved by COSC, resistant to magnetic fields and shocks. Free sprung-
+        balance with silicon balance spring, automatic winding in both directions. Special luxury finish.
+      </p>
+      <ul class="movement-specs">
+        <li><span class="spec-icon">⚙️</span> Self Winding</li>
+        <li><span class="spec-icon">⏳</span> Approx. 70 Hours Power Reserve</li>
+        <li><span class="spec-icon">🔊</span> Frequency 4 Hz (28,800 vph)</li>
+      </ul>
+    </div>
+    <div class="movement-image-container">
+      <img src="../images/breitlingmovement.avif" alt="Breitling 01 Calibre Movement" class="movement-image">
+    </div>
+  </section>
+
 </main>
+
+<section class="related-products-section">
+  <h2 class="related-products-heading">You Might Also Like</h2>
+  <div class="related-products-carousel-wrapper">
+    <div class="related-products-grid" id="relatedProductsTrack"> <!-- Changed to ID for JS -->
+        <!-- Card 1 -->
+        <a href="rolex-datejust-detail.html" class="related-product-card">
+            <span class="related-product-tag">Classic</span>
+            <div class="related-product-image-container">
+                <img src="../images/Watch6.jpg" alt="Rolex Datejust" class="related-product-image">
+            </div>
+            <div class="related-product-info">
+                <h3 class="related-product-name">Rolex Datejust</h3>
+                <p class="related-product-price">Steel on Jubilee</p>
+            </div>
+        </a>
+        <!-- Card 2 -->
+        <a href="omega-seamaster-detail.html" class="related-product-card">
+            <span class="related-product-tag">Diver</span>
+            <div class="related-product-image-container">
+                <img src="../images/horloge2.jpg" alt="Omega Seamaster" class="related-product-image">
+            </div>
+            <div class="related-product-info">
+                <h3 class="related-product-name">Omega Seamaster 300M</h3>
+                <p class="related-product-price">Blue Dial, Steel</p>
+            </div>
+        </a>
+        <!-- Card 3 -->
+        <a href="seiko-detail.html" class="related-product-card">
+            <span class="related-product-tag">Value</span>
+            <div class="related-product-image-container">
+                <img src="../images/watch5.jpg" alt="Seiko Prospex" class="related-product-image">
+            </div>
+            <div class="related-product-info">
+                <h3 class="related-product-name">Seiko Prospex Diver</h3>
+                <p class="related-product-price">Automatic, Black Dial</p>
+            </div>
+        </a>
+     
+    </div>
+  </div>
+  <div class="carousel-nav">
+    <button id="prevRelated" aria-label="Previous related item">❮</button>
+    <button id="nextRelated" aria-label="Next related item">❯</button>
+  </div>
+</section>
 
 <footer>
   &copy; 2025 The Vault — Alle rechten voorbehouden.
@@ -513,24 +873,148 @@
     });
   }
 
-  // Thumbnail click to change main image and active state
-  const mainWatchImage = document.getElementById('mainWatchImage');
-  // const thumbnails = document.querySelectorAll('.watch-thumbnail'); // No longer needed
+  // Image Zoom on Hover Script
+  function imageZoom(imgID, resultID) {
+    const img = document.getElementById(imgID);
+    const result = document.getElementById(resultID);
 
-  // function changeMainImage(src) { // No longer needed
-  //   mainWatchImage.src = src;
-  //   thumbnails.forEach(thumb => {
-  //       if (thumb.querySelector('img').src === src) {
-  //           thumb.classList.add('active');
-  //       } else {
-  //           thumb.classList.remove('active');
-  //       }
-  //   });
-  // }
-  
-  // if(thumbnails.length > 0) { // No longer needed
-  //     thumbnails[0].classList.add('active');
-  // }
+    if (!img || !result) {
+      console.error("ImageZoom: Image or result element not found.");
+      return;
+    }
+
+    const resultWidth = 300; 
+    const resultHeight = 300;
+    const lensSize = 150; 
+
+    if (!img.complete || img.naturalWidth === 0) {
+        console.error("ImageZoom: Main image not fully loaded or has no dimensions when zoom was initialized. Natural width is: " + img.naturalWidth);
+        // If called before load, it might not work. The DOMContentLoaded listener tries to prevent this.
+        return; 
+    }
+
+    const cx = resultWidth / lensSize;
+    const cy = resultHeight / lensSize;
+
+    result.style.backgroundImage = "url('" + img.src + "')";
+    // Use naturalWidth/Height for background size to get the correct zoom ratio from the original image
+    result.style.backgroundSize = (img.naturalWidth * cx) + "px " + (img.naturalHeight * cy) + "px";
+
+    function moveLens(e) {
+      e.preventDefault();
+      const pos = getCursorPos(e);
+      
+      // Calculate lens position relative to the displayed image
+      let x = pos.x - (lensSize / 2);
+      let y = pos.y - (lensSize / 2);
+
+      // Prevent the lens from being positioned outside the displayed image boundaries
+      // Use offsetWidth/Height for the current rendered dimensions of the image
+      if (x > img.offsetWidth - lensSize) { x = img.offsetWidth - lensSize; }
+      if (x < 0) { x = 0; }
+      if (y > img.offsetHeight - lensSize) { y = img.offsetHeight - lensSize; }
+      if (y < 0) { y = 0; }
+
+      result.style.display = "block";
+      result.style.backgroundPosition = "-" + (x * cx) + "px -" + (y * cy) + "px";
+    }
+
+    function getCursorPos(e) {
+      const a = img.getBoundingClientRect(); // Gives position of image relative to viewport
+      // Calculate cursor position relative to the image, accounting for page scroll
+      let x = e.pageX - (a.left + window.pageXOffset);
+      let y = e.pageY - (a.top + window.pageYOffset);
+      return {x : x, y : y};
+    }
+
+    img.addEventListener("mousemove", moveLens);
+    img.addEventListener("mouseleave", () => { result.style.display = "none"; });
+    
+    result.addEventListener("mousemove", moveLens); // Keep zoom active if mouse is over result
+    result.addEventListener("mouseleave", () => { result.style.display = "none"; });
+  }
+
+  // Initialize zoom for the main watch image
+  document.addEventListener('DOMContentLoaded', function() {
+    const mainImage = document.getElementById('mainWatchImage');
+    const zoomResult = document.getElementById('imageZoomResult');
+
+    if (mainImage && zoomResult) {
+        if (mainImage.complete && mainImage.naturalWidth > 0 && mainImage.naturalHeight > 0) {
+            // If image is already loaded and has dimensions, initialize zoom
+            imageZoom("mainWatchImage", "imageZoomResult");
+        } else {
+            // Otherwise, wait for it to load
+            mainImage.onload = function() {
+                if(mainImage.naturalWidth > 0 && mainImage.naturalHeight > 0) {
+                    imageZoom("mainWatchImage", "imageZoomResult");
+                } else {
+                    console.error("Main watch image ONLOAD but naturalWidth/Height is 0.");
+                }
+            };
+            mainImage.onerror = function() {
+                console.error("Main watch image could not be loaded (onerror triggered).");
+            };
+            // In case 'load' already fired before this script runs but 'complete' is false (e.g. for SVGs in some browsers or edge cases)
+            // or if naturalWidth/Height were 0 initially
+            if (!mainImage.complete && mainImage.src) { // if src is set but not complete, it might still be loading
+                 // onload should handle it. This is just a fallback thought, usually not needed.
+            } else if (mainImage.complete && (mainImage.naturalWidth === 0 || mainImage.naturalHeight === 0) && mainImage.src ){
+                 // If complete but no dimensions, it might be a broken image or not a typical raster image
+                 console.warn("Main image is complete but naturalWidth/Height are zero. Zoom may not function correctly.");
+            }
+        }
+    } else {
+        console.error("DOM ContentLoaded: Main image or zoom result element not found for zoom setup.");
+    }
+
+    // Related Products Carousel Script
+    const track = document.getElementById('relatedProductsTrack');
+    const prevButton = document.getElementById('prevRelated');
+    const nextButton = document.getElementById('nextRelated');
+    
+    if (track && prevButton && nextButton) {
+        const cardWidth = track.querySelector('.related-product-card')?.offsetWidth || 280; // Width of a card
+        const gap = parseFloat(getComputedStyle(track.querySelector('.related-product-card')).marginRight) || 24; // 1.5rem default gap
+        const scrollAmount = cardWidth + gap;
+        let currentScroll = 0;
+
+        nextButton.addEventListener('click', () => {
+            const maxScroll = track.scrollWidth - track.clientWidth;
+            if (currentScroll < maxScroll) {
+                currentScroll += scrollAmount;
+                if (currentScroll > maxScroll) currentScroll = maxScroll; // Don't overscroll
+                track.style.transform = `translateX(-${currentScroll}px)`;
+            }
+            setTimeout(updateNavButtons, 50);
+        });
+
+        prevButton.addEventListener('click', () => {
+            if (currentScroll > 0) {
+                currentScroll -= scrollAmount;
+                if (currentScroll < 0) currentScroll = 0; // Don't underscroll
+                track.style.transform = `translateX(-${currentScroll}px)`;
+            }
+            setTimeout(updateNavButtons, 50);
+        });
+        
+        // Hide/show nav buttons based on scroll position (basic)
+        // This needs to be more robust for dynamic content / resize
+        function updateNavButtons() {
+            const maxScroll = track.scrollWidth - track.clientWidth;
+            prevButton.style.display = currentScroll > 0 ? 'inline-block' : 'none';
+            nextButton.style.display = currentScroll < maxScroll -1 ? 'inline-block' : 'none'; // -1 for precision
+        }
+        // Initial state + on scroll (if we implement native scroll later)
+        // For transform-based, we call this after each click
+        // Small timeout to let DOM update forclientWidth if needed
+        setTimeout(updateNavButtons, 100); 
+
+    } else {
+        console.warn("Carousel elements not found for You Might Also Like section.");
+    }
+
+  });
 
 </script>
 
