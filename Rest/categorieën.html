@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>The Vault - Categorieën</title>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Didot&family=Montserrat:wght@400;700&display=swap" rel="stylesheet" />
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+  <style>
+    /* Root kleuren voor licht en donker */
+    :root {
+      --bg-light: #f8f9fa;
+      --bg-dark: #121212;
+      --text-light: #111;
+      --text-dark: #eee;
+      --accent-light: #bfa14a;
+      --accent-dark: #d4af37;
+      --accent-hover-light: #9a7f36;
+      --accent-hover-dark: #a5820a;
+      --card-bg-light: #fff;
+      --card-bg-dark: #1f1f1f;
+      --border-light: #e9ecef;
+      --border-dark: #333;
+      --header-bg-light: #fff;
+      --header-bg-dark: #1c1c1c;
+      --header-border-light: #e0e0e0;
+      --header-border-dark: #333;
+      --footer-bg-light: #111;
+      --footer-bg-dark: #1c1c1c;
+      --footer-text-light: #ccc;
+      --footer-text-dark: #ccc;
+    }
+
+    /* Algemene reset en body styling */
+    html, body {
+      margin: 0; padding: 0;
+      height: 100%;
+      font-family: 'Montserrat', sans-serif;
+      background-color: var(--bg-light);
+      color: var(--text-light);
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      transition: background-color 0.4s ease, color 0.4s ease;
+    }
+
+    body.dark {
+      background-color: var(--bg-dark);
+      color: var(--text-dark);
+    }
+
+    /* Header navbar */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 9999;
+      background-color: var(--header-bg-light);
+      border-bottom: 1px solid var(--header-border-light);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.5rem 4rem;
+      transition: background-color 0.4s ease, border-color 0.4s ease;
+    }
+
+    body.dark header {
+      background-color: var(--header-bg-dark);
+      border-bottom: 1px solid var(--header-border-dark);
+    }
+
+    /* Logo styling */
+    .logo {
+      font-family: 'Didot', serif;
+      font-size: 2.5rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      color: inherit;
+      user-select: none;
+      text-transform: uppercase;
+      cursor: default;
+      transition: color 0.4s ease;
+    }
+
+    /* Navbar links */
+    nav a {
+      color: inherit;
+      text-decoration: none;
+      font-weight: 500;
+      margin-left: 3rem;
+      font-size: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      position: relative;
+      transition: color 0.3s ease;
+    }
+
+    /* Link hover underline */
+    nav a::after {
+      content: '';
+      position: absolute;
+      width: 0%;
+      height: 2px;
+      bottom: -4px;
+      left: 0;
+      background-color: var(--accent-light);
+      transition: width 0.3s ease;
+    }
+    nav a:hover::after {
+      width: 100%;
+    }
+    body.dark nav a::after {
+      background-color: var(--accent-dark);
+    }
+
+    /* Hover kleur link */
+    nav a:hover {
+      color: var(--accent-light);
+    }
+    body.dark nav a:hover {
+      color: var(--accent-dark);
+    }
+
+    /* Dark mode toggle knop */
+    #theme-toggle {
+      background: none;
+      border: 1px solid currentColor;
+      color: inherit;
+      padding: 0.5rem 0.8rem;
+      margin-left: 3rem;
+      font-size: 1rem;
+      cursor: pointer;
+      border-radius: 5px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      transition: background-color 0.3s ease, color 0.3s ease;
+      user-select: none;
+    }
+    #theme-toggle:hover {
+      background-color: var(--accent-light);
+      color: var(--bg-light);
+      border-color: var(--accent-light);
+    }
+    body.dark #theme-toggle:hover {
+      background-color: var(--accent-dark);
+      color: var(--bg-dark);
+      border-color: var(--accent-dark);
+    }
+
+    /* Main content wrapper: flex-grow zodat footer onderaan blijft */
+    main.content-wrapper {
+      flex-grow: 1;
+      max-width: 1200px;
+      width: 100%;
+      margin: 5rem auto 7rem;
+      padding: 0 2rem;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Header sectie binnen main */
+    .category-header {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+    .category-heading {
+      font-family: 'Didot', serif;
+      font-size: 3rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: inherit;
+    }
+
+    /* Grid voor categorieën */
+    .categories {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2.5rem;
+    }
+
+    /* Category card styling */
+    .category-card {
+      background-color: var(--card-bg-light);
+      border: 1px solid var(--border-light);
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 6px 12px rgba(0,0,0,0.08);
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      color: inherit;
+      text-decoration: none;
+      transition:
+        box-shadow 0.4s ease,
+        transform 0.4s ease,
+        border-color 0.4s ease;
+      position: relative;
+    }
+    .category-card:hover {
+      box-shadow: 0 12px 24px rgba(0,0,0,0.12);
+      transform: translateY(-5px);
+      border-color: var(--accent-light);
+    }
+    body.dark .category-card {
+      background-color: var(--card-bg-dark);
+      border-color: var(--border-dark);
+    }
+    body.dark .category-card:hover {
+      border-color: var(--accent-dark);
+      box-shadow: 0 12px 24px rgba(212,175,55,0.25);
+    }
+
+    /* Media wrapper (afbeelding + video) */
+    .media-wrapper {
+      position: relative;
+      width: 100%;
+      height: 180px;
+      overflow: hidden;
+      border-bottom: 1px solid #ddd;
+      border-radius: 10px 10px 0 0;
+      user-select: none;
+    }
+    /* Overlay gradient op hover */
+    .media-wrapper::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, rgba(0,0,0,0) 50%, rgba(0,0,0,0.3) 100%);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.5s ease;
+      border-radius: 10px 10px 0 0;
+    }
+    .category-card:hover .media-wrapper::after {
+      opacity: 1;
+    }
+
+    /* Afbeeldingen en video styling */
+    .category-image, .category-video {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 10px 10px 0 0;
+      transition: opacity 0.5s ease;
+      pointer-events: none;
+    }
+    /* Video standaard onzichtbaar */
+    .category-video {
+      opacity: 0;
+    }
+    /* Op hover video tonen, afbeelding verbergen */
+    .category-card:hover .category-video {
+      opacity: 1;
+    }
+    .category-card:hover .category-image {
+      opacity: 0;
+    }
+
+    /* Content binnen categorie card */
+    .category-content {
+      padding: 1.5rem;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      text-align: center;
+    }
+    .category-title {
+      font-family: 'Didot', serif;
+      font-weight: 700;
+      font-size: 1.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 0.5rem;
+    }
+    .category-description {
+      font-size: 1rem;
+      color: #666;
+      transition: color 0.4s ease;
+    }
+    body.dark .category-description {
+      color: #aaa;
+    }
+
+    /* Footer styling */
+    footer {
+      background-color: var(--footer-bg-light);
+      color: var(--footer-text-light);
+      text-align: center;
+      padding: 1.2rem 1rem;
+      font-size: 0.9rem;
+      transition: background-color 0.4s ease, color 0.4s ease;
+    }
+    body.dark footer {
+      background-color: var(--footer-bg-dark);
+      color: var(--footer-text-dark);
+    }
+
+    /* Hamburger Menu Styles */
+    .nav-toggle {
+        display: none; 
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        padding: 0.5rem;
+        z-index: 1001;
+    }
+    .hamburger {
+        display: block;
+        position: relative;
+        width: 25px;
+        height: 3px;
+        background-color: var(--text-light); /* Default light mode */
+        transition: all 0.3s ease-in-out;
+    }
+    body.dark .hamburger {
+        background-color: var(--text-dark);
+    }
+    .hamburger::before,
+    .hamburger::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        width: 100%;
+        height: 3px;
+        background-color: var(--text-light); /* Default light mode */
+        transition: all 0.3s ease-in-out;
+    }
+    body.dark .hamburger::before,
+    body.dark .hamburger::after {
+        background-color: var(--text-dark);
+    }
+    .hamburger::before {
+        top: -8px;
+    }
+    .hamburger::after {
+        bottom: -8px;
+    }
+    .nav-toggle.active .hamburger {
+        background-color: transparent;
+    }
+    .nav-toggle.active .hamburger::before {
+        transform: translateY(8px) rotate(45deg);
+    }
+    .nav-toggle.active .hamburger::after {
+        transform: translateY(-8px) rotate(-45deg);
+    }
+    .nav-links-container {
+        display: flex;
+        align-items: center;
+    }
+
+    /* Responsive tweaks */
+    @media (max-width: 1024px) { /* General tablet */
+        .logo {
+            font-size: 2.2rem;
+        }
+        .nav-links-container a {
+            margin-left: 2rem;
+            font-size: 0.9rem;
+        }
+        .nav-links-container #theme-toggle {
+            margin-left: 2rem;
+            font-size: 0.9rem;
+        }
+    }
+
+    @media (max-width: 768px) {
+      header {
+        padding: 1rem 2rem;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .nav-toggle {
+        display: block;
+      }
+      .nav-links-container {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background-color: var(--header-bg-light);
+        flex-direction: column;
+        align-items: center;
+        padding: 1rem 0;
+        border-top: 1px solid var(--header-border-light);
+        transform: translateY(-150%);
+        transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+        opacity: 0;
+        pointer-events: none;
+        z-index: 1000;
+      }
+      body.dark .nav-links-container {
+        background-color: var(--header-bg-dark);
+        border-top: 1px solid var(--header-border-dark);
+      }
+      .nav-links-container.active {
+        transform: translateY(0);
+        opacity: 1;
+        pointer-events: auto;
+      }
+      .nav-links-container a {
+        margin: 1rem 0; /* Full width touch targets */
+        font-size: 1.1rem;
+      }
+      .nav-links-container #theme-toggle {
+        margin: 1rem 0;
+      }
+      main.content-wrapper {
+        margin: 4rem 1rem 6rem;
+        padding: 0 1rem;
+      }
+      .category-heading {
+        font-size: 2.5rem;
+      }
+      .categories {
+        gap: 1.5rem;
+      }
+      .category-title {
+        font-size: 1.5rem;
+      }
+    }
+
+    @media (max-width: 480px) { /* Mobile phones */
+        header {
+            padding: 1rem 1rem;
+            /* flex-direction: row; already default */
+        }
+        .logo {
+            font-size: 1.8rem; 
+        }
+        main.content-wrapper {
+            margin: 3rem 0.5rem 5rem;
+            padding: 0 0.5rem;
+        }
+        .category-heading {
+            font-size: 2rem;
+        }
+        .category-title {
+            font-size: 1.3rem;
+        }
+        .category-description {
+            font-size: 0.9rem;
+        }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">THE VAULT</div>
+    <button class="nav-toggle" aria-label="toggle navigation">
+      <span class="hamburger"></span>
+    </button>
+    <nav class="nav-links-container">
+      <a href="../index.html">Home</a>
+      <a href="../horloge/horloges.html">Horloges</a>
+      <a href="../auto's/autos.html">Auto's</a>
+      <a href="../jachten/jachten.html">Jachten</a>
+      <a href="cart.html">Account</a>
+      <button id="theme-toggle" aria-label="Toggle dark mode">🌙</button>
+    </nav>
+  </header>
+
+  <main class="content-wrapper">
+    <section class="category-header">
+      <h1 class="category-heading">Categorieën</h1>
+    </section>
+  
+    <section class="categories container">
+      <!-- Hier staan de categoriekaarten -->
+    </section>
+ 
+  <section class="categories container">
+    <a href="../horloge/horloges.html" class="category-card" aria-label="Horloges categorie">
+      <div class="media-wrapper">
+        <img src="../images/rolex.jpeg" alt="Horloges" class="category-image" />
+        <video class="category-video" muted loop preload="metadata" playsinline>
+          <source src="../Videos/horloge video.mp4" type="video/mp4" />
+          <source src="https://cdn.videvo.net/videvo_files/video/free/2019-06/small_watermarked/190517_07_Coins_01_4k_001_preview.webm" type="video/webm" />
+        </video>
+      </div>
+      <div class="category-content">
+        <h3 class="category-title">Horloges</h3>
+        <p class="category-description">Exclusieve limited edition horloges en design stukken.</p>
+      </div>
+    </a>
+    <a href="../jachten/jachten.html" class="category-card" aria-label="Jachten categorie">
+      <div class="media-wrapper">
+        <img src="../images1/yacht.jpg" alt="jachten" class="category-image" />
+        <video class="category-video" muted loop preload="metadata" playsinline>
+          <source src="../Videos/yacht video.mp4" type="video/mp4" />
+          <source src="https://cdn.videvo.net/videvo_files/video/free/2019-04/small_watermarked/190405_06_Car_02_preview.webm" type="video/webm" />
+        </video>
+      </div>
+      <div class="category-content">
+        <h3 class="category-title">Jachten</h3>
+        <p class="category-description">Luxe jachten met stijlvol design en topkwaliteit.</p>
+      </div>
+    </a>
+    <a href="../auto's/autos.html" class="category-card" aria-label="Auto\'s categorie">
+      <div class="media-wrapper">
+        <img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=600&q=80" alt="Auto\'s" class="category-image" />
+        <video class="category-video" muted loop preload="metadata" playsinline>
+          <source src="../Videos/auto video.mp4" type="video/mp4" />
+          <source src="https://cdn.videvo.net/videvo_files/video/free/2017-08/small_watermarked/170725_06_Sports_Car_04_preview.webm" type="video/webm" />
+        </video>
+      </div>
+      <div class="category-content">
+        <h3 class="category-title">Auto's</h3>
+        <p class="category-description">Sportwagens en luxe auto's van de nieuwste modellen.</p>
+      </div>
+    </a>
+  </section>
+</main>
+
+
+  <footer>
+    &copy; 2025 The Vault — Alle rechten voorbehouden.
+  </footer>
+
+  <script>
+    // Dark mode toggle
+    const toggleBtn = document.getElementById('theme-toggle');
+    const body = document.body;
+
+    // Check saved theme on load
+    if(localStorage.getItem('theme') === 'dark') {
+      body.classList.add('dark');
+      toggleBtn.textContent = '☀️';
+    }
+
+    toggleBtn.addEventListener('click', () => {
+      if(body.classList.contains('dark')) {
+        body.classList.remove('dark');
+        toggleBtn.textContent = '🌙';
+        localStorage.setItem('theme', 'light');
+      } else {
+        body.classList.add('dark');
+        toggleBtn.textContent = '☀️';
+        localStorage.setItem('theme', 'dark');
+      }
+    });
+
+    // Auto play videos on hover
+    document.querySelectorAll('.category-card').forEach(card => {
+      const video = card.querySelector('.category-video');
+      card.addEventListener('mouseenter', () => {
+        video.play();
+      });
+      card.addEventListener('mouseleave', () => {
+        video.pause();
+        video.currentTime = 0;
+      });
+    });
+
+    // Hamburger Menu Toggle Script
+    const navToggle = document.querySelector('.nav-toggle');
+    const navLinksContainer = document.querySelector('.nav-links-container');
+
+    if (navToggle && navLinksContainer) {
+      navToggle.addEventListener('click', () => {
+        navToggle.classList.toggle('active');
+        navLinksContainer.classList.toggle('active');
+      });
+    }
+  </script>
+</body>
+</html>

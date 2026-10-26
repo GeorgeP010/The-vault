@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>The Vault - Winkelwagen</title>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Didot&family=Montserrat:wght@400;700&display=swap" rel="stylesheet" />
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+  <style>
+    /* Consistent CSS variables */
+    :root {
+      --bg-color: #f8f9fa; 
+      --text-color: #111;
+      --accent-color: #bfa14a;
+      --accent-hover: #9a7f36;
+      --header-bg: #fff; 
+      --header-border: #e0e0e0;
+      --footer-bg: #111;
+      --footer-text: #ccc;
+      --card-bg: #fff; 
+      --card-border: #e9ecef;
+      --button-primary-bg: var(--accent-color);
+      --button-primary-text: #fff;
+      --button-primary-hover-bg: var(--accent-hover);
+    }
+    body.dark {
+      --bg-color: #121212;
+      --text-color: #eee;
+      --accent-color: #d4af37;
+      --accent-hover: #a5820a;
+      --header-bg: #1c1c1c;
+      --header-border: #333;
+      --footer-bg: #1c1c1c; 
+      --footer-text: #ccc;
+      --card-bg: #1f1f1f; 
+      --card-border: #333;
+      --button-primary-bg: var(--accent-color);
+      --button-primary-text: #121212; 
+      --button-primary-hover-bg: var(--accent-hover);
+    }
+    html {
+      height: 100%;
+    }
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      margin: 0;
+      padding: 0;
+      transition: background-color 0.5s ease, color 0.5s ease;
+      display: flex; 
+      flex-direction: column; 
+      min-height: 100vh;
+    }
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.5rem 4rem;
+      background-color: var(--header-bg);
+      border-bottom: 1px solid var(--header-border);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      transition: background-color 0.5s ease, border-color 0.5s ease;
+    }
+    .logo {
+      font-family: 'Didot', serif;
+      font-size: 2.5rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      color: var(--text-color);
+      cursor: default;
+      user-select: none;
+      text-transform: uppercase;
+      transition: color 0.5s ease;
+    }
+    nav a {
+      color: var(--text-color);
+      text-decoration: none;
+      font-weight: 500;
+      margin-left: 3rem;
+      font-size: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      transition: color 0.3s ease;
+    }
+    nav a:hover {
+      color: var(--accent-color);
+    }
+    .content-wrapper {
+      flex-grow: 1; 
+      padding: 3rem 2rem; /* Add padding to content area */
+      max-width: 1200px; /* Max width for cart content */
+      margin: 0 auto; /* Center content */
+      width:100%;
+    }
+    footer {
+      background-color: var(--footer-bg);
+      color: var(--footer-text);
+      text-align: center;
+      padding: 2rem 1rem;
+      font-size: 0.9rem;
+      letter-spacing: 0.05em;
+      user-select: none;
+      transition: background-color 0.5s ease, color 0.5s ease;
+      border-top: 1px solid transparent; 
+    }
+    body.dark footer {
+        border-top: 1px solid var(--header-border);
+    }
+    #theme-toggle {
+      background: none;
+      border: 1px solid var(--text-color);
+      color: var(--text-color);
+      padding: 0.5rem 0.8rem;
+      margin-left: 3rem;
+      font-size: 1rem; 
+      cursor: pointer;
+      border-radius: 5px;
+      transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+      text-transform: uppercase; 
+      letter-spacing: 0.1em;
+    }
+    #theme-toggle:hover {
+      background-color: var(--accent-color);
+      color: var(--bg-color); 
+      border-color: var(--accent-color);
+    }
+    body.dark #theme-toggle {
+      border-color: var(--text-color); 
+      color: var(--text-color);
+    }
+    body.dark #theme-toggle:hover {
+      background-color: var(--accent-color);
+      color: #121212; 
+      border-color: var(--accent-color);
+    }
+
+    /* Cart Page Specific Styles */
+    .cart-header {
+        font-family: 'Didot', serif;
+        font-size: 3rem;
+        font-weight: 700;
+        text-align: center;
+        margin-bottom: 2rem;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+    }
+    .cart-empty-message {
+        font-size: 1.2rem;
+        text-align: center;
+        color: var(--text-color);
+        opacity: 0.8;
+        padding: 2rem 0;
+    }
+    /* Placeholder for future cart items styling */
+    .cart-items-list {
+        /* border: 1px solid var(--card-border); */
+        /* border-radius: 8px; */
+        /* padding: 1rem; */
+    }
+    .cart-item {
+        /* display: flex; */
+        /* align-items: center; */
+        /* padding: 1rem 0; */
+        /* border-bottom: 1px solid var(--card-border); */
+    }
+    /* .cart-item:last-child { border-bottom: none; } */
+    .cart-summary {
+        /* margin-top: 2rem; */
+        /* padding: 1.5rem; */
+        /* background-color: var(--card-bg); */
+        /* border: 1px solid var(--card-border); */
+        /* border-radius: 8px; */
+    }
+    .cart-summary h3 {
+        /* font-family: 'Didot', serif; */
+        /* margin-bottom: 1rem; */
+    }
+    .btn-checkout {
+        /* display: block; */
+        /* width: 100%; */
+        /* padding: 1rem; */
+        /* background-color: var(--button-primary-bg); */
+        /* color: var(--button-primary-text); */
+        /* text-align: center; */
+        /* text-decoration: none; */
+        /* border-radius: 5px; */
+        /* font-size: 1.1rem; */
+        /* font-weight: 700; */
+        /* text-transform: uppercase; */
+        /* margin-top: 1rem; */
+        /* transition: background-color 0.3s ease; */
+    }
+    /* .btn-checkout:hover { background-color: var(--button-primary-hover-bg); } */
+
+    /* Hamburger Menu Styles */
+    .nav-toggle {
+        display: none; 
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        padding: 0.5rem;
+        z-index: 1001;
+    }
+    .hamburger {
+        display: block;
+        position: relative;
+        width: 25px;
+        height: 3px;
+        background-color: var(--text-color);
+        transition: all 0.3s ease-in-out;
+    }
+    .hamburger::before,
+    .hamburger::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        width: 100%;
+        height: 3px;
+        background-color: var(--text-color);
+        transition: all 0.3s ease-in-out;
+    }
+    .hamburger::before {
+        top: -8px;
+    }
+    .hamburger::after {
+        bottom: -8px;
+    }
+    .nav-toggle.active .hamburger {
+        background-color: transparent;
+    }
+    .nav-toggle.active .hamburger::before {
+        transform: translateY(8px) rotate(45deg);
+    }
+    .nav-toggle.active .hamburger::after {
+        transform: translateY(-8px) rotate(-45deg);
+    }
+    .nav-links-container {
+        display: flex;
+        align-items: center;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 1024px) { /* Tablet and smaller */
+        header {
+            padding: 1rem 2rem;
+        }
+        .logo {
+            font-size: 2rem;
+        }
+        .nav-links-container a {
+            margin-left: 1.5rem;
+            font-size: 0.9rem;
+        }
+        .nav-links-container #theme-toggle {
+            margin-left: 1.5rem;
+            font-size: 0.9rem;
+        }
+        .content-wrapper {
+            padding: 2rem 1.5rem;
+        }
+        .cart-header {
+            font-size: 2.5rem;
+        }
+    }
+
+    @media (max-width: 768px) { /* Smaller tablets / Large phones - Hamburger appears */
+        .nav-toggle {
+            display: block;
+        }
+        header {
+            justify-content: space-between;
+            align-items: center;
+        }
+        .nav-links-container {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background-color: var(--header-bg);
+            flex-direction: column;
+            align-items: center;
+            padding: 1rem 0;
+            border-top: 1px solid var(--header-border);
+            transform: translateY(-150%);
+            transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+            opacity: 0;
+            pointer-events: none;
+            z-index: 1000;
+        }
+        .nav-links-container.active {
+            transform: translateY(0);
+            opacity: 1;
+            pointer-events: auto;
+        }
+        .nav-links-container a {
+            margin: 1rem 0;
+            font-size: 1.1rem;
+        }
+        .nav-links-container #theme-toggle {
+            margin: 1rem 0;
+        }
+        .cart-header {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+        }
+        .cart-empty-message {
+            font-size: 1.1rem;
+        }
+    }
+
+    @media (max-width: 480px) { /* Mobile phones */
+        header {
+            padding: 1rem 1rem;
+            flex-direction: row;
+        }
+        .logo {
+            margin-bottom: 0;
+            font-size: 1.8rem; 
+        }
+        .content-wrapper {
+            padding: 1.5rem 1rem;
+        }
+        .cart-header {
+            font-size: 1.8rem;
+        }
+        .cart-empty-message {
+            font-size: 1rem;
+        }
+    }
+
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="logo">THE VAULT</div>
+  <button class="nav-toggle" aria-label="toggle navigation">
+    <span class="hamburger"></span>
+  </button>
+  <nav class="nav-links-container">
+    <a href="index.html">Home</a>
+    <a href="categorieën.html">Categorieën</a>
+    <a href="../horloge/horloges.html">Horloges</a>
+    <a href="../jachten/jachten.html">Jachten</a>
+    <button id="theme-toggle" aria-label="Toggle dark mode">🌙</button>
+  </nav>
+</header>
+
+<main class="content-wrapper">
+  <h1 class="cart-header">Uw Winkelwagen</h1>
+  
+  <div class="cart-items-list">
+    <!-- Cart items will be listed here in a real application -->
+    <p class="cart-empty-message">Uw winkelwagen is momenteel leeg.</p>
+  </div>
+
+  <!-- Placeholder for cart summary and checkout -->
+  <!-- 
+  <div class="cart-summary">
+    <h3>Overzicht</h3>
+    <p>Subtotaal: €0.00</p>
+    <p>Verzending: €0.00</p>
+    <h4>Totaal: €0.00</h4>
+    <a href="#" class="btn-checkout">Afrekenen</a>
+  </div>
+  -->
+
+</main>
+
+<footer>
+  &copy; 2025 The Vault — Alle rechten voorbehouden.
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+  // Dark Mode Toggle Script
+  const themeToggle = document.getElementById('theme-toggle');
+  const currentTheme = localStorage.getItem('theme');
+
+  if (currentTheme) {
+    document.body.classList.add(currentTheme);
+    if (currentTheme === 'dark') {
+        themeToggle.textContent = '☀️'; 
+    } else {
+        themeToggle.textContent = '🌙';
+    }
+  } else {
+    themeToggle.textContent = '🌙';
+  }
+
+  themeToggle.addEventListener('click', () => {
+    document.body.classList.toggle('dark');
+    let theme = 'light';
+    if (document.body.classList.contains('dark')) {
+      theme = 'dark';
+      themeToggle.textContent = '☀️'; 
+    } else {
+      themeToggle.textContent = '🌙'; 
+    }
+    localStorage.setItem('theme', theme);
+  });
+
+  // Hamburger Menu Toggle Script
+  const navToggle = document.querySelector('.nav-toggle');
+  const navLinksContainer = document.querySelector('.nav-links-container');
+
+  if (navToggle && navLinksContainer) {
+    navToggle.addEventListener('click', () => {
+      navToggle.classList.toggle('active');
+      navLinksContainer.classList.toggle('active');
+    });
+  }
+
+</script>
+
+</body>
+</html> 

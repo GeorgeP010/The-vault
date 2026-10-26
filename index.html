@@ -1,0 +1,891 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>The Vault - Exclusieve Luxeproducten</title>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet" />
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+  <!-- Font Awesome -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+
+  <style>
+    :root {
+      --bg-light: #f8f9fa;
+      --bg-dark: #121212;
+      --text-light: #111;
+      --text-dark: #eee;
+      --accent-light: #bfa14a;
+      --accent-dark: #d4af37;
+      --accent-hover-light: #9a7f36;
+      --accent-hover-dark: #a5820a;
+      --card-bg-light: #fff;
+      --card-bg-dark: #1f1f1f;
+      --border-light: #e9ecef;
+      --border-dark: #333;
+      --header-bg-light: #fff;
+      --header-bg-dark: #1c1c1c;
+      --header-border-light: #e0e0e0;
+      --header-border-dark: #333;
+      --footer-bg-light: #111;
+      --footer-bg-dark: #1c1c1c;
+      --footer-text-light: #ccc;
+      --footer-text-dark: #ccc;
+    }
+
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      margin: 0;
+      padding: 0;
+      transition: background-color 0.5s ease, color 0.5s ease;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    body:not(.dark) {
+      --bg-color: var(--bg-light);
+      --text-color: var(--text-light);
+      --accent-color: var(--accent-light);
+      --accent-hover: var(--accent-hover-light);
+      --header-bg: var(--header-bg-light);
+      --header-border: var(--header-border-light);
+      --footer-bg: var(--footer-bg-light);
+      --footer-text: var(--footer-text-light);
+      --card-bg: var(--card-bg-light);
+      --card-border: var(--border-light);
+    }
+
+    body.dark {
+      --bg-color: var(--bg-dark);
+      --text-color: var(--text-dark);
+      --accent-color: var(--accent-dark);
+      --accent-hover: var(--accent-hover-dark);
+      --header-bg: var(--header-bg-dark);
+      --header-border: var(--header-border-dark);
+      --footer-bg: var(--footer-bg-dark);
+      --footer-text: var(--footer-text-dark);
+      --card-bg: var(--card-bg-dark);
+      --card-border: var(--border-dark);
+    }
+
+    main.content-wrapper {
+      flex-grow: 1;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.5rem 4rem;
+      background-color: var(--header-bg);
+      border-bottom: 1px solid var(--header-border);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      transition: background-color 0.5s ease, border-color 0.5s ease;
+    }
+
+    .logo {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 2.5rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      color: inherit;
+      user-select: none;
+      text-transform: uppercase;
+      text-decoration: none;
+    }
+
+    nav a {
+      color: inherit;
+      text-decoration: none;
+      font-weight: 500;
+      margin-left: 3rem;
+      font-size: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      position: relative;
+      transition: color 0.3s ease;
+    }
+
+    nav a::after {
+      content: '';
+      position: absolute;
+      width: 0%;
+      height: 2px;
+      bottom: -4px;
+      left: 0;
+      background-color: var(--accent-color);
+      transition: width 0.3s ease;
+    }
+
+    nav a:hover::after {
+      width: 100%;
+    }
+
+    nav a:hover {
+      color: var(--accent-color);
+    }
+
+    #theme-toggle {
+      background: none;
+      border: 1px solid currentColor;
+      color: inherit;
+      padding: 0.5rem 0.8rem;
+      margin-left: 3rem;
+      font-size: 1rem;
+      cursor: pointer;
+      border-radius: 5px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      transition: background-color 0.3s ease, color 0.3s ease;
+      user-select: none;
+    }
+
+    #theme-toggle:hover {
+      background-color: var(--accent-color);
+      color: var(--bg-color);
+      border-color: var(--accent-color);
+    }
+
+    /* Loading Screen */
+    #loading-screen {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: #111;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      transition: opacity 0.8s ease, visibility 0.8s ease;
+    }
+    #loading-screen.hidden {
+      opacity: 0;
+      visibility: hidden;
+    }
+    .vault-logo {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 3rem;
+      font-weight: 700;
+      letter-spacing: 0.4em;
+      color: #d4af37;
+      text-transform: uppercase;
+      animation: pulse 1.5s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 0.3; }
+      50% { opacity: 1; }
+    }
+
+    /* Hero Section */
+    .hero {
+      position: relative;
+      height: 100vh;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: #fff;
+    }
+
+    .hero-video-container {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      z-index: 0;
+    }
+
+    .hero-video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.52);
+      z-index: 1;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      padding: 20px;
+    }
+
+    .hero-content h1 {
+      font-size: 4.5rem;
+      font-weight: 700;
+      margin-bottom: 1.2rem;
+      line-height: 1.1;
+      text-shadow: 0 2px 20px rgba(0,0,0,0.4);
+    }
+
+    .hero-content p {
+      font-size: 1.2rem;
+      margin-bottom: 2rem;
+      opacity: 0.9;
+    }
+
+    .hero-content .btn {
+      background-color: #d4af37;
+      border: none;
+      color: #111;
+      padding: 0.9rem 2.5rem;
+      font-weight: 700;
+      font-size: 1rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      border-radius: 30px;
+      transition: background-color 0.3s ease, transform 0.3s ease;
+    }
+
+    .hero-content .btn:hover {
+      background-color: #bfa14a;
+      transform: translateY(-2px);
+    }
+
+    /* Products Section */
+    .products {
+      padding: 5rem 1rem;
+    }
+
+    .products h2, .featured-categories h2, .why-choose-us h2, .services h2, .newsletter h2 {
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      color: var(--text-color);
+    }
+
+    .product-card {
+      border: 1px solid var(--card-border);
+      background-color: var(--card-bg);
+      border-radius: 12px;
+      overflow: hidden;
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+    }
+
+    .product-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 16px 40px rgba(0,0,0,0.15);
+    }
+
+    .product-card img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+    }
+
+    /* Categories */
+    .category-card {
+      position: relative;
+      border-radius: 12px;
+      overflow: hidden;
+      height: 280px;
+      cursor: pointer;
+    }
+
+    .category-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+
+    .category-card:hover img {
+      transform: scale(1.08);
+    }
+
+    .category-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.45);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      transition: background 0.3s ease;
+    }
+
+    .category-card:hover .category-overlay {
+      background: rgba(0,0,0,0.6);
+    }
+
+    .category-overlay h3 {
+      font-weight: 700;
+      font-size: 1.6rem;
+      letter-spacing: 0.1em;
+      margin-bottom: 1rem;
+    }
+
+    /* Why Choose */
+    .why-choose-us {
+      background-color: var(--card-bg);
+    }
+
+    .feature-list {
+      list-style: none;
+      padding: 0;
+    }
+
+    .feature-list li {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+      align-items: flex-start;
+    }
+
+    .feature-list .fas {
+      color: #d4af37;
+      font-size: 1.4rem;
+      margin-top: 3px;
+    }
+
+    .feature-list h4 {
+      font-weight: 700;
+      margin-bottom: 0.3rem;
+    }
+
+    /* Services */
+    .service-card {
+      background-color: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 2rem;
+      text-align: center;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .service-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 12px 30px rgba(0,0,0,0.12);
+    }
+
+    .service-icon {
+      font-size: 2.5rem;
+      color: #d4af37;
+      margin-bottom: 1rem;
+    }
+
+    .service-card h3 {
+      font-weight: 700;
+      margin-bottom: 0.8rem;
+    }
+
+    /* Newsletter */
+    .newsletter {
+      background: linear-gradient(135deg, #111 0%, #1c1c1c 100%);
+      color: #fff;
+    }
+
+    .newsletter h2 {
+      color: #d4af37;
+    }
+
+    .newsletter .form-control {
+      border-radius: 30px 0 0 30px;
+      padding: 0.8rem 1.5rem;
+      border: none;
+    }
+
+    .newsletter .btn-primary {
+      border-radius: 0 30px 30px 0;
+      background-color: #d4af37;
+      border: none;
+      color: #111;
+      font-weight: 700;
+      padding: 0.8rem 1.5rem;
+    }
+
+    /* Footer */
+    footer {
+      background-color: #111;
+      color: #ccc;
+      padding: 3rem 1rem 1rem;
+    }
+
+    footer h4 {
+      color: #d4af37;
+      font-weight: 700;
+      margin-bottom: 1rem;
+    }
+
+    footer a {
+      color: #ccc;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    footer a:hover {
+      color: #d4af37;
+    }
+
+    footer li {
+      margin-bottom: 0.5rem;
+    }
+
+    footer .fas {
+      margin-right: 0.5rem;
+      color: #d4af37;
+    }
+
+    .footer-bottom {
+      border-top: 1px solid #333;
+      margin-top: 2rem;
+      padding-top: 1rem;
+    }
+
+    /* Chatbot */
+    #chatbot-toggle {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      background: #d4af37;
+      border: none;
+      border-radius: 50%;
+      width: 56px;
+      height: 56px;
+      font-size: 1.5rem;
+      cursor: pointer;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+      z-index: 1000;
+      transition: transform 0.3s ease;
+    }
+
+    #chatbot-toggle:hover { transform: scale(1.1); }
+
+    #chatbot-container {
+      position: fixed;
+      bottom: 6rem;
+      right: 2rem;
+      width: 320px;
+      background: var(--card-bg, #fff);
+      border-radius: 12px;
+      box-shadow: 0 8px 40px rgba(0,0,0,0.2);
+      display: none;
+      flex-direction: column;
+      z-index: 1001;
+      overflow: hidden;
+      border: 1px solid var(--card-border, #e9ecef);
+    }
+
+    #chatbot-container.open { display: flex; }
+
+    .chatbot-header {
+      background: #d4af37;
+      color: #111;
+      padding: 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-weight: 700;
+    }
+
+    #close-chatbot {
+      background: none;
+      border: none;
+      font-size: 1.2rem;
+      cursor: pointer;
+      color: #111;
+    }
+
+    .chatbot-messages {
+      padding: 1rem;
+      height: 220px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .chat-message {
+      padding: 0.6rem 1rem;
+      border-radius: 18px;
+      max-width: 85%;
+      font-size: 0.9rem;
+      line-height: 1.4;
+    }
+
+    .chat-message.bot {
+      background: #f0f0f0;
+      color: #111;
+      align-self: flex-start;
+    }
+
+    .chat-message.user {
+      background: #d4af37;
+      color: #111;
+      align-self: flex-end;
+    }
+
+    .chatbot-input {
+      display: flex;
+      border-top: 1px solid #eee;
+    }
+
+    #chatbot-user-input {
+      flex: 1;
+      padding: 0.8rem 1rem;
+      border: none;
+      outline: none;
+      font-size: 0.9rem;
+    }
+
+    #chatbot-send-btn {
+      background: #d4af37;
+      border: none;
+      padding: 0.8rem 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      color: #111;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      header { padding: 1rem 1.5rem; }
+      .logo { font-size: 1.8rem; }
+      nav a { margin-left: 1.2rem; font-size: 0.85rem; }
+      #theme-toggle { margin-left: 1rem; }
+      .hero-content h1 { font-size: 2.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Loading Screen -->
+  <div id="loading-screen">
+    <div class="vault-logo">THE VAULT</div>
+  </div>
+
+  <header>
+    <a href="index.html" class="logo">THE VAULT</a>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="Rest/categorieen.html">Categorieën</a>
+      <a href="auto's/autos.html">Auto's</a>
+      <a href="jachten/jachten.html">Jachten</a>
+      <a href="horloge/horloges.html">Horloges</a>
+      <a href="login.html">Login</a>
+      <button id="theme-toggle" aria-label="Toggle dark mode">🌙</button>
+    </nav>
+  </header>
+
+  <main class="content-wrapper">
+
+    <!-- Hero Section -->
+    <section class="hero">
+      <div class="hero-video-container">
+        <video autoplay muted loop playsinline class="hero-video">
+          <source src="Videos/header.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="hero-content">
+        <h1>Exclusieve Luxeproducten<br>voor de Elite</h1>
+        <p>Ontdek de meest exclusieve horloges, auto's en jachten</p>
+        <a href="Rest/categorieen.html" class="btn">Bekijk aanbod</a>
+      </div>
+    </section>
+
+    <!-- Featured Products -->
+    <section class="products container">
+      <h2 class="text-center mb-5">Uitgelichte Producten</h2>
+      <div class="row g-4">
+        <div class="col-md-4">
+          <div class="card product-card">
+            <a href="jachten/jacht-detail-benetti-60.html">
+              <img src="images1/benetti buiten.jpg" alt="Benetti 60" />
+            </a>
+            <div class="card-body">
+              <h5 class="card-title">Benetti 60</h5>
+              <p class="card-text">Een meesterwerk van Italiaans design en verfijning.</p>
+            </div>
+            <div class="card-footer bg-transparent border-top-0">
+              <div class="d-flex justify-content-end">
+                <a href="jachten/jacht-detail-benetti-60.html" class="btn btn-outline-warning">Bekijk</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card product-card">
+            <a href="horloge/rolex-datejust-detail.html">
+              <img src="images/rolex.jpeg" alt="Rolex Datejust" />
+            </a>
+            <div class="card-body">
+              <h5 class="card-title">Rolex Datejust</h5>
+              <p class="card-text">Tijdloos design met perfecte precisie en elegantie.</p>
+            </div>
+            <div class="card-footer bg-transparent border-top-0">
+              <div class="d-flex justify-content-end">
+                <a href="horloge/rolex-datejust-detail.html" class="btn btn-outline-warning">Bekijk</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card product-card">
+            <a href="auto's/bugatti-chiron-detail.html">
+              <img src="images/auto's/bugatticar1.jpg" alt="Bugatti Chiron" />
+            </a>
+            <div class="card-body">
+              <h5 class="card-title">Bugatti Chiron</h5>
+              <p class="card-text">Ultieme superwagen met ongekende kracht en prestaties.</p>
+            </div>
+            <div class="card-footer bg-transparent border-top-0">
+              <div class="d-flex justify-content-end">
+                <a href="auto's/bugatti-chiron-detail.html" class="btn btn-outline-warning">Bekijk</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Categories -->
+    <section class="featured-categories container py-5">
+      <h2 class="text-center mb-5">Onze Categorieën</h2>
+      <div class="row g-4">
+        <div class="col-md-4">
+          <div class="category-card">
+            <img src="images/auto's/uruscar1.jpg" alt="Luxe Auto's" />
+            <div class="category-overlay">
+              <h3>Luxe Auto's</h3>
+              <a href="auto's/autos.html" class="btn btn-outline-light">Ontdek</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="category-card">
+            <img src="images1/boot1.jpg" alt="Jachten" />
+            <div class="category-overlay">
+              <h3>Jachten</h3>
+              <a href="jachten/jachten.html" class="btn btn-outline-light">Ontdek</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="category-card">
+            <img src="images/Watch6.jpg" alt="Horloges" />
+            <div class="category-overlay">
+              <h3>Horloges</h3>
+              <a href="horloge/horloges.html" class="btn btn-outline-light">Ontdek</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Why Choose Us -->
+    <section class="why-choose-us py-5">
+      <div class="container">
+        <div class="row align-items-center">
+          <div class="col-md-6">
+            <div class="why-choose-content">
+              <h2>Waarom The Vault?</h2>
+              <p class="lead">Uw vertrouwde partner in de wereld van exclusieve luxe</p>
+              <ul class="feature-list">
+                <li>
+                  <i class="fas fa-check-circle"></i>
+                  <div>
+                    <h4>Expertise &amp; Ervaring</h4>
+                    <p>Meer dan 15 jaar ervaring in het cureren van de meest exclusieve luxeproducten ter wereld.</p>
+                  </div>
+                </li>
+                <li>
+                  <i class="fas fa-check-circle"></i>
+                  <div>
+                    <h4>Exclusief Netwerk</h4>
+                    <p>Directe relaties met toonaangevende merken en exclusieve dealers wereldwijd.</p>
+                  </div>
+                </li>
+                <li>
+                  <i class="fas fa-check-circle"></i>
+                  <div>
+                    <h4>Discrete Service</h4>
+                    <p>Absolute discretie en privacy gegarandeerd voor al onze klanten.</p>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="why-choose-image">
+              <img src="images1/lamborghini binnen.jpg" alt="The Vault Experience" class="img-fluid rounded">
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Services -->
+    <section class="services py-5">
+      <div class="container">
+        <h2 class="text-center mb-5">Onze Diensten</h2>
+        <div class="row g-4">
+          <div class="col-md-4">
+            <div class="service-card">
+              <div class="service-icon"><i class="fas fa-handshake"></i></div>
+              <h3>Persoonlijke Begeleiding</h3>
+              <p>Een toegewijde expert staat voor u klaar om u te begeleiden bij elke stap van uw aankoop, van eerste interesse tot definitieve levering.</p>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="service-card">
+              <div class="service-icon"><i class="fas fa-shield-alt"></i></div>
+              <h3>Authenticiteitsgarantie</h3>
+              <p>Elk product wordt zorgvuldig geverifieerd en komt met volledige documentatie en garantie van authenticiteit.</p>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="service-card">
+              <div class="service-icon"><i class="fas fa-globe"></i></div>
+              <h3>Wereldwijde Levering</h3>
+              <p>Ons netwerk van partners zorgt voor veilige en discrete levering naar elke gewenste locatie wereldwijd.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Newsletter -->
+    <section class="newsletter py-5">
+      <div class="container">
+        <div class="newsletter-content text-center">
+          <h2>Blijf Op De Hoogte</h2>
+          <p>Schrijf je in voor exclusieve updates en aanbiedingen</p>
+          <form class="newsletter-form" onsubmit="handleNewsletter(event)">
+            <div class="input-group justify-content-center" style="max-width:480px;margin:0 auto;">
+              <input type="email" class="form-control" placeholder="Uw e-mailadres" required>
+              <button type="submit" class="btn btn-primary">Inschrijven</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <div class="container">
+        <div class="row">
+          <div class="col-md-4">
+            <h4>Over The Vault</h4>
+            <p>Ontdek de wereld van luxe bij The Vault. Wij bieden een unieke collectie van exclusieve horloges, auto's en jachten, speciaal geselecteerd voor de ware liefhebber.</p>
+          </div>
+          <div class="col-md-4">
+            <h4>Snelle Links</h4>
+            <ul class="list-unstyled">
+              <li><a href="index.html">Home</a></li>
+              <li><a href="auto's/autos.html">Luxury Auto's</a></li>
+              <li><a href="jachten/jachten.html">Exclusieve Jachten</a></li>
+              <li><a href="horloge/horloges.html">Horloges</a></li>
+            </ul>
+          </div>
+          <div class="col-md-4">
+            <h4>Contact</h4>
+            <ul class="list-unstyled">
+              <li><i class="fas fa-map-marker-alt"></i> Jan Ligthartstraat 250, 3083 AM Rotterdam</li>
+              <li><i class="fas fa-phone"></i> +31 (0)10 290 97 00</li>
+              <li><i class="fas fa-envelope"></i> info@thevault.nl</li>
+            </ul>
+          </div>
+        </div>
+        <div class="footer-bottom text-center">
+          <p>&copy; 2024 The Vault. Alle rechten voorbehouden.</p>
+        </div>
+      </div>
+    </footer>
+  </main>
+
+  <!-- Chatbot -->
+  <button id="chatbot-toggle" aria-label="Open chatbot">💬</button>
+  <div id="chatbot-container">
+    <div class="chatbot-header">
+      <span>Chat met The Vault</span>
+      <button id="close-chatbot" aria-label="Close chatbot">&times;</button>
+    </div>
+    <div class="chatbot-messages" id="chatbot-messages">
+      <div class="chat-message bot">Hallo! Hoe kan ik u helpen?</div>
+    </div>
+    <div class="chatbot-input">
+      <input type="text" id="chatbot-user-input" placeholder="Stel een vraag...">
+      <button id="chatbot-send-btn">Stuur</button>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+    // Loading screen
+    window.addEventListener('load', function() {
+      setTimeout(function() {
+        document.getElementById('loading-screen').classList.add('hidden');
+      }, 1800);
+    });
+
+    // Theme toggle
+    const themeToggle = document.getElementById('theme-toggle');
+    const body = document.body;
+    if (localStorage.getItem('theme') === 'dark') {
+      body.classList.add('dark');
+      themeToggle.textContent = '☀️';
+    }
+    themeToggle.addEventListener('click', () => {
+      body.classList.toggle('dark');
+      const theme = body.classList.contains('dark') ? 'dark' : 'light';
+      localStorage.setItem('theme', theme);
+      themeToggle.textContent = theme === 'dark' ? '☀️' : '🌙';
+    });
+
+    // Chatbot toggle
+    const chatbotToggle = document.getElementById('chatbot-toggle');
+    const chatbotContainer = document.getElementById('chatbot-container');
+    const closeBtn = document.getElementById('close-chatbot');
+    chatbotToggle.addEventListener('click', () => chatbotContainer.classList.toggle('open'));
+    closeBtn.addEventListener('click', () => chatbotContainer.classList.remove('open'));
+
+    // Chatbot send
+    const sendBtn = document.getElementById('chatbot-send-btn');
+    const userInput = document.getElementById('chatbot-user-input');
+    const messages = document.getElementById('chatbot-messages');
+
+    function sendMessage() {
+      const text = userInput.value.trim();
+      if (!text) return;
+      const userMsg = document.createElement('div');
+      userMsg.className = 'chat-message user';
+      userMsg.textContent = text;
+      messages.appendChild(userMsg);
+      userInput.value = '';
+      setTimeout(() => {
+        const botMsg = document.createElement('div');
+        botMsg.className = 'chat-message bot';
+        botMsg.textContent = 'Bedankt voor uw bericht! Wij nemen spoedig contact met u op.';
+        messages.appendChild(botMsg);
+        messages.scrollTop = messages.scrollHeight;
+      }, 600);
+      messages.scrollTop = messages.scrollHeight;
+    }
+
+    sendBtn.addEventListener('click', sendMessage);
+    userInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') sendMessage(); });
+
+    // Newsletter
+    function handleNewsletter(e) {
+      e.preventDefault();
+      alert('Bedankt voor uw inschrijving!');
+    }
+  </script>
+
+</body>
+</html>
